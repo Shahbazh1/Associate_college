@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import college_img from "../../assets/college.webp";
+import {Link} from 'react-router-dom'
 
 const SignUp = () => {
   const [user, setUser] = useState("Student");
 
   return (
     <div>
-      <div className="flex flex-row-reverse h-screen w-full rounded-4xl">
+      <div className="flex flex-col-reverse  md:flex-row-reverse h-screen w-full rounded-4xl">
         <div className="flex-1">
           <img
             src={college_img}
@@ -16,7 +17,7 @@ const SignUp = () => {
         </div>
         <div className="flex-[0.7] flex flex-col p-6 pr-8">
           <div className="flex flex-col">
-            <ul className="flex flex-row gap-6 text-sky-600 font-semibold self-end">
+            <ul className="flex flex-row gap-6 text-sky-600 font-semibold self-start">
               <li
                 onClick={() => setUser("Student")}
                 className="relative cursor-pointer after:content-[''] after:block after:w-0 after:h-0.5 after:bg-green-500 after:transition-all after:duration-300 hover:after:w-full"
@@ -40,7 +41,7 @@ const SignUp = () => {
 
           <div className="flex-1 mt-7 flex flex-col justify-start items-start gap-6">
             <div className="self-center">
-              <h1 className="font-bold text-2xl mb-2">{user} Login</h1>
+              <h1 className="font-bold text-2xl mb-2">{user} SignUp</h1>
               <hr className="w-full bg-green-500 h-0.5 text-green-500" />
             </div>
 
@@ -95,13 +96,13 @@ const SignUp = () => {
                 </button>
               </div>
               <div className="mt-1 flex w-full justify-center flex-row  gap-3  cursor-pointer">
-                <p className="text-black/40 ">Don't have an account?</p>
-                <a
-                  href="/signUp"
-                  className="text-sky-600 hover:underline font-semibold"
+                <p className="text-black/40 ">Already have an account.</p>
+                <Link
+                  to="/SignIn"
+                  className="text-sky-600  hover:underline font-semibold"
                 >
-                  Sign Up
-                </a>
+                  SignIn
+                </Link>
               </div>
             </div>
           </div>

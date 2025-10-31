@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import college_img from "../../assets/college.webp";
+import { Link } from "react-router-dom";
 
 const signIn1 = () => {
   const [user, setUser] = useState("Student");
   return (
     <div>
-      <div className="flex h-screen w-full rounded-4xl">
-        <div className="flex-1">
+      <div className="flex flex-col md:flex-row h-screen w-full rounded-4xl">
+        <div className="flex-1 h-fit">
           <img
             src={college_img}
             alt="college_img"
-            className="object-cover h-screen"
+            className="object-cover md:h-screen"
           />
         </div>
         <div className="flex-[0.7] flex flex-col p-6 pr-8">
@@ -63,7 +64,7 @@ const signIn1 = () => {
                 <p className="text-black/40 ">
                   Don't have an account?{"   "}
                 </p>
-                <a href="/signUp" className="text-sky-600 hover:underline font-semibold">Sign Up</a>
+                <Link to="/signUp" className="text-sky-600 hover:underline font-semibold">Sign Up</Link>
               </div>
             </div>
           </div>

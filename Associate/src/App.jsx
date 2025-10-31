@@ -1,10 +1,13 @@
 import React from 'react'
-import SignUp from '../src/components/signUp/signUp'
+import AppRoutes from './routes.jsx'
+import {BrowserRouter} from 'react-router-dom'
 
 const App = () => {
   return (
     <div>
-      <SignUp/>
+      <BrowserRouter>
+      <AppRoutes/>
+      </BrowserRouter>
     </div>
   )
 }
