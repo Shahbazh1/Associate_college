@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const signIn = () => {
+const SignIn = () => {
+  const navigate=useNavigate();
   return (
     <div>
       <div className="flex flex-col lg:flex-row h-screen w-full">
@@ -84,4 +86,4 @@ const signIn = () => {
   );
 };
 
-export default signIn;
+export default SignIn;

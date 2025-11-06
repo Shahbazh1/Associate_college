@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import college_img from "../../assets/college.webp";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const signIn1 = () => {
+const SignIn1 = () => {
+  const navigate=useNavigate();
   const [user, setUser] = useState("Student");
   return (
     <div>
@@ -56,7 +58,7 @@ const signIn1 = () => {
                 <input type="text" className="h-8 w-full border rounded-sm " />
               </div>
               <div className="mb-5">
-                <button className="bg-sky-600 text-slate-100 px-4 py-1 rounded-sm">
+                <button onClick={()=>{navigate('/Dashboard')}}  className="bg-sky-600 cursor-pointer text-slate-100 px-4 py-1 rounded-sm">
                   Login
                 </button>
               </div>
@@ -74,4 +76,4 @@ const signIn1 = () => {
   );
 };
 
-export default signIn1;
+export default SignIn1;
