@@ -44,11 +44,9 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Add Student', path: 'dashboard/addStudents' },
-        { label: 'View Students', path: '/students/view' },
-        { label: 'Attendance', path: '/students/attendance' },
-        { label: 'Results / Performance', path: '/students/results' },
-        { label: 'Fees Management', path: '/students/fees' }
+        { label: 'Add Student', path: 'students/addStudents' },
+        { label: 'View Students', path: 'students/view' },
+        { label: 'Fees Management', path: 'students/fees' }
       ]
     },
     {

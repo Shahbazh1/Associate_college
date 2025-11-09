@@ -7,7 +7,9 @@ import AddStudentForm from "./components/students/addStudents";
 import NotFound from "./pages/notFound";
 import AdminDashboard from "./pages/home";
 import Layout from "./components/layout/Layout";
-import OverviewPage from "./components/overview";
+import ViewStudents from "./components/students/viewStudents";
+import ViewStudents from "./components/students/viewStudents";
+
 
 
 const AppRoutes = () => {
@@ -22,8 +24,8 @@ const AppRoutes = () => {
       <Route path="/Dashboard" element={<Layout />}>
         {/* Nested routes inside the layout */}
         <Route index element={<AdminDashboard />} />
-        <Route path="addStudents" element={<AddStudentForm />} />
-        <Route path="overview" element={<OverviewPage />} />
+        <Route path="students/addStudents" element={<AddStudentForm />} />
+        <Route path="students/view" element={<ViewStudents/>}/>
       </Route>
 
       {/* Not Found (keep last) */}
