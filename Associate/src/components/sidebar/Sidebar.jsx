@@ -44,9 +44,8 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Add Student', path: 'students/addStudents' },
+        { label: 'Add Student', path: 'students/add' },
         { label: 'View Students', path: 'students/view' },
-        { label: 'Fees Management', path: 'students/fees' }
       ]
     },
     {
@@ -58,10 +57,9 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Add Teacher', path: '/teachers/add' },
-        { label: 'View Teachers', path: '/teachers/view' },
-        { label: 'Assign Subjects / Classes', path: '/teachers/assign' },
-        { label: 'Teacher Attendance', path: '/teachers/attendance' }
+        { label: 'Add Teacher', path: 'teachers/add' },
+        { label: 'View Teachers', path: 'teachers/view' },
+        { label: 'Teacher Attendance', path: 'teachers/attendance' }
       ]
     },
     {
@@ -73,9 +71,8 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Add Class / Section', path: '/classes/add' },
-        { label: 'Manage Subjects', path: '/classes/subjects' },
-        { label: 'Class Timetable', path: '/classes/timetable' }
+        { label: 'Add Class / Section', path: 'classes/add' },
+        { label: 'Class Timetable', path: 'classes/timetable' }
       ]
     },
     {
@@ -87,9 +84,9 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Mark Attendance', path: '/attendance/mark' },
-        { label: 'View Attendance Reports', path: '/attendance/reports' },
-        { label: 'Generate Monthly Reports', path: '/attendance/monthly' }
+        { label: 'Mark Attendance', path: 'attendance/mark' },
+        { label: 'View Attendance Reports', path: 'attendance/reports' },
+        { label: 'Generate Monthly Reports', path: 'attendance/monthly' }
       ]
     },
     {
@@ -101,10 +98,8 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Add Test / Exam', path: '/exams/add' },
-        { label: 'Enter Marks', path: '/exams/marks' },
-        { label: 'View Results', path: '/exams/results' },
-        { label: 'Performance Analytics', path: '/exams/analytics' }
+        { label: 'Add Test Marks', path: 'exams/add' },
+        { label: 'View Test Results', path: 'exams/results' },
       ]
     },
     {
@@ -116,22 +111,7 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Create Announcement', path: '/announcements/create' },
-        { label: 'Manage Notices', path: '/announcements/manage' }
-      ]
-    },
-    {
-      name: 'messages',
-      label: 'Messages / Feedback',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      ),
-      submenus: [
-        { label: 'Student Queries', path: '/messages/students' },
-        { label: 'Teacher Queries', path: '/messages/teachers' },
-        { label: 'Parent Feedback', path: '/messages/parents' }
+        { label: ' Noties', path: 'announcements/notices' }
       ]
     },
     {
