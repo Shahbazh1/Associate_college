@@ -4,11 +4,12 @@ const AddStudentForm = () => {
   const [formData, setFormData] = useState({
     studentName: '',
     fatherName: '',
-    gender: '',
     dob: '',
     rollNo: '',
     studentClass: '',
-    section: '',
+    session: '',
+    group: '', // Added group field
+    field: '', // Added field field
     contactNumber: '',
     address: '',
     admissionDate: '',
@@ -20,9 +21,26 @@ const AddStudentForm = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const fileInputRef = useRef(null);
   
-  const genderOptions = ['Male', 'Female', 'Other'];
-  const classOptions = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th'];
-  const sectionOptions = ['A', 'B', 'C', 'D', 'E'];
+  // Updated class options to only include 11th to 14th
+  const classOptions = ['11th', '12th', '13th', '14th'];
+  
+  const sessionOptions = [
+    '2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', 
+    '2024-2025', '2025-2026', '2026-2027', '2027-2028', '2028-2029', '2029-2030'
+  ];
+  
+  // Added group options
+  const groupOptions = ['Science', 'Arts'];
+  
+  // Added field options
+  const fieldOptions = [
+    'FSc Pre-Engineering',
+    'FSc Pre-Medical',
+    'ICS',
+    'FA IT',
+    'Simple FA',
+    'Other'
+  ];
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,10 +86,6 @@ const AddStudentForm = () => {
       newErrors.fatherName = "Father's name is required";
     }
     
-    if (!formData.gender) {
-      newErrors.gender = 'Please select a gender';
-    }
-    
     if (!formData.dob) {
       newErrors.dob = 'Date of birth is required';
     }
@@ -84,8 +98,18 @@ const AddStudentForm = () => {
       newErrors.studentClass = 'Please select a class';
     }
     
-    if (!formData.section) {
-      newErrors.section = 'Please select a section';
+    if (!formData.session) {
+      newErrors.session = 'Please select a session';
+    }
+    
+    // Added validation for group
+    if (!formData.group) {
+      newErrors.group = 'Please select a group';
+    }
+    
+    // Added validation for field
+    if (!formData.field) {
+      newErrors.field = 'Please select a field';
     }
     
     if (!formData.contactNumber.trim()) {
@@ -126,11 +150,12 @@ const AddStudentForm = () => {
           setFormData({
             studentName: '',
             fatherName: '',
-            gender: '',
             dob: '',
             rollNo: '',
             studentClass: '',
-            section: '',
+            session: '',
+            group: '', // Added group reset
+            field: '', // Added field reset
             contactNumber: '',
             address: '',
             admissionDate: '',
@@ -217,30 +242,6 @@ const AddStudentForm = () => {
                 )}
               </div>
               
-              {/* Gender */}
-              <div>
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
-                  Gender <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.gender ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                >
-                  <option value="">Select Gender</option>
-                  {genderOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
-                {errors.gender && (
-                  <p className="mt-1 text-sm text-red-600">{errors.gender}</p>
-                )}
-              </div>
-              
               {/* Date of Birth */}
               <div>
                 <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
@@ -306,27 +307,75 @@ const AddStudentForm = () => {
                 )}
               </div>
               
-              {/* Section */}
+              {/* Session */}
               <div>
-                <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">
-                  Section <span className="text-red-500">*</span>
+                <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">
+                  Session <span className="text-red-500">*</span>
                 </label>
                 <select
-                  id="section"
-                  name="section"
-                  value={formData.section}
+                  id="session"
+                  name="session"
+                  value={formData.session}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.section ? 'border-red-500' : 'border-gray-300'
+                    errors.session ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
-                  <option value="">Select Section</option>
-                  {sectionOptions.map(option => (
+                  <option value="">Select Session</option>
+                  {sessionOptions.map(option => (
                     <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
-                {errors.section && (
-                  <p className="mt-1 text-sm text-red-600">{errors.section}</p>
+                {errors.session && (
+                  <p className="mt-1 text-sm text-red-600">{errors.session}</p>
+                )}
+              </div>
+              
+              {/* Group - New Field */}
+              <div>
+                <label htmlFor="group" className="block text-sm font-medium text-gray-700 mb-1">
+                  Group <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="group"
+                  name="group"
+                  value={formData.group}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.group ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Group</option>
+                  {groupOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+                {errors.group && (
+                  <p className="mt-1 text-sm text-red-600">{errors.group}</p>
+                )}
+              </div>
+              
+              {/* Field - New Field */}
+              <div>
+                <label htmlFor="field" className="block text-sm font-medium text-gray-700 mb-1">
+                  Field <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="field"
+                  name="field"
+                  value={formData.field}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.field ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Field</option>
+                  {fieldOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+                {errors.field && (
+                  <p className="mt-1 text-sm text-red-600">{errors.field}</p>
                 )}
               </div>
               

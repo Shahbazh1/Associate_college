@@ -10,7 +10,6 @@ import AddStudentForm from "./components/students/addStudents";
 import ViewStudents from "./components/students/viewStudents";
 import AddTeachersForm from "./components/teachers/addTeachers";
 import ViewTeachers from "./components/teachers/viewTeachers";
-import AddClass from './components/classesAndSubjects/addClass'
 import ClassTimeTable from './components/classesAndSubjects/classTimeTable'
 import GenerateReport from './components/attendance/generateReport'
 import MarkAttendance from './components/attendance/markAttendace'
@@ -40,7 +39,6 @@ const AppRoutes = () => {
         <Route path="teachers/view" element={<ViewTeachers/>}/>
         <Route path="teachers/attendance" element={<MarkTeachersAttendance/>}/>
         {/* classes and subjects routes */}
-        <Route path="classes/add" element={<AddClass/>}/>
         <Route path="classes/timetable" element={<ClassTimeTable/>}/>
         {/* attendance report rotes*/}
         <Route path="attendance/mark" element={<MarkAttendance/>}/>

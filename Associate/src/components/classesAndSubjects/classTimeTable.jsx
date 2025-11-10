@@ -3,17 +3,15 @@ import React, { useState, useEffect } from 'react'
 const ClassTimeTable = () => {
   // Sample data - in a real app, this would come from an API
   const [classes] = useState([
-    { id: 1, name: '10th Grade', section: 'A' },
-    { id: 2, name: '10th Grade', section: 'B' },
-    { id: 3, name: '9th Grade', section: 'A' },
-    { id: 4, name: '11th Grade', section: 'A', stream: 'Science' },
-    { id: 5, name: '11th Grade', section: 'B', stream: 'Commerce' },
+    { id: 1, name: '11th Grade', section: 'A', stream: 'Science' },
+    { id: 2, name: '11th Grade', section: 'B', stream: 'Commerce' },
+    { id: 3, name: '12th Grade', section: 'A', stream: 'Science' },
+    { id: 4, name: '12th Grade', section: 'B', stream: 'Commerce' },
   ])
 
   const [sessions] = useState([
     { id: 1, name: '2023-2024' },
     { id: 2, name: '2024-2025' },
-    { id: 3, name: '2025-2026' },
   ])
 
   const [subjects] = useState([
@@ -24,7 +22,10 @@ const ClassTimeTable = () => {
     { id: 5, name: 'Computer Science', code: 'CS', color: 'bg-indigo-100 text-indigo-800' },
     { id: 6, name: 'English', code: 'ENG', color: 'bg-pink-100 text-pink-800' },
     { id: 7, name: 'History', code: 'HIST', color: 'bg-red-100 text-red-800' },
-    { id: 8, name: 'Physical Education', code: 'PE', color: 'bg-gray-100 text-gray-800' },
+    { id: 8, name: 'Economics', code: 'ECO', color: 'bg-orange-100 text-orange-800' },
+    { id: 9, name: 'Accountancy', code: 'ACC', color: 'bg-teal-100 text-teal-800' },
+    { id: 10, name: 'Business Studies', code: 'BST', color: 'bg-cyan-100 text-cyan-800' },
+    { id: 11, name: 'Physical Education', code: 'PE', color: 'bg-gray-100 text-gray-800' },
   ])
 
   const [teachers] = useState([
@@ -36,6 +37,9 @@ const ClassTimeTable = () => {
     { id: 6, name: 'Mr. James Wilson', subjectIds: [6] },
     { id: 7, name: 'Ms. Patricia Brown', subjectIds: [7] },
     { id: 8, name: 'Dr. Robert Taylor', subjectIds: [8] },
+    { id: 9, name: 'Mrs. Jennifer White', subjectIds: [9] },
+    { id: 10, name: 'Mr. Richard Green', subjectIds: [10] },
+    { id: 11, name: 'Ms. Amanda Lee', subjectIds: [11] },
   ])
 
   const timeSlots = [
@@ -53,13 +57,165 @@ const ClassTimeTable = () => {
 
   // Component State
   const [selectedClass, setSelectedClass] = useState('')
-  const [selectedSession, setSelectedSession] = useState('')
+  const [selectedSession, setSelectedSession] = useState('1') // Default to 2023-2024
   const [currentView, setCurrentView] = useState('select') // select, view, edit, create
   const [timetable, setTimetable] = useState(null)
   const [editableGrid, setEditableGrid] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [editingCell, setEditingCell] = useState(null) // { dayIndex, slotIndex }
+
+  // Demo timetables for 11th and 12th grade
+  const demoTimetables = {
+    '1': { // 11th Grade A - Science
+      id: 101,
+      classId: 1,
+      sessionId: 1,
+      entries: [
+        { dayIndex: 0, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Monday - Period 1 - Mathematics
+        { dayIndex: 0, slotIndex: 1, subjectId: 2, teacherId: 2 }, // Monday - Period 2 - Physics
+        { dayIndex: 0, slotIndex: 2, subjectId: 3, teacherId: 3 }, // Monday - Period 3 - Chemistry
+        { dayIndex: 0, slotIndex: 3, subjectId: 4, teacherId: 4 }, // Monday - Period 4 - Biology
+        { dayIndex: 0, slotIndex: 5, subjectId: 5, teacherId: 5 }, // Monday - Period 5 - Computer Science
+        { dayIndex: 0, slotIndex: 6, subjectId: 6, teacherId: 6 }, // Monday - Period 6 - English
+        { dayIndex: 1, slotIndex: 0, subjectId: 2, teacherId: 2 }, // Tuesday - Period 1 - Physics
+        { dayIndex: 1, slotIndex: 1, subjectId: 1, teacherId: 1 }, // Tuesday - Period 2 - Mathematics
+        { dayIndex: 1, slotIndex: 2, subjectId: 5, teacherId: 5 }, // Tuesday - Period 3 - Computer Science
+        { dayIndex: 1, slotIndex: 3, subjectId: 3, teacherId: 3 }, // Tuesday - Period 4 - Chemistry
+        { dayIndex: 1, slotIndex: 5, subjectId: 4, teacherId: 4 }, // Tuesday - Period 5 - Biology
+        { dayIndex: 1, slotIndex: 6, subjectId: 6, teacherId: 6 }, // Tuesday - Period 6 - English
+        { dayIndex: 2, slotIndex: 0, subjectId: 3, teacherId: 3 }, // Wednesday - Period 1 - Chemistry
+        { dayIndex: 2, slotIndex: 1, subjectId: 1, teacherId: 1 }, // Wednesday - Period 2 - Mathematics
+        { dayIndex: 2, slotIndex: 2, subjectId: 2, teacherId: 2 }, // Wednesday - Period 3 - Physics
+        { dayIndex: 2, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Wednesday - Period 4 - English
+        { dayIndex: 2, slotIndex: 5, subjectId: 11, teacherId: 11 }, // Wednesday - Period 5 - Physical Education
+        { dayIndex: 2, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Wednesday - Period 6 - Biology
+        { dayIndex: 3, slotIndex: 0, subjectId: 5, teacherId: 5 }, // Thursday - Period 1 - Computer Science
+        { dayIndex: 3, slotIndex: 1, subjectId: 3, teacherId: 3 }, // Thursday - Period 2 - Chemistry
+        { dayIndex: 3, slotIndex: 2, subjectId: 1, teacherId: 1 }, // Thursday - Period 3 - Mathematics
+        { dayIndex: 3, slotIndex: 3, subjectId: 2, teacherId: 2 }, // Thursday - Period 4 - Physics
+        { dayIndex: 3, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Thursday - Period 5 - English
+        { dayIndex: 3, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Thursday - Period 6 - Biology
+        { dayIndex: 4, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Friday - Period 1 - Mathematics
+        { dayIndex: 4, slotIndex: 1, subjectId: 2, teacherId: 2 }, // Friday - Period 2 - Physics
+        { dayIndex: 4, slotIndex: 2, subjectId: 3, teacherId: 3 }, // Friday - Period 3 - Chemistry
+        { dayIndex: 4, slotIndex: 3, subjectId: 5, teacherId: 5 }, // Friday - Period 4 - Computer Science
+        { dayIndex: 4, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Friday - Period 5 - English
+        { dayIndex: 4, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Friday - Period 6 - Biology
+      ]
+    },
+    '2': { // 11th Grade B - Commerce
+      id: 102,
+      classId: 2,
+      sessionId: 1,
+      entries: [
+        { dayIndex: 0, slotIndex: 0, subjectId: 6, teacherId: 6 }, // Monday - Period 1 - English
+        { dayIndex: 0, slotIndex: 1, subjectId: 7, teacherId: 7 }, // Monday - Period 2 - History
+        { dayIndex: 0, slotIndex: 2, subjectId: 8, teacherId: 8 }, // Monday - Period 3 - Economics
+        { dayIndex: 0, slotIndex: 3, subjectId: 9, teacherId: 9 }, // Monday - Period 4 - Accountancy
+        { dayIndex: 0, slotIndex: 5, subjectId: 10, teacherId: 10 }, // Monday - Period 5 - Business Studies
+        { dayIndex: 0, slotIndex: 6, subjectId: 1, teacherId: 1 }, // Monday - Period 6 - Mathematics
+        { dayIndex: 1, slotIndex: 0, subjectId: 8, teacherId: 8 }, // Tuesday - Period 1 - Economics
+        { dayIndex: 1, slotIndex: 1, subjectId: 9, teacherId: 9 }, // Tuesday - Period 2 - Accountancy
+        { dayIndex: 1, slotIndex: 2, subjectId: 10, teacherId: 10 }, // Tuesday - Period 3 - Business Studies
+        { dayIndex: 1, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Tuesday - Period 4 - English
+        { dayIndex: 1, slotIndex: 5, subjectId: 1, teacherId: 1 }, // Tuesday - Period 5 - Mathematics
+        { dayIndex: 1, slotIndex: 6, subjectId: 7, teacherId: 7 }, // Tuesday - Period 6 - History
+        { dayIndex: 2, slotIndex: 0, subjectId: 9, teacherId: 9 }, // Wednesday - Period 1 - Accountancy
+        { dayIndex: 2, slotIndex: 1, subjectId: 10, teacherId: 10 }, // Wednesday - Period 2 - Business Studies
+        { dayIndex: 2, slotIndex: 2, subjectId: 6, teacherId: 6 }, // Wednesday - Period 3 - English
+        { dayIndex: 2, slotIndex: 3, subjectId: 8, teacherId: 8 }, // Wednesday - Period 4 - Economics
+        { dayIndex: 2, slotIndex: 5, subjectId: 11, teacherId: 11 }, // Wednesday - Period 5 - Physical Education
+        { dayIndex: 2, slotIndex: 6, subjectId: 1, teacherId: 1 }, // Wednesday - Period 6 - Mathematics
+        { dayIndex: 3, slotIndex: 0, subjectId: 7, teacherId: 7 }, // Thursday - Period 1 - History
+        { dayIndex: 3, slotIndex: 1, subjectId: 9, teacherId: 9 }, // Thursday - Period 2 - Accountancy
+        { dayIndex: 3, slotIndex: 2, subjectId: 10, teacherId: 10 }, // Thursday - Period 3 - Business Studies
+        { dayIndex: 3, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Thursday - Period 4 - English
+        { dayIndex: 3, slotIndex: 5, subjectId: 1, teacherId: 1 }, // Thursday - Period 5 - Mathematics
+        { dayIndex: 3, slotIndex: 6, subjectId: 8, teacherId: 8 }, // Thursday - Period 6 - Economics
+        { dayIndex: 4, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Friday - Period 1 - Mathematics
+        { dayIndex: 4, slotIndex: 1, subjectId: 8, teacherId: 8 }, // Friday - Period 2 - Economics
+        { dayIndex: 4, slotIndex: 2, subjectId: 9, teacherId: 9 }, // Friday - Period 3 - Accountancy
+        { dayIndex: 4, slotIndex: 3, subjectId: 10, teacherId: 10 }, // Friday - Period 4 - Business Studies
+        { dayIndex: 4, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Friday - Period 5 - English
+        { dayIndex: 4, slotIndex: 6, subjectId: 7, teacherId: 7 }, // Friday - Period 6 - History
+      ]
+    },
+    '3': { // 12th Grade A - Science
+      id: 103,
+      classId: 3,
+      sessionId: 1,
+      entries: [
+        { dayIndex: 0, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Monday - Period 1 - Mathematics
+        { dayIndex: 0, slotIndex: 1, subjectId: 2, teacherId: 2 }, // Monday - Period 2 - Physics
+        { dayIndex: 0, slotIndex: 2, subjectId: 3, teacherId: 3 }, // Monday - Period 3 - Chemistry
+        { dayIndex: 0, slotIndex: 3, subjectId: 4, teacherId: 4 }, // Monday - Period 4 - Biology
+        { dayIndex: 0, slotIndex: 5, subjectId: 5, teacherId: 5 }, // Monday - Period 5 - Computer Science
+        { dayIndex: 0, slotIndex: 6, subjectId: 6, teacherId: 6 }, // Monday - Period 6 - English
+        { dayIndex: 1, slotIndex: 0, subjectId: 2, teacherId: 2 }, // Tuesday - Period 1 - Physics
+        { dayIndex: 1, slotIndex: 1, subjectId: 1, teacherId: 1 }, // Tuesday - Period 2 - Mathematics
+        { dayIndex: 1, slotIndex: 2, subjectId: 5, teacherId: 5 }, // Tuesday - Period 3 - Computer Science
+        { dayIndex: 1, slotIndex: 3, subjectId: 3, teacherId: 3 }, // Tuesday - Period 4 - Chemistry
+        { dayIndex: 1, slotIndex: 5, subjectId: 4, teacherId: 4 }, // Tuesday - Period 5 - Biology
+        { dayIndex: 1, slotIndex: 6, subjectId: 6, teacherId: 6 }, // Tuesday - Period 6 - English
+        { dayIndex: 2, slotIndex: 0, subjectId: 3, teacherId: 3 }, // Wednesday - Period 1 - Chemistry
+        { dayIndex: 2, slotIndex: 1, subjectId: 1, teacherId: 1 }, // Wednesday - Period 2 - Mathematics
+        { dayIndex: 2, slotIndex: 2, subjectId: 2, teacherId: 2 }, // Wednesday - Period 3 - Physics
+        { dayIndex: 2, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Wednesday - Period 4 - English
+        { dayIndex: 2, slotIndex: 5, subjectId: 11, teacherId: 11 }, // Wednesday - Period 5 - Physical Education
+        { dayIndex: 2, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Wednesday - Period 6 - Biology
+        { dayIndex: 3, slotIndex: 0, subjectId: 5, teacherId: 5 }, // Thursday - Period 1 - Computer Science
+        { dayIndex: 3, slotIndex: 1, subjectId: 3, teacherId: 3 }, // Thursday - Period 2 - Chemistry
+        { dayIndex: 3, slotIndex: 2, subjectId: 1, teacherId: 1 }, // Thursday - Period 3 - Mathematics
+        { dayIndex: 3, slotIndex: 3, subjectId: 2, teacherId: 2 }, // Thursday - Period 4 - Physics
+        { dayIndex: 3, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Thursday - Period 5 - English
+        { dayIndex: 3, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Thursday - Period 6 - Biology
+        { dayIndex: 4, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Friday - Period 1 - Mathematics
+        { dayIndex: 4, slotIndex: 1, subjectId: 2, teacherId: 2 }, // Friday - Period 2 - Physics
+        { dayIndex: 4, slotIndex: 2, subjectId: 3, teacherId: 3 }, // Friday - Period 3 - Chemistry
+        { dayIndex: 4, slotIndex: 3, subjectId: 5, teacherId: 5 }, // Friday - Period 4 - Computer Science
+        { dayIndex: 4, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Friday - Period 5 - English
+        { dayIndex: 4, slotIndex: 6, subjectId: 4, teacherId: 4 }, // Friday - Period 6 - Biology
+      ]
+    },
+    '4': { // 12th Grade B - Commerce
+      id: 104,
+      classId: 4,
+      sessionId: 1,
+      entries: [
+        { dayIndex: 0, slotIndex: 0, subjectId: 6, teacherId: 6 }, // Monday - Period 1 - English
+        { dayIndex: 0, slotIndex: 1, subjectId: 7, teacherId: 7 }, // Monday - Period 2 - History
+        { dayIndex: 0, slotIndex: 2, subjectId: 8, teacherId: 8 }, // Monday - Period 3 - Economics
+        { dayIndex: 0, slotIndex: 3, subjectId: 9, teacherId: 9 }, // Monday - Period 4 - Accountancy
+        { dayIndex: 0, slotIndex: 5, subjectId: 10, teacherId: 10 }, // Monday - Period 5 - Business Studies
+        { dayIndex: 0, slotIndex: 6, subjectId: 1, teacherId: 1 }, // Monday - Period 6 - Mathematics
+        { dayIndex: 1, slotIndex: 0, subjectId: 8, teacherId: 8 }, // Tuesday - Period 1 - Economics
+        { dayIndex: 1, slotIndex: 1, subjectId: 9, teacherId: 9 }, // Tuesday - Period 2 - Accountancy
+        { dayIndex: 1, slotIndex: 2, subjectId: 10, teacherId: 10 }, // Tuesday - Period 3 - Business Studies
+        { dayIndex: 1, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Tuesday - Period 4 - English
+        { dayIndex: 1, slotIndex: 5, subjectId: 1, teacherId: 1 }, // Tuesday - Period 5 - Mathematics
+        { dayIndex: 1, slotIndex: 6, subjectId: 7, teacherId: 7 }, // Tuesday - Period 6 - History
+        { dayIndex: 2, slotIndex: 0, subjectId: 9, teacherId: 9 }, // Wednesday - Period 1 - Accountancy
+        { dayIndex: 2, slotIndex: 1, subjectId: 10, teacherId: 10 }, // Wednesday - Period 2 - Business Studies
+        { dayIndex: 2, slotIndex: 2, subjectId: 6, teacherId: 6 }, // Wednesday - Period 3 - English
+        { dayIndex: 2, slotIndex: 3, subjectId: 8, teacherId: 8 }, // Wednesday - Period 4 - Economics
+        { dayIndex: 2, slotIndex: 5, subjectId: 11, teacherId: 11 }, // Wednesday - Period 5 - Physical Education
+        { dayIndex: 2, slotIndex: 6, subjectId: 1, teacherId: 1 }, // Wednesday - Period 6 - Mathematics
+        { dayIndex: 3, slotIndex: 0, subjectId: 7, teacherId: 7 }, // Thursday - Period 1 - History
+        { dayIndex: 3, slotIndex: 1, subjectId: 9, teacherId: 9 }, // Thursday - Period 2 - Accountancy
+        { dayIndex: 3, slotIndex: 2, subjectId: 10, teacherId: 10 }, // Thursday - Period 3 - Business Studies
+        { dayIndex: 3, slotIndex: 3, subjectId: 6, teacherId: 6 }, // Thursday - Period 4 - English
+        { dayIndex: 3, slotIndex: 5, subjectId: 1, teacherId: 1 }, // Thursday - Period 5 - Mathematics
+        { dayIndex: 3, slotIndex: 6, subjectId: 8, teacherId: 8 }, // Thursday - Period 6 - Economics
+        { dayIndex: 4, slotIndex: 0, subjectId: 1, teacherId: 1 }, // Friday - Period 1 - Mathematics
+        { dayIndex: 4, slotIndex: 1, subjectId: 8, teacherId: 8 }, // Friday - Period 2 - Economics
+        { dayIndex: 4, slotIndex: 2, subjectId: 9, teacherId: 9 }, // Friday - Period 3 - Accountancy
+        { dayIndex: 4, slotIndex: 3, subjectId: 10, teacherId: 10 }, // Friday - Period 4 - Business Studies
+        { dayIndex: 4, slotIndex: 5, subjectId: 6, teacherId: 6 }, // Friday - Period 5 - English
+        { dayIndex: 4, slotIndex: 6, subjectId: 7, teacherId: 7 }, // Friday - Period 6 - History
+      ]
+    }
+  }
 
   // Initialize empty grid
   const initializeGrid = () => {
@@ -85,29 +241,9 @@ const ClassTimeTable = () => {
     
     // Simulate API call
     setTimeout(() => {
-      // Check if timetable exists (mock logic)
-      if (selectedClass === '1' && selectedSession === '2') {
-        // Return existing timetable
-        const existingTimetable = {
-          id: 1,
-          classId: selectedClass,
-          sessionId: selectedSession,
-          entries: [
-            { dayIndex: 0, slotIndex: 0, subjectId: 1, teacherId: 1 },
-            { dayIndex: 0, slotIndex: 1, subjectId: 2, teacherId: 2 },
-            { dayIndex: 0, slotIndex: 2, subjectId: 6, teacherId: 6 },
-            { dayIndex: 0, slotIndex: 3, subjectId: 3, teacherId: 3 },
-            { dayIndex: 0, slotIndex: 5, subjectId: 5, teacherId: 5 },
-            { dayIndex: 0, slotIndex: 6, subjectId: 4, teacherId: 4 },
-            { dayIndex: 1, slotIndex: 0, subjectId: 2, teacherId: 2 },
-            { dayIndex: 1, slotIndex: 1, subjectId: 1, teacherId: 1 },
-            { dayIndex: 1, slotIndex: 2, subjectId: 3, teacherId: 3 },
-            { dayIndex: 1, slotIndex: 3, subjectId: 6, teacherId: 6 },
-            { dayIndex: 1, slotIndex: 5, subjectId: 5, teacherId: 5 },
-            { dayIndex: 1, slotIndex: 6, subjectId: 4, teacherId: 4 },
-          ]
-        }
-        setTimetable(existingTimetable)
+      // Check if timetable exists (using demo data)
+      if (demoTimetables[selectedClass]) {
+        setTimetable(demoTimetables[selectedClass])
         setCurrentView('view')
       } else {
         // No existing timetable
@@ -174,6 +310,50 @@ const ClassTimeTable = () => {
       setShowSuccess(true)
       setTimeout(() => setShowSuccess(false), 3000)
     }, 1000)
+  }
+
+  // Quick fill template for Science stream
+  const fillScienceTemplate = () => {
+    const grid = initializeGrid()
+    const scienceSubjects = [1, 2, 3, 4, 5, 6] // Math, Physics, Chemistry, Biology, CS, English
+    
+    // Fill with a balanced distribution of science subjects
+    for (let day = 0; day < days.length; day++) {
+      for (let slot = 0; slot < timeSlots.length; slot++) {
+        if (timeSlots[slot].period === 'Lunch Break') continue
+        
+        // Distribute subjects evenly
+        const subjectIndex = (day * 6 + slot) % scienceSubjects.length
+        const subjectId = scienceSubjects[subjectIndex]
+        const teacherId = subjectId // For simplicity, using subject ID as teacher ID
+        
+        grid[slot][day] = { subjectId, teacherId }
+      }
+    }
+    
+    setEditableGrid(grid)
+  }
+
+  // Quick fill template for Commerce stream
+  const fillCommerceTemplate = () => {
+    const grid = initializeGrid()
+    const commerceSubjects = [6, 7, 8, 9, 10, 1] // English, History, Economics, Accountancy, Business, Math
+    
+    // Fill with a balanced distribution of commerce subjects
+    for (let day = 0; day < days.length; day++) {
+      for (let slot = 0; slot < timeSlots.length; slot++) {
+        if (timeSlots[slot].period === 'Lunch Break') continue
+        
+        // Distribute subjects evenly
+        const subjectIndex = (day * 6 + slot) % commerceSubjects.length
+        const subjectId = commerceSubjects[subjectIndex]
+        const teacherId = subjectId // For simplicity, using subject ID as teacher ID
+        
+        grid[slot][day] = { subjectId, teacherId }
+      }
+    }
+    
+    setEditableGrid(grid)
   }
 
   // Update cell in editable grid
@@ -326,12 +506,29 @@ const ClassTimeTable = () => {
                 </>
               )}
               {currentView === 'create' && (
-                <button
-                  onClick={createNewTimetable}
-                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                >
-                  Create New Timetable
-                </button>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={createNewTimetable}
+                    className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    Create New Timetable
+                  </button>
+                  <div className="flex items-center text-sm text-gray-600">
+                    Or use a template:
+                    <button
+                      onClick={fillScienceTemplate}
+                      className="ml-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Science
+                    </button>
+                    <button
+                      onClick={fillCommerceTemplate}
+                      className="ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      Commerce
+                    </button>
+                  </div>
+                </div>
               )}
               {(currentView === 'edit' || currentView === 'create') && (
                 <>
@@ -368,6 +565,7 @@ const ClassTimeTable = () => {
             </svg>
             <h3 className="mt-2 text-sm font-medium text-gray-900">No class selected</h3>
             <p className="mt-1 text-sm text-gray-500">Select a class and session to get started</p>
+            <p className="mt-4 text-sm text-gray-600">Demo timetables available for 11th and 12th grade classes</p>
           </div>
         )}
 
@@ -378,6 +576,9 @@ const ClassTimeTable = () => {
             </svg>
             <h3 className="mt-2 text-sm font-medium text-gray-900">No timetable found</h3>
             <p className="mt-1 text-sm text-gray-500">Create a new timetable for this class</p>
+            <div className="mt-4 p-4 bg-blue-50 rounded-md">
+              <p className="text-sm text-blue-800">Use the quick templates above to auto-fill a balanced timetable for Science or Commerce streams</p>
+            </div>
           </div>
         )}
 
