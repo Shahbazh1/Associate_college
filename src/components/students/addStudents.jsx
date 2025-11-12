@@ -2,17 +2,20 @@ import React, { useState, useRef } from 'react';
 
 const AddStudentForm = () => {
   const [formData, setFormData] = useState({
-    studentName: '',
+    srNo: '',
+    classRollNo: '',
+    nameOfStudent: '',
     fatherName: '',
-    dob: '',
-    rollNo: '',
-    studentClass: '',
-    session: '',
-    group: '', // Added group field
-    field: '', // Added field field
-    contactNumber: '',
-    address: '',
-    admissionDate: '',
+    group: '',
+    field: '',
+    customField: '', // For custom field input
+    electiveSubject: '',
+    contactNo: '',
+    homeAddress: '',
+    marksObtained: '',
+    feesStatus: '',
+    amountPaid: '',
+    session: '2025-27', // Default session from Excel
     studentPhoto: null
   });
   
@@ -21,33 +24,125 @@ const AddStudentForm = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const fileInputRef = useRef(null);
   
-  // Updated class options to only include 11th to 14th
-  const classOptions = ['11th', '12th', '13th', '14th'];
-  
+  // Session options based on Excel
   const sessionOptions = [
-    '2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', 
-    '2024-2025', '2025-2026', '2026-2027', '2027-2028', '2028-2029', '2029-2030'
+    '2023-24', '2024-25', '2025-26', '2025-27', '2026-27', '2027-28'
   ];
   
-  // Added group options
-  const groupOptions = ['Science', 'Arts'];
-  
-  // Added field options
-  const fieldOptions = [
-    'FSc Pre-Engineering',
-    'FSc Pre-Medical',
-    'ICS',
-    'FA IT',
-    'Simple FA',
-    'Other'
+  // Group options
+  const groupOptions = [
+    'Science', 'General Science', 'Humanities', 'Other'
   ];
+  
+  // Field options based on group
+  const getFieldOptions = (group) => {
+    switch(group) {
+      case 'Science':
+        return ['Pre-Medical', 'Pre-Engineering', 'Other'];
+      case 'General Science':
+        return ['ICS', 'Other'];
+      case 'Humanities':
+        return ['FA IT', 'Arts', 'Other'];
+      case 'Other':
+        return ['Other'];
+      default:
+        return [];
+    }
+  };
+  
+  // Helper function to generate combinations of subjects
+  const generateCombinations = (subjects, combinationSize) => {
+    const result = [];
+    
+    const generate = (start, current) => {
+      if (current.length === combinationSize) {
+        result.push([...current].join(', '));
+        return;
+      }
+      
+      for (let i = start; i < subjects.length; i++) {
+        current.push(subjects[i]);
+        generate(i + 1, current);
+        current.pop();
+      }
+    };
+    
+    generate(0, []);
+    return result;
+  };
+  
+  // Elective Subject options based on group and field
+  const getElectiveSubjectOptions = (group, field) => {
+    if (group === 'Science' && field === 'Pre-Medical') {
+      return ['Bio, Chem, Phy', 'Other'];
+    } else if (group === 'Science' && field === 'Pre-Engineering') {
+      return ['Math, Chem, Phy', 'Other'];
+    } else if (group === 'General Science' && field === 'ICS') {
+      return ['Math, Phy, Computer Sc', 'Math, Eco, Computer Sc', 'Other'];
+    } else if (group === 'Humanities' && field === 'FA IT') {
+      // Computer is compulsory for FA IT + 2 other subjects = 3 total
+      const otherSubjects = [
+        'Sociology', 
+        'Physics', 
+        'History', 
+        'Islamiat Studies', 
+        'Economics', 
+        'Health and Physical Education', 
+        'Education'
+      ];
+      
+      // Generate all combinations of 2 subjects from the list (to pair with Computer)
+      const combinations = generateCombinations(otherSubjects, 2);
+      
+      // Prepend Computer to each combination to make 3 subjects total
+      const faItOptions = combinations.map(combination => `Computer, ${combination}`);
+      
+      return [...faItOptions, 'Other'];
+    } else if (group === 'Humanities' && field === 'Arts') {
+      // Exactly 3 subjects from the list
+      const subjects = [
+        'Sociology', 
+        'Physics', 
+        'History', 
+        'Islamiat Studies', 
+        'Economics', 
+        'Health and Physical Education', 
+        'Education'
+      ];
+      
+      // Generate all combinations of exactly 3 subjects from the list
+      const combinations = generateCombinations(subjects, 3);
+      
+      return [...combinations, 'Other'];
+    } else {
+      return ['Other'];
+    }
+  };
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    
+    // Reset dependent fields when group or field changes
+    if (name === 'group') {
+      setFormData({
+        ...formData,
+        [name]: value,
+        field: '',
+        customField: '',
+        electiveSubject: ''
+      });
+    } else if (name === 'field') {
+      setFormData({
+        ...formData,
+        [name]: value,
+        electiveSubject: ''
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
     
     // Clear error for this field if it exists
     if (errors[name]) {
@@ -78,56 +173,47 @@ const AddStudentForm = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.studentName.trim()) {
-      newErrors.studentName = 'Student name is required';
+    if (!formData.srNo.trim()) {
+      newErrors.srNo = 'Serial number is required';
+    }
+    
+    if (!formData.classRollNo.trim()) {
+      newErrors.classRollNo = 'Class roll number is required';
+    }
+    
+    if (!formData.nameOfStudent.trim()) {
+      newErrors.nameOfStudent = 'Student name is required';
     }
     
     if (!formData.fatherName.trim()) {
       newErrors.fatherName = "Father's name is required";
     }
     
-    if (!formData.dob) {
-      newErrors.dob = 'Date of birth is required';
-    }
-    
-    if (!formData.rollNo.trim()) {
-      newErrors.rollNo = 'Roll number is required';
-    }
-    
-    if (!formData.studentClass) {
-      newErrors.studentClass = 'Please select a class';
-    }
-    
-    if (!formData.session) {
-      newErrors.session = 'Please select a session';
-    }
-    
-    // Added validation for group
     if (!formData.group) {
       newErrors.group = 'Please select a group';
     }
     
-    // Added validation for field
-    if (!formData.field) {
-      newErrors.field = 'Please select a field';
+    // Validate field selection
+    if (!formData.field && !formData.customField) {
+      newErrors.field = 'Please select or enter a field';
     }
     
-    if (!formData.contactNumber.trim()) {
-      newErrors.contactNumber = 'Contact number is required';
-    } else if (!/^\d{4}-\d{7}$/.test(formData.contactNumber)) {
-      newErrors.contactNumber = 'Please enter a valid contact number (e.g., 0300-1234567)';
+    if (!formData.electiveSubject) {
+      newErrors.electiveSubject = 'Please select an elective subject';
     }
     
-    if (!formData.address.trim()) {
-      newErrors.address = 'Address is required';
+    if (!formData.contactNo.trim()) {
+      newErrors.contactNo = 'Contact number is required';
+    } else if (!/^\d{10,11}$/.test(formData.contactNo.replace(/\D/g, ''))) {
+      newErrors.contactNo = 'Please enter a valid contact number';
     }
     
-    if (!formData.admissionDate) {
-      newErrors.admissionDate = 'Admission date is required';
+    if (!formData.homeAddress.trim()) {
+      newErrors.homeAddress = 'Home address is required';
     }
     
-    if (!formData.studentPhoto) {
-      newErrors.studentPhoto = 'Please upload a student photo';
+    if (!formData.session) {
+      newErrors.session = 'Please select a session';
     }
     
     return newErrors;
@@ -148,17 +234,20 @@ const AddStudentForm = () => {
         // Reset form after successful submission
         setTimeout(() => {
           setFormData({
-            studentName: '',
+            srNo: '',
+            classRollNo: '',
+            nameOfStudent: '',
             fatherName: '',
-            dob: '',
-            rollNo: '',
-            studentClass: '',
-            session: '',
-            group: '', // Added group reset
-            field: '', // Added field reset
-            contactNumber: '',
-            address: '',
-            admissionDate: '',
+            group: '',
+            field: '',
+            customField: '',
+            electiveSubject: '',
+            contactNo: '',
+            homeAddress: '',
+            marksObtained: '',
+            feesStatus: '',
+            amountPaid: '',
+            session: '2025-27',
             studentPhoto: null
           });
           setSubmitSuccess(false);
@@ -170,6 +259,14 @@ const AddStudentForm = () => {
     } else {
       setErrors(formErrors);
     }
+  };
+  
+  // Get the actual field value (either from dropdown or custom input)
+  const getFieldValue = () => {
+    if (formData.field === 'Other' || !formData.field) {
+      return formData.customField;
+    }
+    return formData.field;
   };
   
   return (
@@ -200,31 +297,73 @@ const AddStudentForm = () => {
           
           <form onSubmit={handleSubmit} className="px-6 py-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Student Name */}
+              {/* Sr No */}
               <div>
-                <label htmlFor="studentName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Student Name <span className="text-red-500">*</span>
+                <label htmlFor="srNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Sr No <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="studentName"
-                  name="studentName"
-                  value={formData.studentName}
+                  id="srNo"
+                  name="srNo"
+                  value={formData.srNo}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.studentName ? 'border-red-500' : 'border-gray-300'
+                    errors.srNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Ali Raza"
+                  placeholder="1"
                 />
-                {errors.studentName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.studentName}</p>
+                {errors.srNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.srNo}</p>
                 )}
               </div>
               
-              {/* Father's Name */}
+              {/* Class Roll No */}
+              <div>
+                <label htmlFor="classRollNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Class Roll No <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="classRollNo"
+                  name="classRollNo"
+                  value={formData.classRollNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.classRollNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="1"
+                />
+                {errors.classRollNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.classRollNo}</p>
+                )}
+              </div>
+              
+              {/* Name of Student */}
+              <div>
+                <label htmlFor="nameOfStudent" className="block text-sm font-medium text-gray-700 mb-1">
+                  Name of Student <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="nameOfStudent"
+                  name="nameOfStudent"
+                  value={formData.nameOfStudent}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.nameOfStudent ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Muhammad Bilal"
+                />
+                {errors.nameOfStudent && (
+                  <p className="mt-1 text-sm text-red-600">{errors.nameOfStudent}</p>
+                )}
+              </div>
+              
+              {/* Father Name */}
               <div>
                 <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Father's Name <span className="text-red-500">*</span>
+                  Father Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -235,75 +374,157 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.fatherName ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Muhammad Raza"
+                  placeholder="Muhammad Ali"
                 />
                 {errors.fatherName && (
                   <p className="mt-1 text-sm text-red-600">{errors.fatherName}</p>
                 )}
               </div>
               
-              {/* Date of Birth */}
+              {/* Group */}
               <div>
-                <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
-                  Date of Birth <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.dob ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                />
-                {errors.dob && (
-                  <p className="mt-1 text-sm text-red-600">{errors.dob}</p>
-                )}
-              </div>
-              
-              {/* Roll Number */}
-              <div>
-                <label htmlFor="rollNo" className="block text-sm font-medium text-gray-700 mb-1">
-                  Roll No <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="rollNo"
-                  name="rollNo"
-                  value={formData.rollNo}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.rollNo ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="1023"
-                />
-                {errors.rollNo && (
-                  <p className="mt-1 text-sm text-red-600">{errors.rollNo}</p>
-                )}
-              </div>
-              
-              {/* Class */}
-              <div>
-                <label htmlFor="studentClass" className="block text-sm font-medium text-gray-700 mb-1">
-                  Class <span className="text-red-500">*</span>
+                <label htmlFor="group" className="block text-sm font-medium text-gray-700 mb-1">
+                  Group <span className="text-red-500">*</span>
                 </label>
                 <select
-                  id="studentClass"
-                  name="studentClass"
-                  value={formData.studentClass}
+                  id="group"
+                  name="group"
+                  value={formData.group}
                   onChange={handleChange}
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.studentClass ? 'border-red-500' : 'border-gray-300'
+                    errors.group ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
-                  <option value="">Select Class</option>
-                  {classOptions.map(option => (
+                  <option value="">Select Group</option>
+                  {groupOptions.map(option => (
                     <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
-                {errors.studentClass && (
-                  <p className="mt-1 text-sm text-red-600">{errors.studentClass}</p>
+                {errors.group && (
+                  <p className="mt-1 text-sm text-red-600">{errors.group}</p>
+                )}
+              </div>
+              
+              {/* Field - Dynamic based on group */}
+              <div>
+                <label htmlFor="field" className="block text-sm font-medium text-gray-700 mb-1">
+                  Field <span className="text-red-500">*</span>
+                </label>
+                <div className="flex space-x-2">
+                  <select
+                    id="field"
+                    name="field"
+                    value={formData.field}
+                    onChange={handleChange}
+                    className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.field ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    disabled={!formData.group}
+                  >
+                    <option value="">Select Field</option>
+                    {getFieldOptions(formData.group).map(option => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                  
+                  {formData.field === 'Other' && (
+                    <input
+                      type="text"
+                      name="customField"
+                      value={formData.customField}
+                      onChange={handleChange}
+                      className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.field ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Enter custom field"
+                    />
+                  )}
+                </div>
+                {errors.field && (
+                  <p className="mt-1 text-sm text-red-600">{errors.field}</p>
+                )}
+              </div>
+              
+              {/* Elective Subject - Dynamic based on group and field */}
+              <div className="md:col-span-2">
+                <label htmlFor="electiveSubject" className="block text-sm font-medium text-gray-700 mb-1">
+                  Elective Subjects (3 Subjects) <span className="text-red-500">*</span>
+                </label>
+                <div className="flex space-x-2">
+                  <select
+                    id="electiveSubject"
+                    name="electiveSubject"
+                    value={formData.electiveSubject}
+                    onChange={handleChange}
+                    className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    disabled={!formData.group || (!formData.field && !formData.customField)}
+                  >
+                    <option value="">Select 3 Subjects Combination</option>
+                    {getElectiveSubjectOptions(formData.group, getFieldValue()).map(option => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                  
+                  {formData.electiveSubject === 'Other' && (
+                    <input
+                      type="text"
+                      name="customElectiveSubject"
+                      value={formData.customElectiveSubject || ''}
+                      onChange={handleChange}
+                      className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Enter 3 subjects (e.g., Subject1, Subject2, Subject3)"
+                    />
+                  )}
+                </div>
+                {errors.electiveSubject && (
+                  <p className="mt-1 text-sm text-red-600">{errors.electiveSubject}</p>
+                )}
+                
+                {/* Show note for FA IT and Arts fields */}
+                {formData.group === 'Humanities' && formData.field === 'FA IT' && (
+                  <p className="mt-1 text-sm text-blue-600 font-medium">
+                    <strong>Note:</strong> Computer is compulsory for FA IT field. Selecting Computer + 2 other subjects (3 total).
+                  </p>
+                )}
+                {formData.group === 'Humanities' && formData.field === 'Arts' && (
+                  <p className="mt-1 text-sm text-blue-600 font-medium">
+                    <strong>Note:</strong> All combinations include exactly 3 subjects from the list.
+                  </p>
+                )}
+                {formData.group === 'Science' && (
+                  <p className="mt-1 text-sm text-blue-600 font-medium">
+                    <strong>Note:</strong> All combinations include exactly 3 subjects.
+                  </p>
+                )}
+                {formData.group === 'General Science' && formData.field === 'ICS' && (
+                  <p className="mt-1 text-sm text-blue-600 font-medium">
+                    <strong>Note:</strong> All combinations include exactly 3 subjects.
+                  </p>
+                )}
+              </div>
+              
+              {/* Contact No */}
+              <div>
+                <label htmlFor="contactNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Contact No <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="contactNo"
+                  name="contactNo"
+                  value={formData.contactNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="3195547249"
+                />
+                {errors.contactNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.contactNo}</p>
                 )}
               </div>
               
@@ -331,120 +552,96 @@ const AddStudentForm = () => {
                 )}
               </div>
               
-              {/* Group - New Field */}
-              <div>
-                <label htmlFor="group" className="block text-sm font-medium text-gray-700 mb-1">
-                  Group <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="group"
-                  name="group"
-                  value={formData.group}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.group ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                >
-                  <option value="">Select Group</option>
-                  {groupOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
-                {errors.group && (
-                  <p className="mt-1 text-sm text-red-600">{errors.group}</p>
-                )}
-              </div>
-              
-              {/* Field - New Field */}
-              <div>
-                <label htmlFor="field" className="block text-sm font-medium text-gray-700 mb-1">
-                  Field <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="field"
-                  name="field"
-                  value={formData.field}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.field ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                >
-                  <option value="">Select Field</option>
-                  {fieldOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
-                {errors.field && (
-                  <p className="mt-1 text-sm text-red-600">{errors.field}</p>
-                )}
-              </div>
-              
-              {/* Contact Number */}
-              <div>
-                <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                  Contact Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="contactNumber"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.contactNumber ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="0300-1234567"
-                />
-                {errors.contactNumber && (
-                  <p className="mt-1 text-sm text-red-600">{errors.contactNumber}</p>
-                )}
-              </div>
-              
-              {/* Admission Date */}
-              <div>
-                <label htmlFor="admissionDate" className="block text-sm font-medium text-gray-700 mb-1">
-                  Admission Date <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  id="admissionDate"
-                  name="admissionDate"
-                  value={formData.admissionDate}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.admissionDate ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                />
-                {errors.admissionDate && (
-                  <p className="mt-1 text-sm text-red-600">{errors.admissionDate}</p>
-                )}
-              </div>
-              
-              {/* Address */}
+              {/* Home Address */}
               <div className="md:col-span-2">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                  Address <span className="text-red-500">*</span>
+                <label htmlFor="homeAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                  Home Address <span className="text-red-500">*</span>
                 </label>
                 <textarea
-                  id="address"
-                  name="address"
-                  value={formData.address}
+                  id="homeAddress"
+                  name="homeAddress"
+                  value={formData.homeAddress}
                   onChange={handleChange}
                   rows={3}
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.address ? 'border-red-500' : 'border-gray-300'
+                    errors.homeAddress ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Mianwali, Punjab"
+                  placeholder="Chak No3DB"
                 />
-                {errors.address && (
-                  <p className="mt-1 text-sm text-red-600">{errors.address}</p>
+                {errors.homeAddress && (
+                  <p className="mt-1 text-sm text-red-600">{errors.homeAddress}</p>
+                )}
+              </div>
+              
+              {/* Marks Obtained in Matric */}
+              <div>
+                <label htmlFor="marksObtained" className="block text-sm font-medium text-gray-700 mb-1">
+                  Marks Obtained in Matric
+                </label>
+                <input
+                  type="text"
+                  id="marksObtained"
+                  name="marksObtained"
+                  value={formData.marksObtained}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.marksObtained ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="912"
+                />
+                {errors.marksObtained && (
+                  <p className="mt-1 text-sm text-red-600">{errors.marksObtained}</p>
+                )}
+              </div>
+              
+              {/* Fees Status */}
+              <div>
+                <label htmlFor="feesStatus" className="block text-sm font-medium text-gray-700 mb-1">
+                  Fees Status
+                </label>
+                <select
+                  id="feesStatus"
+                  name="feesStatus"
+                  value={formData.feesStatus}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.feesStatus ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Status</option>
+                  <option value="PAID">Paid</option>
+                  <option value="NOT PAID">Not Paid</option>
+                </select>
+                {errors.feesStatus && (
+                  <p className="mt-1 text-sm text-red-600">{errors.feesStatus}</p>
+                )}
+              </div>
+              
+              {/* Amount of Fees Paid */}
+              <div>
+                <label htmlFor="amountPaid" className="block text-sm font-medium text-gray-700 mb-1">
+                  Amount of Fees Paid
+                </label>
+                <input
+                  type="text"
+                  id="amountPaid"
+                  name="amountPaid"
+                  value={formData.amountPaid}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.amountPaid ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="5000"
+                />
+                {errors.amountPaid && (
+                  <p className="mt-1 text-sm text-red-600">{errors.amountPaid}</p>
                 )}
               </div>
               
               {/* Student Photo */}
               <div className="md:col-span-2">
                 <label htmlFor="studentPhoto" className="block text-sm font-medium text-gray-700 mb-1">
-                  Student Photo <span className="text-red-500">*</span>
+                  Student Photo
                 </label>
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
