@@ -5,7 +5,7 @@ import SignUp from "./components/signUp/signUp";
 import Welcome from "./components/welcome";
 import NotFound from "./pages/notFound";
 import AdminDashboard from "./pages/home";
-import Layout from "./components/layout/Layout";
+import Layout from "./components/Layout/Layout";
 import AddStudentForm from "./components/students/addStudents";
 import ViewStudents from "./components/students/viewStudents";
 import AddTeachersForm from "./components/teachers/addTeachers";
