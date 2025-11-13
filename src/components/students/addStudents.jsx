@@ -26,7 +26,7 @@ const AddStudentForm = () => {
   
   // Session options based on Excel
   const sessionOptions = [
-    '2023-24', '2024-25', '2025-26', '2025-27', '2026-27', '2027-28'
+     '2025-27', '2026-28', '2027-29', '2028-30'
   ];
   
   // Group options
