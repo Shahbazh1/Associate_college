@@ -18,7 +18,6 @@ import ViewAttendance from './components/attendance/viewAttendance'
 import AddExamMarks from './components/exams/addExamMarks'
 import ViewExamResults from './components/exams/viewExamResults'
 import Notices from './components/annoucements/notices'
-import MarkTeachersAttendance from './components/teachers/markTeacherAttendance'
 
 
 const AppRoutes = () => {
@@ -46,7 +45,6 @@ const AppRoutes = () => {
         {/* teacher routes */}
         <Route path="teachers/add" element={<AddTeachersForm />} />
         <Route path="teachers/view" element={<ViewTeachers/>}/>
-        <Route path="teachers/attendance" element={<MarkTeachersAttendance/>}/>
         {/* classes and subjects routes */}
         <Route path="classes/timetable" element={<ClassTimeTable/>}/>
         {/* attendance report rotes*/}

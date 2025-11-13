@@ -56,7 +56,6 @@ const AdminSidebar = () => {
       submenus: [
         { label: 'Add Teacher', path: 'teachers/add' },
         { label: 'View Teachers', path: 'teachers/view' },
-        { label: 'Teacher Attendance', path: 'teachers/attendance' }
       ]
     },
     {
