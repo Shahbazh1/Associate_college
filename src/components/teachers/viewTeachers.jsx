@@ -1,150 +1,272 @@
 import React, { useState, useEffect } from 'react'
+import TeacherDetails from './teacherDetail'
+import {useNavigate} from 'react-router-dom'
 
 const ViewTeachers = () => {
-  // Sample teacher data - in a real app, this would come from an API
+  // Sample teacher data based on the Excel STAFF STATEMENT sheet
+  const Navigate=useNavigate();
   const [teachers, setTeachers] = useState([
     {
       id: 1,
-      employeeId: 'T001',
-      name: 'Dr. Sarah Johnson',
-      email: 'sarah.johnson@school.com',
-      phone: '9876543210',
-      department: 'Computer Science',
-      designation: 'Head of Department',
-      subjects: ['Computer Science', 'Data Structures'],
-      employmentType: 'Full Time',
-      qualification: 'Ph.D. in Computer Science',
-      experience: '15 years',
-      joiningDate: '2010-07-15',
-      dateOfBirth: '1980-03-22',
-      gender: 'Female',
-      address: '123 Tech Park, Bangalore',
+      srNo: 2,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Muhammad Asif Awan',
+      fatherName: 'Malik Ghulam Ali',
+      contactNo: '',
+      idCardNo: '',
+      dobDay: '',
+      dobMonth: '',
+      dobYear: '',
+      domicile: 'Mianwali',
+      qualification: 'English',
+      designation: 'Assistant Professor',
+      subject: 'English',
+      bsNo: '18',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '',
+      dateOfPosting: '',
+      homeAddress: '',
       status: 'Active'
     },
     {
       id: 2,
-      employeeId: 'T002',
-      name: 'Prof. Michael Chen',
-      email: 'michael.chen@school.com',
-      phone: '9876543211',
-      department: 'Mathematics',
-      designation: 'Senior Teacher',
-      subjects: ['Mathematics', 'Statistics'],
-      employmentType: 'Full Time',
-      qualification: 'M.Sc. in Mathematics',
-      experience: '10 years',
-      joiningDate: '2015-06-20',
-      dateOfBirth: '1985-07-15',
-      gender: 'Male',
-      address: '456 Education Lane, Delhi',
+      srNo: 3,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Farrukh Shawaz Kundi',
+      fatherName: 'Khalid Masood Kundi',
+      contactNo: '3338900261',
+      idCardNo: '3830350653167',
+      dobDay: '13',
+      dobMonth: '8',
+      dobYear: '1974',
+      domicile: 'Mianwali',
+      qualification: 'Psychology',
+      designation: 'Assistant Professor',
+      subject: 'Psychology',
+      bsNo: '18',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '12-09-2002',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '13-10-2009',
+      dateOfPromotionAsstProf: '17-10-2017',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '',
+      dateOfPosting: '',
+      homeAddress: 'Moh Noor Khel Kundian',
       status: 'Active'
     },
     {
       id: 3,
-      employeeId: 'T003',
-      name: 'Ms. Emily Rodriguez',
-      email: 'emily.rodriguez@school.com',
-      phone: '9876543212',
-      department: 'Physics',
-      designation: 'Teacher',
-      subjects: ['Physics', 'Electronics'],
-      employmentType: 'Full Time',
-      qualification: 'M.Sc. in Physics',
-      experience: '5 years',
-      joiningDate: '2020-08-10',
-      dateOfBirth: '1992-11-30',
-      gender: 'Female',
-      address: '789 Science Avenue, Mumbai',
+      srNo: 4,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Raees Ahmad Khan',
+      fatherName: 'Ahmad Khan',
+      contactNo: '3336837781',
+      idCardNo: '3830212018173',
+      dobDay: '4',
+      dobMonth: '9',
+      dobYear: '1977',
+      domicile: 'Mianwali',
+      qualification: 'Zoology',
+      designation: 'Assistant Professor',
+      subject: 'Zoology',
+      bsNo: '18',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '17-11-2004',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '04-07-2013',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '21-05-2020',
+      dateOfPromotionProfessor: '',
+      dateOfPosting: '',
+      homeAddress: 'Moh Ameer Khel Maharan Wala Mianwali',
       status: 'Active'
     },
     {
       id: 4,
-      employeeId: 'T004',
-      name: 'Mr. David Kumar',
-      email: 'david.kumar@school.com',
-      phone: '9876543213',
-      department: 'Chemistry',
-      designation: 'Teacher',
-      subjects: ['Chemistry', 'Organic Chemistry'],
-      employmentType: 'Full Time',
-      qualification: 'M.Sc. in Chemistry',
-      experience: '7 years',
-      joiningDate: '2018-05-25',
-      dateOfBirth: '1990-04-18',
-      gender: 'Male',
-      address: '321 Chemical Road, Chennai',
-      status: 'On Leave'
+      srNo: 5,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Kamran Masood Ahmad',
+      fatherName: 'Muhammad Qurban Hussain',
+      contactNo: '3045731204',
+      idCardNo: '3830309636767',
+      dobDay: '22',
+      dobMonth: '8',
+      dobYear: '1981',
+      domicile: 'Mianwali',
+      qualification: 'Sociology',
+      designation: 'Assistant Professor',
+      subject: 'Sociology',
+      bsNo: '18',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '17-02-2010',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '04-07-2013',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '16-09-2022',
+      dateOfPosting: '',
+      homeAddress: 'Moh Ameen Khel Kundian',
+      status: 'Active'
     },
     {
       id: 5,
-      employeeId: 'T005',
-      name: 'Dr. Lisa Anderson',
-      email: 'lisa.anderson@school.com',
-      phone: '9876543214',
-      department: 'Biology',
-      designation: 'Senior Teacher',
-      subjects: ['Biology', 'Biotechnology'],
-      employmentType: 'Full Time',
-      qualification: 'Ph.D. in Biology',
-      experience: '12 years',
-      joiningDate: '2013-09-01',
-      dateOfBirth: '1983-12-05',
-      gender: 'Female',
-      address: '654 Bio Park, Kolkata',
+      srNo: 6,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Muhammad Habib',
+      fatherName: 'Muhammad Ameer',
+      contactNo: '3007037018',
+      idCardNo: '3830292750841',
+      dobDay: '10',
+      dobMonth: '4',
+      dobYear: '1986',
+      domicile: 'Mianwali',
+      qualification: 'Economics',
+      designation: 'Assistant Professor',
+      subject: 'Economics',
+      bsNo: '18',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '01-06-2012',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '07-09-2015',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '2023/5/30',
+      dateOfPosting: '',
+      homeAddress: 'Moh Dabaran Wal Wan Bhachran',
       status: 'Active'
     },
     {
       id: 6,
-      employeeId: 'T006',
-      name: 'Mr. James Wilson',
-      email: 'james.wilson@school.com',
-      phone: '9876543215',
-      department: 'English',
-      designation: 'Teacher',
-      subjects: ['English', 'Literature'],
-      employmentType: 'Part Time',
-      qualification: 'M.A. in English',
-      experience: '3 years',
-      joiningDate: '2022-01-15',
-      dateOfBirth: '1995-06-25',
-      gender: 'Male',
-      address: '987 Literature Street, Pune',
+      srNo: 7,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Muhammad Ijaz',
+      fatherName: 'Suleman Shah',
+      contactNo: '3347653710',
+      idCardNo: '3830157526807',
+      dobDay: '24',
+      dobMonth: '5',
+      dobYear: '1987',
+      domicile: 'Mianwali',
+      qualification: 'Physics',
+      designation: 'Lecturer',
+      subject: 'Physics',
+      bsNo: '17',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '02-04-2012',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '10-03-2018',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '',
+      dateOfPosting: '',
+      homeAddress: 'Mato Khel P/O Shakar Dara',
       status: 'Active'
     },
     {
       id: 7,
-      employeeId: 'T007',
-      name: 'Ms. Patricia Brown',
-      email: 'patricia.brown@school.com',
-      phone: '9876543216',
-      department: 'History',
-      designation: 'Visiting Faculty',
-      subjects: ['History', 'Civics'],
-      employmentType: 'Contract',
-      qualification: 'M.A. in History',
-      experience: '8 years',
-      joiningDate: '2017-03-10',
-      dateOfBirth: '1988-09-14',
-      gender: 'Female',
-      address: '147 Heritage Road, Jaipur',
+      srNo: 8,
+      division: '',
+      district: 'Mianwali',
+      tehsil: 'Moh. Ismaeel Khel Near Jhal Pul Kundian',
+      ddoCode: 'MI1124',
+      cmisCode: '383203',
+      collegeName: 'Govt. Associate Collge for Boys Kundian',
+      name: 'Muhammad Faheem Shahzad',
+      fatherName: 'Muhammad Sadiq',
+      contactNo: '3000687487',
+      idCardNo: '3830279530119',
+      dobDay: '7',
+      dobMonth: '11',
+      dobYear: '1985',
+      domicile: 'Mianwali',
+      qualification: 'History',
+      designation: 'Lecturer',
+      subject: 'History',
+      bsNo: '17',
+      cadre: 'General',
+      seniorityNo: '',
+      dateOfFirstEntry: '02-12-2009',
+      dateOfSelectionRegular: '',
+      dateOfSelectionAdhoc: '',
+      dateOfSelectionContract: '',
+      dateOfPromotionLecturer: '01-03-2022',
+      dateOfPromotionAsstProf: '',
+      dateOfPromotionAssocProf: '',
+      dateOfPromotionProfessor: '',
+      dateOfPosting: '',
+      homeAddress: 'Moh Miana Wan Bhachran',
       status: 'Active'
     }
   ])
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState('')
-  const [departmentFilter, setDepartmentFilter] = useState('')
+  const [districtFilter, setDistrictFilter] = useState('')
   const [designationFilter, setDesignationFilter] = useState('')
   const [subjectFilter, setSubjectFilter] = useState('')
-  const [employmentTypeFilter, setEmploymentTypeFilter] = useState('')
+  const [bsNoFilter, setBsNoFilter] = useState('')
   const [showFilters, setShowFilters] = useState(false)
   const [selectedTeacher, setSelectedTeacher] = useState(null)
 
   // Get unique values for filter dropdowns
-  const departments = [...new Set(teachers.map(teacher => teacher.department))].sort()
+  const districts = [...new Set(teachers.map(teacher => teacher.district))].sort()
   const designations = [...new Set(teachers.map(teacher => teacher.designation))].sort()
-  const subjects = [...new Set(teachers.flatMap(teacher => teacher.subjects))].sort()
-  const employmentTypes = [...new Set(teachers.map(teacher => teacher.employmentType))].sort()
+  const subjects = [...new Set(teachers.map(teacher => teacher.subject))].sort()
+  const bsNos = [...new Set(teachers.map(teacher => teacher.bsNo))].sort()
 
   // Filter teachers based on all filter criteria
   useEffect(() => {
@@ -153,13 +275,13 @@ const ViewTeachers = () => {
     if (searchTerm) {
       filtered = filtered.filter(teacher =>
         teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.employeeId.toLowerCase().includes(searchTerm.toLowerCase())
+        teacher.fatherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        teacher.idCardNo.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
-    if (departmentFilter) {
-      filtered = filtered.filter(teacher => teacher.department === departmentFilter)
+    if (districtFilter) {
+      filtered = filtered.filter(teacher => teacher.district === districtFilter)
     }
 
     if (designationFilter) {
@@ -167,16 +289,16 @@ const ViewTeachers = () => {
     }
 
     if (subjectFilter) {
-      filtered = filtered.filter(teacher => teacher.subjects.includes(subjectFilter))
+      filtered = filtered.filter(teacher => teacher.subject === subjectFilter)
     }
 
-    if (employmentTypeFilter) {
-      filtered = filtered.filter(teacher => teacher.employmentType === employmentTypeFilter)
+    if (bsNoFilter) {
+      filtered = filtered.filter(teacher => teacher.bsNo === bsNoFilter)
     }
 
     // Note: In a real app, you would set this in state
     // setFilteredTeachers(filtered)
-  }, [searchTerm, departmentFilter, designationFilter, subjectFilter, employmentTypeFilter, teachers])
+  }, [searchTerm, districtFilter, designationFilter, subjectFilter, bsNoFilter, teachers])
 
   // Get filtered teachers
   const getFilteredTeachers = () => {
@@ -185,13 +307,13 @@ const ViewTeachers = () => {
     if (searchTerm) {
       filtered = filtered.filter(teacher =>
         teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.employeeId.toLowerCase().includes(searchTerm.toLowerCase())
+        teacher.fatherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        teacher.idCardNo.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
-    if (departmentFilter) {
-      filtered = filtered.filter(teacher => teacher.department === departmentFilter)
+    if (districtFilter) {
+      filtered = filtered.filter(teacher => teacher.district === districtFilter)
     }
 
     if (designationFilter) {
@@ -199,11 +321,11 @@ const ViewTeachers = () => {
     }
 
     if (subjectFilter) {
-      filtered = filtered.filter(teacher => teacher.subjects.includes(subjectFilter))
+      filtered = filtered.filter(teacher => teacher.subject === subjectFilter)
     }
 
-    if (employmentTypeFilter) {
-      filtered = filtered.filter(teacher => teacher.employmentType === employmentTypeFilter)
+    if (bsNoFilter) {
+      filtered = filtered.filter(teacher => teacher.bsNo === bsNoFilter)
     }
 
     return filtered
@@ -214,10 +336,10 @@ const ViewTeachers = () => {
   // Clear all filters
   const clearFilters = () => {
     setSearchTerm('')
-    setDepartmentFilter('')
+    setDistrictFilter('')
     setDesignationFilter('')
     setSubjectFilter('')
-    setEmploymentTypeFilter('')
+    setBsNoFilter('')
   }
 
   // View teacher details
@@ -228,6 +350,12 @@ const ViewTeachers = () => {
   // Close teacher details modal
   const closeTeacherDetails = () => {
     setSelectedTeacher(null)
+  }
+
+  // Format date from DMY to readable format
+  const formatDate = (day, month, year) => {
+    if (!day || !month || !year) return 'N/A'
+    return `${day}-${month}-${year}`
   }
 
   return (
@@ -287,8 +415,8 @@ const ViewTeachers = () => {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">On Leave</dt>
-                    <dd className="text-lg font-medium text-gray-900">{teachers.filter(t => t.status === 'On Leave').length}</dd>
+                    <dt className="text-sm font-medium text-gray-500 truncate">BS-18 Teachers</dt>
+                    <dd className="text-lg font-medium text-gray-900">{teachers.filter(t => t.bsNo === '18').length}</dd>
                   </dl>
                 </div>
               </div>
@@ -305,8 +433,8 @@ const ViewTeachers = () => {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Departments</dt>
-                    <dd className="text-lg font-medium text-gray-900">{departments.length}</dd>
+                    <dt className="text-sm font-medium text-gray-500 truncate">Districts</dt>
+                    <dd className="text-lg font-medium text-gray-900">{districts.length}</dd>
                   </dl>
                 </div>
               </div>
@@ -329,7 +457,7 @@ const ViewTeachers = () => {
                   <input
                     type="text"
                     className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Search by name, email, or employee ID"
+                    placeholder="Search by name, father name, or ID card"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -360,18 +488,18 @@ const ViewTeachers = () => {
             <div className="px-4 py-5 sm:p-6 bg-gray-50 border-b border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
-                  <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1">
-                    Department
+                  <label htmlFor="district" className="block text-sm font-medium text-gray-700 mb-1">
+                    District
                   </label>
                   <select
-                    id="department"
+                    id="district"
                     className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                    value={departmentFilter}
-                    onChange={(e) => setDepartmentFilter(e.target.value)}
+                    value={districtFilter}
+                    onChange={(e) => setDistrictFilter(e.target.value)}
                   >
-                    <option value="">All Departments</option>
-                    {departments.map(dept => (
-                      <option key={dept} value={dept}>{dept}</option>
+                    <option value="">All Districts</option>
+                    {districts.map(district => (
+                      <option key={district} value={district}>{district}</option>
                     ))}
                   </select>
                 </div>
@@ -408,18 +536,18 @@ const ViewTeachers = () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="employmentType" className="block text-sm font-medium text-gray-700 mb-1">
-                    Employment Type
+                  <label htmlFor="bsNo" className="block text-sm font-medium text-gray-700 mb-1">
+                    BS Scale
                   </label>
                   <select
-                    id="employmentType"
+                    id="bsNo"
                     className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                    value={employmentTypeFilter}
-                    onChange={(e) => setEmploymentTypeFilter(e.target.value)}
+                    value={bsNoFilter}
+                    onChange={(e) => setBsNoFilter(e.target.value)}
                   >
-                    <option value="">All Types</option>
-                    {employmentTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
+                    <option value="">All Scales</option>
+                    {bsNos.map(bsNo => (
+                      <option key={bsNo} value={bsNo}>BS-{bsNo}</option>
                     ))}
                   </select>
                 </div>
@@ -436,16 +564,19 @@ const ViewTeachers = () => {
                     Teacher
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Employee ID
+                    ID Card No
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Department
+                    District
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Designation
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Subjects
+                    Subject
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    BS Scale
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
@@ -470,27 +601,26 @@ const ViewTeachers = () => {
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{teacher.name}</div>
-                            <div className="text-sm text-gray-500">{teacher.email}</div>
+                            <div className="text-sm text-gray-500">{teacher.fatherName}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {teacher.employeeId}
+                        {teacher.idCardNo || 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {teacher.department}
+                        {teacher.district}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {teacher.designation}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <div className="flex flex-wrap gap-1">
-                          {teacher.subjects.map((subject, index) => (
-                            <span key={index} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                              {subject}
-                            </span>
-                          ))}
-                        </div>
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                          {teacher.subject}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        BS-{teacher.bsNo}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -503,7 +633,7 @@ const ViewTeachers = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button
-                          onClick={() => viewTeacherDetails(teacher)}
+                          onClick={() => Navigate(`teacherDetails`)}
                           className="text-indigo-600 hover:text-indigo-900 mr-3"
                         >
                           View Details
@@ -519,7 +649,7 @@ const ViewTeachers = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="px-6 py-12 text-center">
+                    <td colSpan="8" className="px-6 py-12 text-center">
                       <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -535,128 +665,8 @@ const ViewTeachers = () => {
           </div>
         </div>
       </div>
-
-      {/* Teacher Details Modal */}
-      {selectedTeacher && (
-        <div className="fixed inset-0 overflow-y-auto z-10">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={closeTeacherDetails}></div>
-            </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">
-                        Teacher Details
-                      </h3>
-                      <button
-                        onClick={closeTeacherDetails}
-                        className="text-gray-400 hover:text-gray-500"
-                      >
-                        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="mt-2">
-                      <div className="bg-gray-50 p-4 rounded-md">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="col-span-2 flex items-center space-x-4 pb-4 border-b">
-                            <div className="h-20 w-20 rounded-full bg-indigo-500 flex items-center justify-center">
-                              <span className="text-white text-2xl font-medium">
-                                {selectedTeacher.name.split(' ').map(n => n[0]).join('')}
-                              </span>
-                            </div>
-                            <div>
-                              <h4 className="text-xl font-semibold text-gray-900">{selectedTeacher.name}</h4>
-                              <p className="text-sm text-gray-500">{selectedTeacher.designation}</p>
-                              <p className="text-sm text-gray-500">{selectedTeacher.department}</p>
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Employee ID</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.employeeId}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Email</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.email}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Phone</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.phone}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Date of Birth</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.dateOfBirth}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Gender</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.gender}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Employment Type</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.employmentType}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Qualification</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.qualification}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Experience</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.experience}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Joining Date</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.joiningDate}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">Status</p>
-                            <span className={`mt-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              selectedTeacher.status === 'Active' 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-yellow-100 text-yellow-800'
-                            }`}>
-                              {selectedTeacher.status}
-                            </span>
-                          </div>
-                          <div className="md:col-span-2">
-                            <p className="text-sm font-medium text-gray-500">Subjects Taught</p>
-                            <div className="mt-1 flex flex-wrap gap-2">
-                              {selectedTeacher.subjects.map((subject, index) => (
-                                <span key={index} className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                  {subject}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="md:col-span-2">
-                            <p className="text-sm font-medium text-gray-500">Address</p>
-                            <p className="mt-1 text-sm text-gray-900">{selectedTeacher.address}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  onClick={closeTeacherDetails}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
       )}
-    </div>
-  )
-}
+      
 
-export default ViewTeachers
+export default ViewTeachers 
