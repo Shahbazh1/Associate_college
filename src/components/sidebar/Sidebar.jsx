@@ -67,7 +67,9 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'Class Timetable', path: 'classes/timetable' }
+        { label: 'Create Timetable', path: 'createTimeTable' },
+        { label: 'view Timetable', path: 'viewTimeTable' }
+
       ]
     },
     {
@@ -81,7 +83,7 @@ const AdminSidebar = () => {
       submenus: [
         { label: 'Mark Attendance', path: 'attendance/mark' },
         { label: 'View Attendance Reports', path: 'attendance/reports' },
-        { label: 'Generate Monthly Reports', path: 'attendance/monthly' }
+        { label: 'Generate Monthly Attendance Reports', path: 'attendance/monthly' }
       ]
     },
     {
@@ -106,7 +108,8 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: ' Noties', path: 'announcements/notices' }
+        { label: ' Noties', path: 'announcements/notices' },
+        { label: ' View Notices', path: 'announcements/viewNotices' }
       ]
     },
     {

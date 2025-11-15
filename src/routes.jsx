@@ -12,8 +12,6 @@ import StudentDetails from "./components/students/studentDetails";
 import AddTeachersForm from "./components/teachers/addTeachers";
 import ViewTeachers from "./components/teachers/viewTeachers";
 import TeacherDetails from "./components/teachers/teacherDetail";
-
-import ClassTimeTable from './components/classesAndSubjects/classTimeTable'
 import GenerateReport from './components/attendance/generateReport'
 import MarkAttendance from './components/attendance/markAttendace'
 import ViewAttendance from './components/attendance/viewAttendance'
@@ -21,8 +19,10 @@ import AddExamMarks from './components/exams/addExamMarks'
 import ViewExamResults from './components/exams/viewExamResults'
 import Notices from './components/annoucements/notices'
 import StudentAttendanceDetail from './components/students/studentAttendanceDetail'
-
-
+import CreateTimeTable from './components/classesAndSubjects/createTimeTable'
+import ViewTimeTable from './components/classesAndSubjects/viewTimeTable'
+import StudentSubjectMarks from './components/exams/studentSubjectMarks'
+import ViewNotices from "./components/annoucements/viewNotices";
 
 const AppRoutes = () => {
   const customStudent = {
@@ -54,16 +54,19 @@ const AppRoutes = () => {
 
         
         {/* classes and subjects routes */}
-        <Route path="classes/timetable" element={<ClassTimeTable/>}/>
+        <Route path="ViewTimeTable" element={<ViewTimeTable/>}/>
+        <Route path="createTimeTable" element={<CreateTimeTable/>}/>
         {/* attendance report rotes*/}
         <Route path="attendance/mark" element={<MarkAttendance/>}/>
         <Route path="attendance/monthly" element={<GenerateReport/>}/>
         <Route path="attendance/reports" element={<ViewAttendance/>}/>
         {/* exams routes */}
+        <Route path="exams/results/StudentSubjectMarks" element={<StudentSubjectMarks/>}/>
         <Route path="exams/add" element={<AddExamMarks/>}/>
         <Route path="exams/results" element={<ViewExamResults/>}/>
         {/* announcements routes */}
         <Route path="announcements/notices" element={<Notices/>}/>
+        <Route path="announcements/viewNotices" element={<ViewNotices/>}/>
 
       </Route>
 
