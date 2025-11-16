@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ViewExamResults = () => {
   // Sample data - in a real app, this would come from an API
@@ -62,6 +63,7 @@ const ViewExamResults = () => {
   const [showCharts, setShowCharts] = useState(false)
   const [sortBy, setSortBy] = useState('rollNo') // rollNo, name, marks, grade
   const [sortOrder, setSortOrder] = useState('asc') // asc or desc
+  const Navigate=useNavigate()
 
   // Generate sample results data
   const generateResultsData = () => {
@@ -637,8 +639,7 @@ const ViewExamResults = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
                             onClick={() => {
-                              // View detailed student results
-                              alert(`View detailed results for ${result.name}`)
+                              Navigate('/Dashboard/exams/results/StudentSubjectMarks')
                             }}
                             className="text-indigo-600 hover:text-indigo-900"
                           >

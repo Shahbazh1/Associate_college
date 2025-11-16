@@ -157,6 +157,7 @@ const ViewStudents = () => {
 
   // Navigate to student details page
   const viewStudentDetails = (student) => {
+    
     Navigate(`/Dashboard/students/view/studentDetails`);
   };
 
