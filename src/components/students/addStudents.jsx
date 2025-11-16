@@ -9,7 +9,13 @@ const AddStudentForm = () => {
     group: '',
     field: '',
     customField: '', // For custom field input
-    electiveSubject: '',
+    section: '', // New field for section
+    religion: 'Islam', // New field for religion with default value
+    sect: '', // New field for sect
+    electiveSubject: '', // Used for non-FA/Arts fields
+    electiveSubject1: '', // For FA/Arts fields
+    electiveSubject2: '', // For FA/Arts fields
+    electiveSubject3: '', // For FA/Arts fields
     contactNo: '',
     homeAddress: '',
     marksObtained: '',
@@ -34,6 +40,21 @@ const AddStudentForm = () => {
     'Science', 'General Science', 'Humanities', 'Other'
   ];
   
+  // Section options
+  const sectionOptions = [
+    'Quaid', 'Iqbal'
+  ];
+  
+  // Religion options
+  const religionOptions = [
+    'Islam', 'Christianity', 'Hinduism', 'Buddhism', 'Sikhism', 'Judaism', 'Other'
+  ];
+  
+  // Sect options for Muslims
+  const sectOptions = [
+    'Sunni', 'Shia', 'Ahle Hadith', 'Barelvi', 'Deobandi', 'Other'
+  ];
+  
   // Field options based on group
   const getFieldOptions = (group) => {
     switch(group) {
@@ -50,74 +71,11 @@ const AddStudentForm = () => {
     }
   };
   
-  // Helper function to generate combinations of subjects
-  const generateCombinations = (subjects, combinationSize) => {
-    const result = [];
-    
-    const generate = (start, current) => {
-      if (current.length === combinationSize) {
-        result.push([...current].join(', '));
-        return;
-      }
-      
-      for (let i = start; i < subjects.length; i++) {
-        current.push(subjects[i]);
-        generate(i + 1, current);
-        current.pop();
-      }
-    };
-    
-    generate(0, []);
-    return result;
-  };
-  
-  // Elective Subject options based on group and field
-  const getElectiveSubjectOptions = (group, field) => {
-    if (group === 'Science' && field === 'Pre-Medical') {
-      return ['Bio, Chem, Phy', 'Other'];
-    } else if (group === 'Science' && field === 'Pre-Engineering') {
-      return ['Math, Chem, Phy', 'Other'];
-    } else if (group === 'General Science' && field === 'ICS') {
-      return ['Math, Phy, Computer Sc', 'Math, Eco, Computer Sc', 'Other'];
-    } else if (group === 'Humanities' && field === 'FA IT') {
-      // Computer is compulsory for FA IT + 2 other subjects = 3 total
-      const otherSubjects = [
-        'Sociology', 
-        'Physics', 
-        'History', 
-        'Islamiat Studies', 
-        'Economics', 
-        'Health and Physical Education', 
-        'Education'
-      ];
-      
-      // Generate all combinations of 2 subjects from the list (to pair with Computer)
-      const combinations = generateCombinations(otherSubjects, 2);
-      
-      // Prepend Computer to each combination to make 3 subjects total
-      const faItOptions = combinations.map(combination => `Computer, ${combination}`);
-      
-      return [...faItOptions, 'Other'];
-    } else if (group === 'Humanities' && field === 'Arts') {
-      // Exactly 3 subjects from the list
-      const subjects = [
-        'Sociology', 
-        'Physics', 
-        'History', 
-        'Islamiat Studies', 
-        'Economics', 
-        'Health and Physical Education', 
-        'Education'
-      ];
-      
-      // Generate all combinations of exactly 3 subjects from the list
-      const combinations = generateCombinations(subjects, 3);
-      
-      return [...combinations, 'Other'];
-    } else {
-      return ['Other'];
-    }
-  };
+  // All possible subjects for FA/Arts fields
+  const allSubjects = [
+    'Computer', 'Sociology', 'Physics', 'History', 'Islamiat Studies', 
+    'Economics', 'Health and Physical Education', 'Education'
+  ];
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,13 +87,41 @@ const AddStudentForm = () => {
         [name]: value,
         field: '',
         customField: '',
-        electiveSubject: ''
+        electiveSubject: '',
+        electiveSubject1: '',
+        electiveSubject2: '',
+        electiveSubject3: ''
       });
     } else if (name === 'field') {
+      // Reset elective subjects when field changes
       setFormData({
         ...formData,
         [name]: value,
-        electiveSubject: ''
+        electiveSubject: '',
+        electiveSubject1: '',
+        electiveSubject2: '',
+        electiveSubject3: ''
+      });
+      
+      // Auto-populate elective subjects based on field selection
+      if (value === 'Pre-Medical') {
+        setFormData(prev => ({
+          ...prev,
+          field: value,
+          electiveSubject: 'Bio, Chem, Phy'
+        }));
+      } else if (value === 'Pre-Engineering') {
+        setFormData(prev => ({
+          ...prev,
+          field: value,
+          electiveSubject: 'Chem, Phy, Math'
+        }));
+      }
+    } else if (name === 'electiveSubject1' || name === 'electiveSubject2' || name === 'electiveSubject3') {
+      // Update the specific elective subject field
+      setFormData({
+        ...formData,
+        [name]: value
       });
     } else {
       setFormData({
@@ -198,7 +184,17 @@ const AddStudentForm = () => {
       newErrors.field = 'Please select or enter a field';
     }
     
-    if (!formData.electiveSubject) {
+    // Validate section
+    if (!formData.section) {
+      newErrors.section = 'Please select a section';
+    }
+    
+    // Validate elective subjects based on field
+    if (formData.field === 'FA IT' || formData.field === 'Arts') {
+      if (!formData.electiveSubject1 || !formData.electiveSubject2 || !formData.electiveSubject3) {
+        newErrors.electiveSubject = 'Please select all three elective subjects';
+      }
+    } else if (!formData.electiveSubject) {
       newErrors.electiveSubject = 'Please select an elective subject';
     }
     
@@ -241,7 +237,13 @@ const AddStudentForm = () => {
             group: '',
             field: '',
             customField: '',
+            section: '',
+            religion: 'Islam',
+            sect: '',
             electiveSubject: '',
+            electiveSubject1: '',
+            electiveSubject2: '',
+            electiveSubject3: '',
             contactNo: '',
             homeAddress: '',
             marksObtained: '',
@@ -267,6 +269,17 @@ const AddStudentForm = () => {
       return formData.customField;
     }
     return formData.field;
+  };
+  
+  // Get available options for elective subject dropdowns (excluding already selected ones)
+  const getAvailableSubjects = (currentField) => {
+    const selectedSubjects = [
+      formData.electiveSubject1,
+      formData.electiveSubject2,
+      formData.electiveSubject3
+    ].filter(subject => subject && subject !== '');
+    
+    return allSubjects.filter(subject => !selectedSubjects.includes(subject) || subject === formData[currentField]);
   };
   
   return (
@@ -381,6 +394,79 @@ const AddStudentForm = () => {
                 )}
               </div>
               
+              {/* Section */}
+              <div>
+                <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">
+                  Section <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="section"
+                  name="section"
+                  value={formData.section}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.section ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Section</option>
+                  {sectionOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+                {errors.section && (
+                  <p className="mt-1 text-sm text-red-600">{errors.section}</p>
+                )}
+              </div>
+              
+              {/* Religion */}
+              <div>
+                <label htmlFor="religion" className="block text-sm font-medium text-gray-700 mb-1">
+                  Religion <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="religion"
+                  name="religion"
+                  value={formData.religion}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.religion ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  {religionOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+                {errors.religion && (
+                  <p className="mt-1 text-sm text-red-600">{errors.religion}</p>
+                )}
+              </div>
+              
+              {/* Sect - Only show if religion is Islam */}
+              {formData.religion === 'Islam' && (
+                <div>
+                  <label htmlFor="sect" className="block text-sm font-medium text-gray-700 mb-1">
+                    Sect <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="sect"
+                    name="sect"
+                    value={formData.sect}
+                    onChange={handleChange}
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.sect ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select Sect</option>
+                    {sectOptions.map(option => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                  {errors.sect && (
+                    <p className="mt-1 text-sm text-red-600">{errors.sect}</p>
+                  )}
+                </div>
+              )}
+              
               {/* Group */}
               <div>
                 <label htmlFor="group" className="block text-sm font-medium text-gray-700 mb-1">
@@ -445,67 +531,123 @@ const AddStudentForm = () => {
                 )}
               </div>
               
-              {/* Elective Subject - Dynamic based on group and field */}
-              <div className="md:col-span-2">
-                <label htmlFor="electiveSubject" className="block text-sm font-medium text-gray-700 mb-1">
-                  Elective Subjects (3 Subjects) <span className="text-red-500">*</span>
-                </label>
-                <div className="flex space-x-2">
+              {/* Elective Subjects - Dynamic based on field */}
+              {(formData.field === 'Pre-Medical' || formData.field === 'Pre-Engineering') && (
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Elective Subjects <span className="text-red-500">*</span>
+                  </label>
+                  <div className="p-3 bg-gray-50 rounded-md">
+                    <p className="text-sm text-gray-700">
+                      {formData.electiveSubject || 'Please select a field first'}
+                    </p>
+                  </div>
+                  {errors.electiveSubject && (
+                    <p className="mt-1 text-sm text-red-600">{errors.electiveSubject}</p>
+                  )}
+                </div>
+              )}
+              
+              {/* ICS Elective Subjects */}
+              {formData.field === 'ICS' && (
+                <div className="md:col-span-2">
+                  <label htmlFor="electiveSubject" className="block text-sm font-medium text-gray-700 mb-1">
+                    Elective Subjects <span className="text-red-500">*</span>
+                  </label>
                   <select
                     id="electiveSubject"
                     name="electiveSubject"
                     value={formData.electiveSubject}
                     onChange={handleChange}
-                    className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
                     }`}
-                    disabled={!formData.group || (!formData.field && !formData.customField)}
                   >
-                    <option value="">Select 3 Subjects Combination</option>
-                    {getElectiveSubjectOptions(formData.group, getFieldValue()).map(option => (
-                      <option key={option} value={option}>{option}</option>
-                    ))}
+                    <option value="">Select Subject Combination</option>
+                    <option value="Comp, Phy, Math">Computer, Physics, Mathematics</option>
+                    <option value="Comp, Math, Eco">Computer, Mathematics, Economics</option>
                   </select>
-                  
-                  {formData.electiveSubject === 'Other' && (
-                    <input
-                      type="text"
-                      name="customElectiveSubject"
-                      value={formData.customElectiveSubject || ''}
-                      onChange={handleChange}
-                      className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                        errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="Enter 3 subjects (e.g., Subject1, Subject2, Subject3)"
-                    />
+                  {errors.electiveSubject && (
+                    <p className="mt-1 text-sm text-red-600">{errors.electiveSubject}</p>
                   )}
                 </div>
-                {errors.electiveSubject && (
-                  <p className="mt-1 text-sm text-red-600">{errors.electiveSubject}</p>
-                )}
-                
-                {/* Show note for FA IT and Arts fields */}
-                {formData.group === 'Humanities' && formData.field === 'FA IT' && (
-                  <p className="mt-1 text-sm text-blue-600 font-medium">
-                    <strong>Note:</strong> Computer is compulsory for FA IT field. Selecting Computer + 2 other subjects (3 total).
-                  </p>
-                )}
-                {formData.group === 'Humanities' && formData.field === 'Arts' && (
-                  <p className="mt-1 text-sm text-blue-600 font-medium">
-                    <strong>Note:</strong> All combinations include exactly 3 subjects from the list.
-                  </p>
-                )}
-                {formData.group === 'Science' && (
-                  <p className="mt-1 text-sm text-blue-600 font-medium">
-                    <strong>Note:</strong> All combinations include exactly 3 subjects.
-                  </p>
-                )}
-                {formData.group === 'General Science' && formData.field === 'ICS' && (
-                  <p className="mt-1 text-sm text-blue-600 font-medium">
-                    <strong>Note:</strong> All combinations include exactly 3 subjects.
-                  </p>
-                )}
-              </div>
+              )}
+              
+              {/* FA IT/Arts Elective Subjects */}
+              {(formData.field === 'FA IT' || formData.field === 'Arts') && (
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Elective Subjects <span className="text-red-500">*</span>
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label htmlFor="electiveSubject1" className="block text-sm text-gray-600 mb-1">
+                        Subject 1
+                      </label>
+                      <select
+                        id="electiveSubject1"
+                        name="electiveSubject1"
+                        value={formData.electiveSubject1}
+                        onChange={handleChange}
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      >
+                        <option value="">Select Subject</option>
+                        {getAvailableSubjects('electiveSubject1').map(subject => (
+                          <option key={subject} value={subject}>{subject}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="electiveSubject2" className="block text-sm text-gray-600 mb-1">
+                        Subject 2
+                      </label>
+                      <select
+                        id="electiveSubject2"
+                        name="electiveSubject2"
+                        value={formData.electiveSubject2}
+                        onChange={handleChange}
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      >
+                        <option value="">Select Subject</option>
+                        {getAvailableSubjects('electiveSubject2').map(subject => (
+                          <option key={subject} value={subject}>{subject}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="electiveSubject3" className="block text-sm text-gray-600 mb-1">
+                        Subject 3
+                      </label>
+                      <select
+                        id="electiveSubject3"
+                        name="electiveSubject3"
+                        value={formData.electiveSubject3}
+                        onChange={handleChange}
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      >
+                        <option value="">Select Subject</option>
+                        {getAvailableSubjects('electiveSubject3').map(subject => (
+                          <option key={subject} value={subject}>{subject}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  {errors.electiveSubject && (
+                    <p className="mt-1 text-sm text-red-600">{errors.electiveSubject}</p>
+                  )}
+                  {formData.field === 'FA IT' && (
+                    <p className="mt-1 text-sm text-blue-600 font-medium">
+                      <strong>Note:</strong> Computer is compulsory for FA IT field.
+                    </p>
+                  )}
+                </div>
+              )}
               
               {/* Contact No */}
               <div>
