@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 const StudentDetails = () => {
 
   // Add these states at the top of your component
@@ -169,7 +169,6 @@ const getAttendanceTotals = () => {
 
   // State for active tab
   const [activeTab, setActiveTab] = useState('info');
-  const Navigate=useNavigate();
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
@@ -415,7 +414,7 @@ const getAttendanceTotals = () => {
             
             return (
               <tr key={month}>
-                <td onClick={()=>{Navigate('StudentAttendanceDetail')}} className="cursor-pointer px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {month}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

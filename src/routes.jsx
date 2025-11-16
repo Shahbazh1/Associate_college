@@ -46,7 +46,6 @@ const AppRoutes = () => {
         <Route path="students/add" element={<AddStudentForm />} />
         <Route path="students/view" element={<ViewStudents/>}/>
         <Route path="students/view/studentDetails" element={<StudentDetails student={customStudent} />}/>
-        <Route path="students/view/studentDetails/StudentAttendanceDetail" element={<StudentAttendanceDetail/>}/>
         {/* teacher routes */}
         <Route path="teachers/add" element={<AddTeachersForm />} />
         <Route path="teachers/view" element={<ViewTeachers/>}/>
