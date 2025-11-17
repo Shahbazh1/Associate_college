@@ -4,8 +4,10 @@ import React from 'react';
 const studentReportData = {
   studentInfo: {
     name: "Alice Johnson",
-    classId: "10-B",
+    classId: "11",
     session: "2023-2024",
+    group:'Science',
+    field:'FSC Pre Enginnering',
     rollNumber: "112"
   },
   examDetails: {
@@ -53,6 +55,9 @@ const StudentSubjectMarks = () => {
             <span><strong>Class:</strong> {studentInfo.classId}</span>
             <span><strong>Roll No:</strong> {studentInfo.rollNumber}</span>
             <span><strong>Session:</strong> {studentInfo.session}</span>
+            <span><strong>Group:</strong> {studentInfo.group}</span>
+            <span><strong>Field:</strong> {studentInfo.field}</span>
+
           </div>
         </div>
 

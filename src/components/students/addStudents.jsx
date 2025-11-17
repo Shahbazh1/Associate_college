@@ -9,7 +9,7 @@ const AddStudentForm = () => {
     group: '',
     field: '',
     customField: '', // For custom field input
-    section: '', // New field for section
+    section: 'Quaid', // New field for section
     religion: 'Islam', // New field for religion with default value
     sect: '', // New field for sect
     electiveSubject: '', // Used for non-FA/Arts fields
@@ -324,7 +324,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.srNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="1"
+                  placeholder="Enter serial number"
                 />
                 {errors.srNo && (
                   <p className="mt-1 text-sm text-red-600">{errors.srNo}</p>
@@ -345,7 +345,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.classRollNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="1"
+                  placeholder="Enter roll number"
                 />
                 {errors.classRollNo && (
                   <p className="mt-1 text-sm text-red-600">{errors.classRollNo}</p>
@@ -366,7 +366,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.nameOfStudent ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Muhammad Bilal"
+                  placeholder="Enter student name"
                 />
                 {errors.nameOfStudent && (
                   <p className="mt-1 text-sm text-red-600">{errors.nameOfStudent}</p>
@@ -387,7 +387,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.fatherName ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Muhammad Ali"
+                  placeholder="Enter father's name"
                 />
                 {errors.fatherName && (
                   <p className="mt-1 text-sm text-red-600">{errors.fatherName}</p>
@@ -663,7 +663,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.contactNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="3195547249"
+                  placeholder="Enter contact number"
                 />
                 {errors.contactNo && (
                   <p className="mt-1 text-sm text-red-600">{errors.contactNo}</p>
@@ -708,7 +708,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.homeAddress ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Chak No3DB"
+                  placeholder="Enter home address"
                 />
                 {errors.homeAddress && (
                   <p className="mt-1 text-sm text-red-600">{errors.homeAddress}</p>
@@ -729,7 +729,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.marksObtained ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="912"
+                  placeholder="Enter marks obtained"
                 />
                 {errors.marksObtained && (
                   <p className="mt-1 text-sm text-red-600">{errors.marksObtained}</p>
@@ -773,7 +773,7 @@ const AddStudentForm = () => {
                   className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.amountPaid ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="5000"
+                  placeholder="Enter amount paid"
                 />
                 {errors.amountPaid && (
                   <p className="mt-1 text-sm text-red-600">{errors.amountPaid}</p>

@@ -2,14 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 const MarkAttendance = () => {
   // Sample data - in a real app, this would come from an API
-  const [classes] = useState([
-    { id: 1, name: '10th Grade', section: 'A' },
-    { id: 2, name: '10th Grade', section: 'B' },
-    { id: 3, name: '9th Grade', section: 'A' },
-    { id: 4, name: '11th Grade', section: 'A', stream: 'Science' },
-    { id: 5, name: '11th Grade', section: 'B', stream: 'Commerce' },
-  ])
-
   const [sessions] = useState([
     { id: 1, name: '2023-2024' },
     { id: 2, name: '2024-2025' },
@@ -17,28 +9,36 @@ const MarkAttendance = () => {
   ])
 
   const [students] = useState([
-    { id: 1, rollNo: '101', name: 'John Doe', classId: 1 },
-    { id: 2, rollNo: '102', name: 'Jane Smith', classId: 1 },
-    { id: 3, rollNo: '103', name: 'Bob Johnson', classId: 1 },
-    { id: 4, rollNo: '104', name: 'Alice Williams', classId: 1 },
-    { id: 5, rollNo: '105', name: 'Charlie Brown', classId: 1 },
-    { id: 6, rollNo: '106', name: 'Diana Prince', classId: 1 },
-    { id: 7, rollNo: '107', name: 'Ethan Hunt', classId: 1 },
-    { id: 8, rollNo: '108', name: 'Fiona Green', classId: 1 },
-    { id: 9, rollNo: '109', name: 'George Miller', classId: 1 },
-    { id: 10, rollNo: '110', name: 'Helen Troy', classId: 1 },
-  ])
-
-  const [teachers] = useState([
-    { id: 1, employeeId: 'T001', name: 'Dr. Robert Johnson', subject: 'Mathematics' },
-    { id: 2, employeeId: 'T002', name: 'Ms. Emily Davis', subject: 'English' },
-    { id: 3, employeeId: 'T003', name: 'Mr. James Wilson', subject: 'Science' },
-    { id: 4, employeeId: 'T004', name: 'Mrs. Sarah Brown', subject: 'History' },
-    { id: 5, employeeId: 'T005', name: 'Prof. Michael Smith', subject: 'Computer Science' },
+    // Science Group - Pre-Medical
+    { id: 1, rollNo: '101', name: 'John Doe', group: 'Science', field: 'Pre-Medical', section: 'Quaid', class: '11th' },
+    { id: 2, rollNo: '102', name: 'Jane Smith', group: 'Science', field: 'Pre-Medical', section: 'Iqbal', class: '11th' },
+    { id: 3, rollNo: '103', name: 'Bob Johnson', group: 'Science', field: 'Pre-Medical', section: 'Quaid', class: '12th' },
+    
+    // Science Group - Pre-Engineering
+    { id: 4, rollNo: '104', name: 'Alice Williams', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal', class: '11th' },
+    { id: 5, rollNo: '105', name: 'Charlie Brown', group: 'Science', field: 'Pre-Engineering', section: 'Quaid', class: '12th' },
+    { id: 6, rollNo: '106', name: 'Diana Prince', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal', class: '11th' },
+    
+    // General Science - ICS
+    { id: 7, rollNo: '107', name: 'Ethan Hunt', group: 'General Science', field: 'ICS', section: 'Quaid', class: '12th' },
+    { id: 8, rollNo: '108', name: 'Fiona Green', group: 'General Science', field: 'ICS', section: 'Iqbal', class: '11th' },
+    { id: 9, rollNo: '109', name: 'George Miller', group: 'General Science', field: 'ICS', section: 'Quaid', class: '12th' },
+    
+    // Humanities - FA IT
+    { id: 10, rollNo: '110', name: 'Helen Troy', group: 'Humanities', field: 'FA IT', section: 'Iqbal', class: '11th' },
+    { id: 11, rollNo: '111', name: 'Ivan Drago', group: 'Humanities', field: 'FA IT', section: 'Quaid', class: '12th' },
+    { id: 12, rollNo: '112', name: 'Julia Roberts', group: 'Humanities', field: 'FA IT', section: 'Iqbal', class: '11th' },
+    
+    // Humanities - Arts
+    { id: 13, rollNo: '113', name: 'Kevin Hart', group: 'Humanities', field: 'Arts', section: 'Quaid', class: '12th' },
+    { id: 14, rollNo: '114', name: 'Linda Carter', group: 'Humanities', field: 'Arts', section: 'Iqbal', class: '11th' },
+    { id: 15, rollNo: '115', name: 'Mark Zuckerberg', group: 'Humanities', field: 'Arts', section: 'Quaid', class: '12th' },
   ])
 
   // Component State
-  const [attendanceType, setAttendanceType] = useState('') // 'student' or 'teacher'
+  const [selectedGroup, setSelectedGroup] = useState('')
+  const [selectedField, setSelectedField] = useState('')
+  const [selectedSection, setSelectedSection] = useState('')
   const [selectedClass, setSelectedClass] = useState('')
   const [selectedSession, setSelectedSession] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
@@ -50,6 +50,35 @@ const MarkAttendance = () => {
   const [showBulkActions, setShowBulkActions] = useState(false)
   const [selectedStudents, setSelectedStudents] = useState([])
 
+  // Filter options
+  const groupOptions = [
+    'Science', 'General Science', 'Humanities', 'Other'
+  ]
+
+  const sectionOptions = [
+    'Quaid', 'Iqbal'
+  ]
+
+  const classOptions = [
+    '11th', '12th'
+  ]
+
+  // Get field options based on selected group
+  const getFieldOptions = (group) => {
+    switch(group) {
+      case 'Science':
+        return ['Pre-Medical', 'Pre-Engineering', 'Other'];
+      case 'General Science':
+        return ['ICS', 'Other'];
+      case 'Humanities':
+        return ['FA IT', 'Arts', 'Other'];
+      case 'Other':
+        return ['Other'];
+      default:
+        return [];
+    }
+  }
+
   // Attendance status options
   const attendanceStatuses = [
     { value: 'present', label: 'Present', color: 'bg-green-100 text-green-800', icon: '✓' },
@@ -59,51 +88,50 @@ const MarkAttendance = () => {
     { value: 'leave', label: 'On Leave', color: 'bg-purple-100 text-purple-800', icon: '📄' },
   ]
 
-  // Update filtered students when class changes
+  // Update filtered students when filters change
   useEffect(() => {
-    if (selectedClass && attendanceType === 'student') {
-      const classStudents = students.filter(s => s.classId === parseInt(selectedClass))
-      setFilteredStudents(classStudents)
-      
-      // Initialize attendance data
-      const initialAttendance = {}
-      classStudents.forEach(student => {
-        initialAttendance[student.id] = 'present'
-      })
-      setAttendanceData(initialAttendance)
-    } else {
-      setFilteredStudents([])
-      setAttendanceData({})
-    }
-  }, [selectedClass, students, attendanceType])
+    let filtered = students
 
-  // Initialize teacher attendance data when teacher attendance is selected
-  useEffect(() => {
-    if (attendanceType === 'teacher') {
-      const initialAttendance = {}
-      teachers.forEach(teacher => {
-        initialAttendance[teacher.id] = 'present'
-      })
-      setAttendanceData(initialAttendance)
+    if (selectedGroup) {
+      filtered = filtered.filter(s => s.group === selectedGroup)
     }
-  }, [attendanceType, teachers])
+
+    if (selectedField) {
+      filtered = filtered.filter(s => s.field === selectedField)
+    }
+
+    if (selectedSection) {
+      filtered = filtered.filter(s => s.section === selectedSection)
+    }
+
+    if (selectedClass) {
+      filtered = filtered.filter(s => s.class === selectedClass)
+    }
+
+    setFilteredStudents(filtered)
+    
+    // Initialize attendance data
+    const initialAttendance = {}
+    filtered.forEach(student => {
+      initialAttendance[student.id] = 'present'
+    })
+    setAttendanceData(initialAttendance)
+  }, [selectedGroup, selectedField, selectedSection, selectedClass, students])
+
+  // Reset field when group changes
+  useEffect(() => {
+    setSelectedField('')
+  }, [selectedGroup])
 
   // Check if attendance is already marked for the date
   const checkExistingAttendance = () => {
     // In a real app, this would check the database
     // For demo, we'll simulate some existing attendance
-    if (selectedDate === '2024-01-15' && attendanceType === 'student' && selectedClass === '1') {
+    if (selectedDate === '2024-01-15' && selectedGroup && selectedField) {
       return {
         '1': 'present',
         '2': 'absent',
         '3': 'late'
-      }
-    }
-    if (selectedDate === '2024-01-15' && attendanceType === 'teacher') {
-      return {
-        '1': 'present',
-        '2': 'present',
-        '3': 'absent'
       }
     }
     return null
@@ -111,14 +139,13 @@ const MarkAttendance = () => {
 
   // Load existing attendance if any
   useEffect(() => {
-    if ((attendanceType === 'student' && selectedClass && selectedDate) || 
-        (attendanceType === 'teacher' && selectedDate)) {
+    if (selectedGroup && selectedField && selectedDate) {
       const existing = checkExistingAttendance()
       if (existing) {
         setAttendanceData(existing)
       }
     }
-  }, [selectedClass, selectedDate, attendanceType])
+  }, [selectedGroup, selectedField, selectedDate])
 
   // Handle attendance change
   const handleAttendanceChange = (id, status) => {
@@ -139,17 +166,16 @@ const MarkAttendance = () => {
   // Handle bulk attendance
   const handleBulkAttendance = (status) => {
     const newAttendance = {}
-    const people = attendanceType === 'student' ? filteredStudents : teachers
-    people.forEach(person => {
-      newAttendance[person.id] = status
+    filteredStudents.forEach(student => {
+      newAttendance[student.id] = status
     })
     setAttendanceData(newAttendance)
   }
 
-  // Handle person selection for bulk actions
-  const handlePersonSelection = (id) => {
+  // Handle student selection for bulk actions
+  const handleStudentSelection = (id) => {
     if (selectedStudents.includes(id)) {
-      setSelectedStudents(selectedStudents.filter(personId => personId !== id))
+      setSelectedStudents(selectedStudents.filter(studentId => studentId !== id))
     } else {
       setSelectedStudents([...selectedStudents, id])
     }
@@ -157,23 +183,17 @@ const MarkAttendance = () => {
 
   // Handle select all
   const handleSelectAll = () => {
-    const people = attendanceType === 'student' ? filteredStudents : teachers
-    if (selectedStudents.length === people.length) {
+    if (selectedStudents.length === filteredStudents.length) {
       setSelectedStudents([])
     } else {
-      setSelectedStudents(people.map(p => p.id))
+      setSelectedStudents(filteredStudents.map(s => s.id))
     }
   }
 
   // Save attendance
   const saveAttendance = async () => {
-    if (attendanceType === 'student' && (!selectedClass || !selectedSession || !selectedDate)) {
-      alert('Please select class, session, and date')
-      return
-    }
-    
-    if (attendanceType === 'teacher' && !selectedDate) {
-      alert('Please select date')
+    if (!selectedGroup || !selectedField || !selectedSession || !selectedDate) {
+      alert('Please select group, field, session, and date')
       return
     }
 
@@ -195,7 +215,7 @@ const MarkAttendance = () => {
       late: 0,
       halfday: 0,
       leave: 0,
-      total: attendanceType === 'student' ? filteredStudents.length : teachers.length
+      total: filteredStudents.length
     }
     
     Object.values(attendanceData).forEach(status => {
@@ -214,102 +234,96 @@ const MarkAttendance = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Mark Attendance</h1>
-          <p className="mt-1 text-sm text-gray-500">Record daily attendance for students or teachers</p>
+          <h1 className="text-2xl font-bold text-gray-900">Mark Student Attendance</h1>
+          <p className="mt-1 text-sm text-gray-500">Record daily attendance for students</p>
         </div>
 
-        {/* Attendance Type Selection */}
+        {/* Selection Panel */}
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Select Attendance Type</h2>
-          <div className="flex space-x-4">
-            <button
-              onClick={() => setAttendanceType('student')}
-              className={`px-4 py-2 rounded-md ${
-                attendanceType === 'student'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Student Attendance
-            </button>
-            <button
-              onClick={() => setAttendanceType('teacher')}
-              className={`px-4 py-2 rounded-md ${
-                attendanceType === 'teacher'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Teacher Attendance
-            </button>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Group</label>
+              <select
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Choose a group</option>
+                {groupOptions.map(group => (
+                  <option key={group} value={group}>{group}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Field</label>
+              <select
+                value={selectedField}
+                onChange={(e) => setSelectedField(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                disabled={!selectedGroup}
+              >
+                <option value="">Choose a field</option>
+                {getFieldOptions(selectedGroup).map(field => (
+                  <option key={field} value={field}>{field}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Class</label>
+              <select
+                value={selectedClass}
+                onChange={(e) => setSelectedClass(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Choose a class</option>
+                {classOptions.map(cls => (
+                  <option key={cls} value={cls}>{cls}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Section</label>
+              <select
+                value={selectedSection}
+                onChange={(e) => setSelectedSection(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Choose a section</option>
+                {sectionOptions.map(section => (
+                  <option key={section} value={section}>{section}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Session</label>
+              <select
+                value={selectedSession}
+                onChange={(e) => setSelectedSession(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Choose a session</option>
+                {sessions.map(session => (
+                  <option key={session.id} value={session.id}>{session.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              max={new Date().toISOString().split('T')[0]}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
           </div>
         </div>
-
-        {/* Selection Panel for Students */}
-        {attendanceType === 'student' && (
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Select Class</label>
-                <select
-                  value={selectedClass}
-                  onChange={(e) => setSelectedClass(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Choose a class</option>
-                  {classes.map(cls => (
-                    <option key={cls.id} value={cls.id}>
-                      {cls.name} - Section {cls.section} {cls.stream && `(${cls.stream})`}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Select Session</label>
-                <select
-                  value={selectedSession}
-                  onChange={(e) => setSelectedSession(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Choose a session</option>
-                  {sessions.map(session => (
-                    <option key={session.id} value={session.id}>{session.name}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  max={new Date().toISOString().split('T')[0]}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Selection Panel for Teachers */}
-        {attendanceType === 'teacher' && (
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  max={new Date().toISOString().split('T')[0]}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Success Message */}
         {showSuccess && (
@@ -329,12 +343,11 @@ const MarkAttendance = () => {
           </div>
         )}
 
-        {/* Show attendance content only when type is selected and conditions are met */}
-        {attendanceType && (
+        {/* Show attendance content only when filters are applied */}
+        {selectedGroup && selectedField && (
           <>
             {/* Statistics Cards */}
-            {(attendanceType === 'student' && filteredStudents.length > 0) || 
-             (attendanceType === 'teacher') && (
+            {filteredStudents.length > 0 && (
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
                 <div className="bg-white shadow rounded-lg p-4">
                   <div className="flex items-center">
@@ -399,8 +412,7 @@ const MarkAttendance = () => {
             )}
 
             {/* Bulk Actions */}
-            {((attendanceType === 'student' && filteredStudents.length > 0) || 
-              (attendanceType === 'teacher')) && (
+            {filteredStudents.length > 0 && (
               <div className="bg-white shadow rounded-lg p-4 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -413,7 +425,7 @@ const MarkAttendance = () => {
                     
                     {selectedStudents.length > 0 && (
                       <span className="text-sm text-gray-500">
-                        {selectedStudents.length} {attendanceType === 'student' ? 'student(s)' : 'teacher(s)'} selected
+                        {selectedStudents.length} student(s) selected
                       </span>
                     )}
                   </div>
@@ -421,10 +433,7 @@ const MarkAttendance = () => {
                   <div className="flex items-center space-x-2">
                     <input
                       type="checkbox"
-                      checked={
-                        (attendanceType === 'student' && selectedStudents.length === filteredStudents.length) ||
-                        (attendanceType === 'teacher' && selectedStudents.length === teachers.length)
-                      }
+                      checked={selectedStudents.length === filteredStudents.length}
                       onChange={handleSelectAll}
                       className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
@@ -449,14 +458,14 @@ const MarkAttendance = () => {
             )}
 
             {/* Attendance Table for Students */}
-            {attendanceType === 'student' && filteredStudents.length > 0 && (
+            {filteredStudents.length > 0 && (
               <div className="bg-white shadow rounded-lg overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
                   <h3 className="text-lg font-medium text-gray-900">
                     Mark Attendance - {new Date(selectedDate).toLocaleDateString()}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {classes.find(c => c.id === parseInt(selectedClass))?.name} - Section {classes.find(c => c.id === parseInt(selectedClass))?.section}
+                    {selectedGroup} - {selectedField} {selectedClass && `- Class ${selectedClass}`} {selectedSection && `- Section ${selectedSection}`}
                   </p>
                 </div>
                 
@@ -479,6 +488,12 @@ const MarkAttendance = () => {
                           Name
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Class
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Section
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Attendance Status
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -493,7 +508,7 @@ const MarkAttendance = () => {
                             <input
                               type="checkbox"
                               checked={selectedStudents.includes(student.id)}
-                              onChange={() => handlePersonSelection(student.id)}
+                              onChange={() => handleStudentSelection(student.id)}
                               className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                           </td>
@@ -502,6 +517,12 @@ const MarkAttendance = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {student.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {student.class}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {student.section}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex space-x-2">
@@ -537,101 +558,8 @@ const MarkAttendance = () => {
               </div>
             )}
 
-            {/* Attendance Table for Teachers */}
-            {attendanceType === 'teacher' && (
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Mark Teacher Attendance - {new Date(selectedDate).toLocaleDateString()}
-                  </h3>
-                </div>
-                
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left">
-                          <input
-                            type="checkbox"
-                            checked={selectedStudents.length === teachers.length}
-                            onChange={handleSelectAll}
-                            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Employee ID
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Name
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Subject
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Attendance Status
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Remarks
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {teachers.map(teacher => (
-                        <tr key={teacher.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <input
-                              type="checkbox"
-                              checked={selectedStudents.includes(teacher.id)}
-                              onChange={() => handlePersonSelection(teacher.id)}
-                              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {teacher.employeeId}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {teacher.name}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {teacher.subject}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex space-x-2">
-                              {attendanceStatuses.map(status => (
-                                <button
-                                  key={status.value}
-                                  onClick={() => handleAttendanceChange(teacher.id, status.value)}
-                                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                                    attendanceData[teacher.id] === status.value
-                                      ? `${status.color} ring-2 ring-offset-2 ring-indigo-500`
-                                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                  }`}
-                                >
-                                  {status.icon} {status.label}
-                                </button>
-                              ))}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <input
-                              type="text"
-                              value={remarks[teacher.id] || ''}
-                              onChange={(e) => handleRemarksChange(teacher.id, e.target.value)}
-                              placeholder="Add remarks..."
-                              className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-
             {/* Save Button */}
-            {((attendanceType === 'student' && filteredStudents.length > 0) || 
-              (attendanceType === 'teacher')) && (
+            {filteredStudents.length > 0 && (
               <div className="mt-6 flex justify-end">
                 <button
                   onClick={saveAttendance}
@@ -653,27 +581,27 @@ const MarkAttendance = () => {
               </div>
             )}
 
-            {/* Empty State for Students */}
-            {attendanceType === 'student' && !selectedClass && (
+            {/* Empty State for No Students */}
+            {filteredStudents.length === 0 && (
               <div className="bg-white shadow rounded-lg p-12 text-center">
                 <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No class selected</h3>
-                <p className="mt-1 text-sm text-gray-500">Select a class to start marking attendance</p>
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No students found</h3>
+                <p className="mt-1 text-sm text-gray-500">There are no students matching the selected criteria</p>
               </div>
             )}
           </>
         )}
 
-        {/* Empty State for No Type Selected */}
-        {!attendanceType && (
+        {/* Empty State for No Filters Selected */}
+        {(!selectedGroup || !selectedField) && (
           <div className="bg-white shadow rounded-lg p-12 text-center">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No attendance type selected</h3>
-            <p className="mt-1 text-sm text-gray-500">Select whether you want to mark student or teacher attendance</p>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">Select filters to view students</h3>
+            <p className="mt-1 text-sm text-gray-500">Select group and field to start marking attendance</p>
           </div>
         )}
       </div>
@@ -681,4 +609,4 @@ const MarkAttendance = () => {
   )
 }
 
-export default MarkAttendance
+export default MarkAttendance 
