@@ -10,35 +10,36 @@ const MarkAttendance = () => {
 
   const [students] = useState([
     // Science Group - Pre-Medical
-    { id: 1, rollNo: '101', name: 'John Doe', group: 'Science', field: 'Pre-Medical', section: 'Quaid' },
-    { id: 2, rollNo: '102', name: 'Jane Smith', group: 'Science', field: 'Pre-Medical', section: 'Iqbal' },
-    { id: 3, rollNo: '103', name: 'Bob Johnson', group: 'Science', field: 'Pre-Medical', section: 'Quaid' },
+    { id: 1, rollNo: '101', name: 'John Doe', group: 'Science', field: 'Pre-Medical', section: 'Quaid', class: '11th' },
+    { id: 2, rollNo: '102', name: 'Jane Smith', group: 'Science', field: 'Pre-Medical', section: 'Iqbal', class: '11th' },
+    { id: 3, rollNo: '103', name: 'Bob Johnson', group: 'Science', field: 'Pre-Medical', section: 'Quaid', class: '12th' },
     
     // Science Group - Pre-Engineering
-    { id: 4, rollNo: '104', name: 'Alice Williams', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal' },
-    { id: 5, rollNo: '105', name: 'Charlie Brown', group: 'Science', field: 'Pre-Engineering', section: 'Quaid' },
-    { id: 6, rollNo: '106', name: 'Diana Prince', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal' },
+    { id: 4, rollNo: '104', name: 'Alice Williams', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal', class: '11th' },
+    { id: 5, rollNo: '105', name: 'Charlie Brown', group: 'Science', field: 'Pre-Engineering', section: 'Quaid', class: '12th' },
+    { id: 6, rollNo: '106', name: 'Diana Prince', group: 'Science', field: 'Pre-Engineering', section: 'Iqbal', class: '11th' },
     
     // General Science - ICS
-    { id: 7, rollNo: '107', name: 'Ethan Hunt', group: 'General Science', field: 'ICS', section: 'Quaid' },
-    { id: 8, rollNo: '108', name: 'Fiona Green', group: 'General Science', field: 'ICS', section: 'Iqbal' },
-    { id: 9, rollNo: '109', name: 'George Miller', group: 'General Science', field: 'ICS', section: 'Quaid' },
+    { id: 7, rollNo: '107', name: 'Ethan Hunt', group: 'General Science', field: 'ICS', section: 'Quaid', class: '12th' },
+    { id: 8, rollNo: '108', name: 'Fiona Green', group: 'General Science', field: 'ICS', section: 'Iqbal', class: '11th' },
+    { id: 9, rollNo: '109', name: 'George Miller', group: 'General Science', field: 'ICS', section: 'Quaid', class: '12th' },
     
     // Humanities - FA IT
-    { id: 10, rollNo: '110', name: 'Helen Troy', group: 'Humanities', field: 'FA IT', section: 'Iqbal' },
-    { id: 11, rollNo: '111', name: 'Ivan Drago', group: 'Humanities', field: 'FA IT', section: 'Quaid' },
-    { id: 12, rollNo: '112', name: 'Julia Roberts', group: 'Humanities', field: 'FA IT', section: 'Iqbal' },
+    { id: 10, rollNo: '110', name: 'Helen Troy', group: 'Humanities', field: 'FA IT', section: 'Iqbal', class: '11th' },
+    { id: 11, rollNo: '111', name: 'Ivan Drago', group: 'Humanities', field: 'FA IT', section: 'Quaid', class: '12th' },
+    { id: 12, rollNo: '112', name: 'Julia Roberts', group: 'Humanities', field: 'FA IT', section: 'Iqbal', class: '11th' },
     
     // Humanities - Arts
-    { id: 13, rollNo: '113', name: 'Kevin Hart', group: 'Humanities', field: 'Arts', section: 'Quaid' },
-    { id: 14, rollNo: '114', name: 'Linda Carter', group: 'Humanities', field: 'Arts', section: 'Iqbal' },
-    { id: 15, rollNo: '115', name: 'Mark Zuckerberg', group: 'Humanities', field: 'Arts', section: 'Quaid' },
+    { id: 13, rollNo: '113', name: 'Kevin Hart', group: 'Humanities', field: 'Arts', section: 'Quaid', class: '12th' },
+    { id: 14, rollNo: '114', name: 'Linda Carter', group: 'Humanities', field: 'Arts', section: 'Iqbal', class: '11th' },
+    { id: 15, rollNo: '115', name: 'Mark Zuckerberg', group: 'Humanities', field: 'Arts', section: 'Quaid', class: '12th' },
   ])
 
   // Component State
   const [selectedGroup, setSelectedGroup] = useState('')
   const [selectedField, setSelectedField] = useState('')
   const [selectedSection, setSelectedSection] = useState('')
+  const [selectedClass, setSelectedClass] = useState('')
   const [selectedSession, setSelectedSession] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
   const [attendanceData, setAttendanceData] = useState({})
@@ -56,6 +57,10 @@ const MarkAttendance = () => {
 
   const sectionOptions = [
     'Quaid', 'Iqbal'
+  ]
+
+  const classOptions = [
+    '11th', '12th'
   ]
 
   // Get field options based on selected group
@@ -99,6 +104,10 @@ const MarkAttendance = () => {
       filtered = filtered.filter(s => s.section === selectedSection)
     }
 
+    if (selectedClass) {
+      filtered = filtered.filter(s => s.class === selectedClass)
+    }
+
     setFilteredStudents(filtered)
     
     // Initialize attendance data
@@ -107,7 +116,7 @@ const MarkAttendance = () => {
       initialAttendance[student.id] = 'present'
     })
     setAttendanceData(initialAttendance)
-  }, [selectedGroup, selectedField, selectedSection, students])
+  }, [selectedGroup, selectedField, selectedSection, selectedClass, students])
 
   // Reset field when group changes
   useEffect(() => {
@@ -231,7 +240,7 @@ const MarkAttendance = () => {
 
         {/* Selection Panel */}
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Select Group</label>
               <select
@@ -257,6 +266,20 @@ const MarkAttendance = () => {
                 <option value="">Choose a field</option>
                 {getFieldOptions(selectedGroup).map(field => (
                   <option key={field} value={field}>{field}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Select Class</label>
+              <select
+                value={selectedClass}
+                onChange={(e) => setSelectedClass(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="">Choose a class</option>
+                {classOptions.map(cls => (
+                  <option key={cls} value={cls}>{cls}</option>
                 ))}
               </select>
             </div>
@@ -442,7 +465,7 @@ const MarkAttendance = () => {
                     Mark Attendance - {new Date(selectedDate).toLocaleDateString()}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {selectedGroup} - {selectedField} {selectedSection && `- Section ${selectedSection}`}
+                    {selectedGroup} - {selectedField} {selectedClass && `- Class ${selectedClass}`} {selectedSection && `- Section ${selectedSection}`}
                   </p>
                 </div>
                 
@@ -463,6 +486,9 @@ const MarkAttendance = () => {
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Name
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Class
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Section
@@ -491,6 +517,9 @@ const MarkAttendance = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {student.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {student.class}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {student.section}
@@ -580,4 +609,4 @@ const MarkAttendance = () => {
   )
 }
 
-export default MarkAttendance
+export default MarkAttendance 
