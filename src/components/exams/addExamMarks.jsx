@@ -61,6 +61,7 @@ const AddExamMarks = () => {
   const [studentsData, setStudentsData] = useState([])
   const [filteredStudents, setFilteredStudents] = useState([])
   const [marksData, setMarksData] = useState({})
+  const [attendanceData, setAttendanceData] = useState({}) // New state for attendance
   const [remarks, setRemarks] = useState({})
   const [isSaving, setIsSaving] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -75,16 +76,22 @@ const AddExamMarks = () => {
     if (selectedClass) {
       const classStudents = students.filter(s => s.classId === parseInt(selectedClass))
       setFilteredStudents(classStudents)
+      setStudentsData(classStudents) // Initialize studentsData
       
       // Initialize marks data
       const initialMarks = {}
+      const initialAttendance = {} // Initialize attendance data
       classStudents.forEach(student => {
         initialMarks[student.id] = ''
+        initialAttendance[student.id] = 'present' // Default to present
       })
       setMarksData(initialMarks)
+      setAttendanceData(initialAttendance)
     } else {
       setFilteredStudents([])
+      setStudentsData([])
       setMarksData({})
+      setAttendanceData({})
     }
   }, [selectedClass, students])
 
@@ -105,9 +112,10 @@ const AddExamMarks = () => {
     // For demo, we'll simulate some existing marks
     if (selectedClass === '1' && selectedSubject === '1' && selectedExamType === '3') {
       return {
-        '1': { marks: 85, remarks: 'Good performance' },
-        '2': { marks: 72, remarks: 'Needs improvement' },
-        '3': { marks: 90, remarks: 'Excellent' }
+        '1': { marks: 85, remarks: 'Good performance', attendance: 'present' },
+        '2': { marks: 72, remarks: 'Needs improvement', attendance: 'present' },
+        '3': { marks: 90, remarks: 'Excellent', attendance: 'present' },
+        '4': { marks: null, remarks: 'Absent', attendance: 'absent' }
       }
     }
     return null
@@ -123,14 +131,17 @@ const AddExamMarks = () => {
         
         const existingMarksData = {}
         const existingRemarks = {}
+        const existingAttendanceData = {}
         
         Object.keys(existing).forEach(studentId => {
-          existingMarksData[studentId] = existing[studentId].marks
+          existingMarksData[studentId] = existing[studentId].marks || ''
           existingRemarks[studentId] = existing[studentId].remarks
+          existingAttendanceData[studentId] = existing[studentId].attendance || 'present'
         })
         
         setMarksData(existingMarksData)
         setRemarks(existingRemarks)
+        setAttendanceData(existingAttendanceData)
       } else {
         setExistingMarks(false)
         setViewMode('add')
@@ -152,6 +163,22 @@ const AddExamMarks = () => {
     })
   }
 
+  // Handle attendance change
+  const handleAttendanceChange = (studentId, attendance) => {
+    setAttendanceData({
+      ...attendanceData,
+      [studentId]: attendance
+    })
+    
+    // If student is marked as absent, clear their marks
+    if (attendance === 'absent') {
+      setMarksData({
+        ...marksData,
+        [studentId]: ''
+      })
+    }
+  }
+
   // Handle remarks change
   const handleRemarksChange = (studentId, remark) => {
     setRemarks({
@@ -164,9 +191,33 @@ const AddExamMarks = () => {
   const handleBulkMarks = (marks) => {
     const newMarks = {}
     filteredStudents.forEach(student => {
-      newMarks[student.id] = marks
+      // Only set marks for present students
+      if (attendanceData[student.id] === 'present') {
+        newMarks[student.id] = marks
+      }
     })
     setMarksData(newMarks)
+  }
+
+  // Handle bulk attendance
+  const handleBulkAttendance = (attendance) => {
+    const newAttendance = {}
+    const newMarks = {}
+    
+    filteredStudents.forEach(student => {
+      newAttendance[student.id] = attendance
+      
+      // If marking as absent, clear marks
+      if (attendance === 'absent') {
+        newMarks[student.id] = ''
+      }
+    })
+    
+    setAttendanceData(newAttendance)
+    setMarksData({
+      ...marksData,
+      ...newMarks
+    })
   }
 
   // Handle student selection for bulk actions
@@ -189,6 +240,8 @@ const AddExamMarks = () => {
 
   // Calculate grade based on marks
   const calculateGrade = (marks) => {
+    if (!marks) return ''
+    
     const percentage = (marks / maxMarks) * 100
     if (percentage >= 90) return 'A+'
     if (percentage >= 80) return 'A'
@@ -202,7 +255,9 @@ const AddExamMarks = () => {
 
   // Calculate statistics
   const getStatistics = () => {
-    const validMarks = Object.values(marksData).filter(m => m !== '').map(m => parseFloat(m))
+    const validMarks = Object.entries(marksData)
+      .filter(([id, marks]) => marks !== '' && attendanceData[id] === 'present')
+      .map(([id, marks]) => parseFloat(marks))
     
     if (validMarks.length === 0) {
       return {
@@ -211,7 +266,9 @@ const AddExamMarks = () => {
         highest: 0,
         lowest: 0,
         passed: 0,
-        failed: 0
+        failed: 0,
+        present: 0,
+        absent: 0
       }
     }
     
@@ -222,13 +279,19 @@ const AddExamMarks = () => {
     const passed = validMarks.filter(m => m >= passMarks).length
     const failed = total - passed
     
+    // Count present and absent students
+    const present = Object.values(attendanceData).filter(a => a === 'present').length
+    const absent = Object.values(attendanceData).filter(a => a === 'absent').length
+    
     return {
       total,
       average: average.toFixed(2),
       highest,
       lowest,
       passed,
-      failed
+      failed,
+      present,
+      absent
     }
   }
 
@@ -239,10 +302,13 @@ const AddExamMarks = () => {
       return
     }
 
-    // Validate all marks are entered
-    const emptyMarks = Object.keys(marksData).filter(id => marksData[id] === '')
+    // Validate all present students have marks entered
+    const emptyMarks = Object.keys(marksData).filter(id => 
+      attendanceData[id] === 'present' && marksData[id] === ''
+    )
+    
     if (emptyMarks.length > 0) {
-      alert('Please enter marks for all students')
+      alert('Please enter marks for all present students')
       return
     }
 
@@ -389,11 +455,25 @@ const AddExamMarks = () => {
         {filteredStudents.length > 0 && (
           <>
             {/* Statistics Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
               <div className="bg-white shadow rounded-lg p-4">
                 <div className="text-center">
                   <p className="text-sm font-medium text-gray-500">Total Students</p>
-                  <p className="text-lg font-semibold text-gray-900">{stats.total}</p>
+                  <p className="text-lg font-semibold text-gray-900">{stats.total + stats.absent}</p>
+                </div>
+              </div>
+              
+              <div className="bg-white shadow rounded-lg p-4">
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-500">Present</p>
+                  <p className="text-lg font-semibold text-green-600">{stats.present}</p>
+                </div>
+              </div>
+              
+              <div className="bg-white shadow rounded-lg p-4">
+                <div className="text-center">
+                  <p className="text-sm font-medium text-gray-500">Absent</p>
+                  <p className="text-lg font-semibold text-red-600">{stats.absent}</p>
                 </div>
               </div>
               
@@ -482,20 +562,32 @@ const AddExamMarks = () => {
               {showBulkActions && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleBulkMarks(maxMarks)}
+                    onClick={() => handleBulkAttendance('present')}
                     className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200"
+                  >
+                    Mark All Present
+                  </button>
+                  <button
+                    onClick={() => handleBulkAttendance('absent')}
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200"
+                  >
+                    Mark All Absent
+                  </button>
+                  <button
+                    onClick={() => handleBulkMarks(maxMarks)}
+                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200"
                   >
                     Mark All Full Marks
                   </button>
                   <button
                     onClick={() => handleBulkMarks(passMarks)}
-                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200"
+                    className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium hover:bg-yellow-200"
                   >
                     Mark All Pass Marks
                   </button>
                   <button
                     onClick={() => handleBulkMarks(0)}
-                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200"
+                    className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium hover:bg-gray-200"
                   >
                     Mark All Zero
                   </button>
@@ -545,6 +637,9 @@ const AddExamMarks = () => {
                         Name
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Attendance
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Marks (out of {maxMarks})
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -561,11 +656,13 @@ const AddExamMarks = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {studentsData.map(student => {
                       const marks = marksData[student.id] || ''
+                      const attendance = attendanceData[student.id] || 'present'
                       const grade = marks ? calculateGrade(parseFloat(marks)) : ''
                       const isPass = marks && parseFloat(marks) >= passMarks
+                      const isAbsent = attendance === 'absent'
                       
                       return (
-                        <tr key={student.id} className="hover:bg-gray-50">
+                        <tr key={student.id} className={`hover:bg-gray-50 ${isAbsent ? 'bg-red-50' : ''}`}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <input
                               type="checkbox"
@@ -581,17 +678,36 @@ const AddExamMarks = () => {
                             {student.name}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <select
+                                value={attendance}
+                                onChange={(e) => handleAttendanceChange(student.id, e.target.value)}
+                                className={`text-sm border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
+                                  isAbsent ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                                }`}
+                              >
+                                <option value="present">Present</option>
+                                <option value="absent">Absent</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
                             <input
                               type="number"
                               value={marks}
                               onChange={(e) => handleMarksChange(student.id, e.target.value)}
                               min="0"
                               max={maxMarks}
-                              className="w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                              disabled={isAbsent}
+                              className={`w-20 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
+                                isAbsent 
+                                  ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed' 
+                                  : 'border-gray-300'
+                              }`}
                             />
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {grade && (
+                            {grade && !isAbsent && (
                               <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                                 grade === 'A+' || grade === 'A' ? 'bg-green-100 text-green-800' :
                                 grade === 'B+' || grade === 'B' ? 'bg-blue-100 text-blue-800' :
@@ -602,13 +718,23 @@ const AddExamMarks = () => {
                                 {grade}
                               </span>
                             )}
+                            {isAbsent && (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                N/A
+                              </span>
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {marks && (
+                            {marks && !isAbsent && (
                               <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                                 isPass ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                               }`}>
                                 {isPass ? 'Pass' : 'Fail'}
+                              </span>
+                            )}
+                            {isAbsent && (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                Absent
                               </span>
                             )}
                           </td>
@@ -617,7 +743,7 @@ const AddExamMarks = () => {
                               type="text"
                               value={remarks[student.id] || ''}
                               onChange={(e) => handleRemarksChange(student.id, e.target.value)}
-                              placeholder="Add remarks..."
+                              placeholder={isAbsent ? "Absent for exam" : "Add remarks..."}
                               className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
                             />
                           </td>
