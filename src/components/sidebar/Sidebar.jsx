@@ -83,7 +83,7 @@ const AdminSidebar = () => {
       submenus: [
         { label: 'Mark Attendance', path: 'attendance/mark' },
         { label: 'View Attendance Reports', path: 'attendance/reports' },
-        { label: 'Generate Monthly Attendance Reports', path: 'attendance/monthly' }
+        // { label: 'Generate Monthly Attendance Reports', path: 'attendance/monthly' }
       ]
     },
     {
