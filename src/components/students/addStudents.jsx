@@ -22,7 +22,16 @@ const AddStudentForm = () => {
     feesStatus: '',
     amountPaid: '',
     session: '2025-27', // Default session from Excel
-    studentPhoto: null
+    studentPhoto: null,
+    // New fields
+    bFormNo: '',
+    hafizeQuran: '',
+    studentContactNo: '',
+    guardianContactNo: '',
+    studentWhatsappNo: '',
+    dateOfBirth: '',
+    feeConcession: '',
+    feeConcessionReason: ''
   });
   
   const [errors, setErrors] = useState({});
@@ -52,8 +61,11 @@ const AddStudentForm = () => {
   
   // Sect options for Muslims
   const sectOptions = [
-    'Sunni', 'Shia', 'Ahle Hadith', 'Barelvi', 'Deobandi', 'Other'
-  ];
+  'Ahl-e-Sunnat',
+  'Fiqa Jafria',
+  'Other'
+];
+
   
   // Field options based on group
   const getFieldOptions = (group) => {
@@ -73,9 +85,31 @@ const AddStudentForm = () => {
   
   // All possible subjects for FA/Arts fields
   const allSubjects = [
-    'Computer', 'Sociology', 'Physics', 'History', 'Islamiat Studies', 
-    'Economics', 'Health and Physical Education', 'Education'
-  ];
+  'Arabic',
+  'Computer Science',
+  'Economics',
+  'Education',
+  'English Elective',
+  'Fine Arts',
+  'Geography',
+  'Geology',
+  'History of Islam',
+  'History of Modern World',
+  'History of Muslim India',
+  'History of Pakistan',
+  'Home Economics',
+  'Islamic Studies',
+  'Library Science',
+  'Mathematics',
+  'Persian',
+  'Philosophy',
+  'Psychology',
+  'Punjabi',
+  'Sociology',
+  'Statistics',
+  'Urdu Advance'
+];
+
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -250,7 +284,16 @@ const AddStudentForm = () => {
             feesStatus: '',
             amountPaid: '',
             session: '2025-27',
-            studentPhoto: null
+            studentPhoto: null,
+            // Reset new fields
+            bFormNo: '',
+            hafizeQuran: '',
+            studentContactNo: '',
+            guardianContactNo: '',
+            studentWhatsappNo: '',
+            dateOfBirth: '',
+            feeConcession: '',
+            feeConcessionReason: ''
           });
           setSubmitSuccess(false);
           if (fileInputRef.current) {
@@ -310,31 +353,12 @@ const AddStudentForm = () => {
           
           <form onSubmit={handleSubmit} className="px-6 py-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Sr No */}
-              <div>
-                <label htmlFor="srNo" className="block text-sm font-medium text-gray-700 mb-1">
-                  Sr No <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="srNo"
-                  name="srNo"
-                  value={formData.srNo}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.srNo ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter serial number"
-                />
-                {errors.srNo && (
-                  <p className="mt-1 text-sm text-red-600">{errors.srNo}</p>
-                )}
-              </div>
+            
               
               {/* Class Roll No */}
               <div>
                 <label htmlFor="classRollNo" className="block text-sm font-medium text-gray-700 mb-1">
-                  Class Roll No <span className="text-red-500">*</span>
+                  Student Roll No <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -376,7 +400,7 @@ const AddStudentForm = () => {
               {/* Father Name */}
               <div>
                 <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Father Name <span className="text-red-500">*</span>
+                  Father/Guardian Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -391,6 +415,133 @@ const AddStudentForm = () => {
                 />
                 {errors.fatherName && (
                   <p className="mt-1 text-sm text-red-600">{errors.fatherName}</p>
+                )}
+              </div>
+              
+              {/* B-Form No / CNIC No */}
+              <div>
+                <label htmlFor="bFormNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  B-Form No / CNIC No
+                </label>
+                <input
+                  type="text"
+                  id="bFormNo"
+                  name="bFormNo"
+                  value={formData.bFormNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.bFormNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter B-Form or CNIC number"
+                />
+                {errors.bFormNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.bFormNo}</p>
+                )}
+              </div>
+              
+              {/* Date of Birth */}
+              <div>
+                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.dateOfBirth && (
+                  <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>
+                )}
+              </div>
+              
+              {/* Hafize-Quran */}
+              <div>
+                <label htmlFor="hafizeQuran" className="block text-sm font-medium text-gray-700 mb-1">
+                  Hafize-Quran
+                </label>
+                <select
+                  id="hafizeQuran"
+                  name="hafizeQuran"
+                  value={formData.hafizeQuran}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.hafizeQuran ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+                {errors.hafizeQuran && (
+                  <p className="mt-1 text-sm text-red-600">{errors.hafizeQuran}</p>
+                )}
+              </div>
+              
+              {/* Student Contact No */}
+              <div>
+                <label htmlFor="studentContactNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Student Contact No
+                </label>
+                <input
+                  type="text"
+                  id="studentContactNo"
+                  name="studentContactNo"
+                  value={formData.studentContactNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.studentContactNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter student contact number"
+                />
+                {errors.studentContactNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.studentContactNo}</p>
+                )}
+              </div>
+              
+              {/* Father/Guardian Contact No */}
+              <div>
+                <label htmlFor="guardianContactNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Father/Guardian Contact No
+                </label>
+                <input
+                  type="text"
+                  id="guardianContactNo"
+                  name="guardianContactNo"
+                  value={formData.guardianContactNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.guardianContactNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter guardian contact number"
+                />
+                {errors.guardianContactNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.guardianContactNo}</p>
+                )}
+              </div>
+              
+              {/* Student WhatsApp No */}
+              <div>
+                <label htmlFor="studentWhatsappNo" className="block text-sm font-medium text-gray-700 mb-1">
+                  Student WhatsApp No
+                </label>
+                <input
+                  type="text"
+                  id="studentWhatsappNo"
+                  name="studentWhatsappNo"
+                  value={formData.studentWhatsappNo}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.studentWhatsappNo ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter student WhatsApp number"
+                />
+                {errors.studentWhatsappNo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.studentWhatsappNo}</p>
                 )}
               </div>
               
@@ -649,27 +800,6 @@ const AddStudentForm = () => {
                 </div>
               )}
               
-              {/* Contact No */}
-              <div>
-                <label htmlFor="contactNo" className="block text-sm font-medium text-gray-700 mb-1">
-                  Contact No <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="contactNo"
-                  name="contactNo"
-                  value={formData.contactNo}
-                  onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter contact number"
-                />
-                {errors.contactNo && (
-                  <p className="mt-1 text-sm text-red-600">{errors.contactNo}</p>
-                )}
-              </div>
-              
               {/* Session */}
               <div>
                 <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">
@@ -712,6 +842,48 @@ const AddStudentForm = () => {
                 />
                 {errors.homeAddress && (
                   <p className="mt-1 text-sm text-red-600">{errors.homeAddress}</p>
+                )}
+              </div>
+              
+              {/* Fee Concession Rs */}
+              <div>
+                <label htmlFor="feeConcession" className="block text-sm font-medium text-gray-700 mb-1">
+                  Fee Concession (Rs)
+                </label>
+                <input
+                  type="text"
+                  id="feeConcession"
+                  name="feeConcession"
+                  value={formData.feeConcession}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.feeConcession ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter fee concession amount"
+                />
+                {errors.feeConcession && (
+                  <p className="mt-1 text-sm text-red-600">{errors.feeConcession}</p>
+                )}
+              </div>
+              
+              {/* Fee Concession Reason */}
+              <div>
+                <label htmlFor="feeConcessionReason" className="block text-sm font-medium text-gray-700 mb-1">
+                  Fee Concession Reason
+                </label>
+                <input
+                  type="text"
+                  id="feeConcessionReason"
+                  name="feeConcessionReason"
+                  value={formData.feeConcessionReason}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.feeConcessionReason ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter reason for fee concession"
+                />
+                {errors.feeConcessionReason && (
+                  <p className="mt-1 text-sm text-red-600">{errors.feeConcessionReason}</p>
                 )}
               </div>
               

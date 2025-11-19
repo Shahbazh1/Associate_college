@@ -326,67 +326,93 @@ const teacherDetail = () => {
 
           {/* Schedule Tab */}
           {activeTab === 'schedule' && (
-            <div>
-              <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
-                  </svg>
-                  Weekly Schedule
-                </h2>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-100">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Monday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9:00 AM - 10:30 AM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS301</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Data Structures</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Monday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2:00 PM - 3:30 PM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS402</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Machine Learning</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tuesday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 AM - 11:30 AM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS503</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Algorithm Design</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Wednesday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9:00 AM - 10:30 AM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS301</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Data Structures</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Thursday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1:00 PM - 2:30 PM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS402</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Machine Learning</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Friday</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11:00 AM - 12:30 PM</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS503</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Algorithm Design</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
+  <div>
+    <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
+        </svg>
+        Weekly Schedule
+      </h2>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 text-center">
+          
+          {/* ---------------- TOP ROW (PERIODS + TIME) ---------------- */}
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 border">Period 1</th>
+              <th className="px-4 py-2 border">Period 2</th>
+              <th className="px-4 py-2 border">Period 3</th>
+              <th className="px-4 py-2 border">Period 4</th>
+              <th className="px-4 py-2 border">Period 5</th>
+              <th className="px-4 py-2 border">Period 6</th>
+              <th className="px-4 py-2 border">Period 7</th>
+              <th className="px-4 py-2 border">Period 8</th>
+            </tr>
+          </thead>
+
+          {/* ---------------- SECOND ROW (SUBJECT + ROOM + CLASS) ---------------- */}
+          <tbody>
+            <tr>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 101</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 102</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 103</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 104</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 105</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Lab 1</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Physics <br />
+                <span className="text-gray-500 text-xs">Room 106</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">11th A</span>
+              </td>
+
+              <td className="px-4 py-3 border text-sm">
+                Free Period <br />
+                <span className="text-gray-500 text-xs">---</span> <br />
+                <span className="text-blue-600 text-xs font-semibold">---</span>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+)}
+
+
 
           {/* Students Tab */}
          

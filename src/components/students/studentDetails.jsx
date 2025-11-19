@@ -242,112 +242,171 @@ const getAttendanceTotals = () => {
         <div className="p-6">
           {/* Basic Info Tab */}
           {activeTab === 'info' && (
-            <div>
-              {/* Student Information Card */}
-              <div className="bg-gray-50 rounded-lg p-5 mb-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
-                  </svg>
-                  Student Information
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Roll No:</span>
-                    <span className="text-gray-800 font-medium">{studentData.rollNo}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Name:</span>
-                    <span className="text-gray-800 font-medium">{studentData.name}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Father Name:</span>
-                    <span className="text-gray-800 font-medium">{studentData.fatherName}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Group:</span>
-                    <span className="text-gray-800 font-medium">{studentData.group}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Field:</span>
-                    <span className="text-gray-800 font-medium">{studentData.field}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Session:</span>
-                    <span className="text-gray-800 font-medium">{studentData.session}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Contact No:</span>
-                    <span className="text-gray-800 font-medium">{studentData.phone}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Home Address:</span>
-                    <span className="text-gray-800 font-medium">{studentData.homeAddress}</span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Marks Obtained:</span>
-                    <span className="text-gray-800 font-medium">{studentData.marksObtained}</span>
-                  </div>
-                </div>
-              </div>
+  <div>
 
-              {/* Fees Information Card */}
-              <div className="bg-gray-50 rounded-lg p-5 mb-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd"></path>
-                  </svg>
-                  Fees Information
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Fees Status:</span>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      {studentData.feesStatus}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-600 w-32">Amount Paid:</span>
-                    <span className="text-gray-800 font-medium">{studentData.amountPaid}</span>
-                  </div>
-                </div>
-              </div>
+    {/* Student Information Card */}
+    <div className="bg-gray-50 rounded-lg p-5 mb-6 shadow-sm">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+        </svg>
+        Student Information
+      </h2>
 
-              {/* Subjects Section */}
-              <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <svg className="w-5 h-5 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path>
-                  </svg>
-                  Subjects
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
-                    Physics
-                  </span>
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200 transition-colors">
-                    Chemistry
-                  </span>
-                  <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
-                    Mathematics
-                  </span>
-                  <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200 transition-colors">
-                    Computer Science
-                  </span>
-                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium hover:bg-yellow-200 transition-colors">
-                    English
-                  </span>
-                  <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium hover:bg-indigo-200 transition-colors">
-                    Urdu
-                  </span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm font-medium hover:bg-pink-200 transition-colors">
-                    Pakistan Studies
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Roll No:</span>
+          <span className="text-gray-800 font-medium">{studentData.rollNo || "1123"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Name:</span>
+          <span className="text-gray-800 font-medium">{studentData.name || "Ahmed Raza"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Father/Guardian Name:</span>
+          <span className="text-gray-800 font-medium">{studentData.fatherName || "Muhammad Raza"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">B-Form / CNIC:</span>
+          <span className="text-gray-800 font-medium">{studentData.cnic || "35202-1234567-8"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Date of Birth:</span>
+          <span className="text-gray-800 font-medium">{studentData.dob || "05/14/2008"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Hafiz-e-Quran:</span>
+          <span className="text-gray-800 font-medium">{studentData.hafiz || "No"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Student Contact:</span>
+          <span className="text-gray-800 font-medium">{studentData.studentContact || "0307-1234567"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Guardian Contact:</span>
+          <span className="text-gray-800 font-medium">{studentData.guardianContact || "0302-9876543"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">WhatsApp No:</span>
+          <span className="text-gray-800 font-medium">{studentData.whatsapp || "0307-1234567"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Section:</span>
+          <span className="text-gray-800 font-medium">{studentData.section || "Quaid"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Religion:</span>
+          <span className="text-gray-800 font-medium">{studentData.religion || "Islam"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Sect:</span>
+          <span className="text-gray-800 font-medium">{studentData.sect || "Sunni"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Group:</span>
+          <span className="text-gray-800 font-medium">{studentData.group || "Science"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Field:</span>
+          <span className="text-gray-800 font-medium">{studentData.field || "Pre-Engineering"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Session:</span>
+          <span className="text-gray-800 font-medium">{studentData.session || "2025-27"}</span>
+        </div>
+
+        <div className="flex md:col-span-2">
+          <span className="text-gray-600 w-40">Home Address:</span>
+          <span className="text-gray-800 font-medium">{studentData.homeAddress || "Model Town, Lahore"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Fee Concession:</span>
+          <span className="text-gray-800 font-medium">{studentData.feeConcession || "1,500 Rs"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Concession Reason:</span>
+          <span className="text-gray-800 font-medium">{studentData.concessionReason || "Financial Support"}</span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Marks in Matric:</span>
+          <span className="text-gray-800 font-medium">{studentData.marksObtained || "992 / 1100"}</span>
+        </div>
+
+      </div>
+    </div>
+
+    {/* Fees Information Card */}
+    <div className="bg-gray-50 rounded-lg p-5 mb-6 shadow-sm">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd"></path>
+        </svg>
+        Fees Information
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Fees Status:</span>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            {studentData.feesStatus || "Paid"}
+          </span>
+        </div>
+
+        <div className="flex">
+          <span className="text-gray-600 w-40">Amount Paid:</span>
+          <span className="text-gray-800 font-medium">{studentData.amountPaid || "18,000 Rs"}</span>
+        </div>
+
+      </div>
+    </div>
+
+    {/* Subjects */}
+    <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg className="w-5 h-5 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path>
+        </svg>
+        Subjects
+      </h2>
+
+      <div className="flex flex-wrap gap-2">
+        {(studentData.subjects || ["Physics", "Chemistry", "Mathematics", "English", "Urdu", "Pakistan Studies"]).map(
+          (subj, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
+            >
+              {subj}
+            </span>
+          )
+        )}
+      </div>
+    </div>
+
+  </div>
+)}
+
+
           
           {/* Attendance Tab */}
           {activeTab === 'attendance' && (

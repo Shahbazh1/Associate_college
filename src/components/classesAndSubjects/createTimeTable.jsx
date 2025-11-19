@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const sessions = ["2023-2024", "2024-2025", "2025-2026"];
 const classes = ["11th", "12th"];
-const subjects = ['break', "Mathematics", "Physics", "Biology", "Chemistry", "English"];
+const subjects = ["Mathematics", "Physics", "Biology", "Chemistry", "English"];
 const teachers = ["Ali", "Ahmad", "Sana", "Zeeshan", "Sara"];
-const rooms = ["R-101", "R-102", "R-201", "Lab-1", "Lab-2"];
+const rooms = ["R-1", "R-2", "R-3","R-4", "R-5", "R-6","R-7", "R-8","Physics-Lab", "Chemistry-Lab","Bio-1-Lab","Bio-2-Lab","Computer sciene-Lab"];
 
 const CreateTimeTable = () => {
   const [form, setForm] = useState({
