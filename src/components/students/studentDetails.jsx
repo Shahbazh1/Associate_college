@@ -29,6 +29,11 @@ const getFilteredAttendance = () => {
 };
 
 const getAttendanceTotals = () => {
+  const [selectedMonth, setSelectedMonth] = useState(null);
+const handleMonthClick = (month) => {
+  setSelectedMonth(month);
+};
+
   const filteredData = getFilteredAttendance();
   
   let totalPresent = 0;
@@ -472,7 +477,7 @@ const getAttendanceTotals = () => {
             const fine = data.absent * 50; // 50 Rs per absent
             
             return (
-              <tr key={month}>
+              <tr key={month}   onClick={() => handleMonthClick(month)}>  
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {month}
                 </td>
@@ -548,6 +553,9 @@ const getAttendanceTotals = () => {
         </tbody>
       </table>
     </div>
+
+    
+    
     
     {/* Summary card */}
     <div className="mt-6 bg-white p-4 rounded-lg shadow">
@@ -572,6 +580,7 @@ const getAttendanceTotals = () => {
       </div>
     </div>
   </div>
+  
 )}
           
           {/* Exam Reports Tab */}
