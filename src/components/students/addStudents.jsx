@@ -55,9 +55,18 @@ const AddStudentForm = () => {
   ];
   
   // Religion options
-  const religionOptions = [
-    'Islam', 'Christianity', 'Hinduism', 'Buddhism', 'Sikhism', 'Judaism', 'Other'
-  ];
+const religionOptions = [
+  'Ahmedi / Lahori',
+  'Buddhist',
+  'Christian',
+  'Hindu',
+  'Jain',
+  'Muslim',
+  'Parsi',
+  'Sikh',
+  'Any other'
+];
+
   
   // Sect options for Muslims
   const sectOptions = [
