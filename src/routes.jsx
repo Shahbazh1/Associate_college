@@ -22,6 +22,7 @@ import CreateTimeTable from './components/classesAndSubjects/createTimeTable'
 import ViewTimeTable from './components/classesAndSubjects/viewTimeTable'
 import StudentSubjectMarks from './components/exams/studentSubjectMarks'
 import ViewNotices from "./components/annoucements/viewNotices";
+import ViewFine from "./components/Fine/viewFine";
 
 const AppRoutes = () => {
   const customStudent = {
@@ -65,6 +66,8 @@ const AppRoutes = () => {
         {/* announcements routes */}
         <Route path="announcements/notices" element={<Notices/>}/>
         <Route path="announcements/viewNotices" element={<ViewNotices/>}/>
+        {/* view fine */}
+        <Route path="Fine/viewFine" element={<ViewFine/>}/>
 
       </Route>
 

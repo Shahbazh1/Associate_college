@@ -108,10 +108,23 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: ' Noties', path: 'announcements/notices' },
+        { label: 'create Noties', path: 'announcements/notices' },
         { label: ' View Notices', path: 'announcements/viewNotices' }
       ]
     },
+    {
+  name: 'fine',
+  label: 'viewFine',
+  icon: (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5h8M9 12h6m-6 7h4.5m-4.5 0a7 7 0 010-14h8" />
+      <circle cx="18" cy="6" r="3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M18 4.5v2.5M18 8.5h.01" />
+    </svg>
+  ),
+  submenus: [{ label: ' ViewFine', path: 'Fine/viewFine' }]
+}
+,
     {
       name: 'settings',
       label: 'Settings',
