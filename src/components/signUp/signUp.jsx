@@ -7,15 +7,15 @@ const SignUp = () => {
 
   return (
     <div>
-      <div className="flex flex-col-reverse  md:flex-row-reverse h-screen w-full rounded-4xl">
-        <div className="flex-1">
+      <div className="flex flex-col  lg:flex-row-reverse h-screen w-full rounded-4xl">
+        <div className="flex-[0.3] md:flex-[0.5] lg:flex-[0.6]">
           <img
             src={college_img}
             alt="college_img"
-            className="object-cover h-screen"
+            className="object-cover h-full w-full lg:h-screen lg:rounded-none rounded-br-full"
           />
         </div>
-        <div className="flex-[0.7] flex flex-col p-6 pr-8">
+        <div className="flex-[0.7] md:flex-[0.5] lg:flex-[0.4] flex flex-col justify-center md:px-20 lg: p-6 pr-8">
           <div className="flex flex-col">
             <ul className="flex flex-row gap-6 text-sky-600 font-semibold self-start">
               <li
@@ -39,7 +39,7 @@ const SignUp = () => {
             </ul>
           </div>
 
-          <div className="flex-1 mt-7 flex flex-col justify-start items-start gap-6">
+          <div className="flex-1 mt-7 flex flex-col justify-center items-start gap-6">
             <div className="self-center">
               <h1 className="font-bold text-2xl mb-2">{user} SignUp</h1>
               <hr className="w-full bg-green-500 h-0.5 text-green-500" />
