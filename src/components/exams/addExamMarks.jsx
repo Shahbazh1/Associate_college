@@ -341,23 +341,23 @@ const AddExamMarks = () => {
   const stats = getStatistics()
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Exam Marks Management</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Exam Marks Management</h1>
           <p className="mt-1 text-sm text-gray-500">Add and update exam marks for students</p>
         </div>
 
         {/* Selection Panel */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Class</label>
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Class</option>
                 {classes.map(cls => (
@@ -369,11 +369,11 @@ const AddExamMarks = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Session</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Session</label>
               <select
                 value={selectedSession}
                 onChange={(e) => setSelectedSession(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Session</option>
                 {sessions.map(session => (
@@ -383,11 +383,11 @@ const AddExamMarks = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Exam Type</label>
               <select
                 value={selectedExamType}
                 onChange={(e) => setSelectedExamType(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Exam</option>
                 {examTypes.map(exam => (
@@ -399,11 +399,11 @@ const AddExamMarks = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Subject</label>
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Subject</option>
                 {subjects.map(subject => (
@@ -413,22 +413,22 @@ const AddExamMarks = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Date</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Exam Date</label>
               <input
                 type="date"
                 value={examDate}
                 onChange={(e) => setExamDate(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Max Marks</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Max Marks</label>
               <input
                 type="number"
                 value={maxMarks}
                 onChange={(e) => setMaxMarks(parseInt(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           </div>
@@ -436,7 +436,7 @@ const AddExamMarks = () => {
 
         {/* Success Message */}
         {showSuccess && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+          <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-md">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -455,75 +455,75 @@ const AddExamMarks = () => {
         {filteredStudents.length > 0 && (
           <>
             {/* Statistics Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
-              <div className="bg-white shadow rounded-lg p-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-4 mb-4 sm:mb-6">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Total Students</p>
-                  <p className="text-lg font-semibold text-gray-900">{stats.total + stats.absent}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Total Students</p>
+                  <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.total + stats.absent}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Present</p>
-                  <p className="text-lg font-semibold text-green-600">{stats.present}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Present</p>
+                  <p className="text-base sm:text-lg font-semibold text-green-600">{stats.present}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Absent</p>
-                  <p className="text-lg font-semibold text-red-600">{stats.absent}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Absent</p>
+                  <p className="text-base sm:text-lg font-semibold text-red-600">{stats.absent}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Average</p>
-                  <p className="text-lg font-semibold text-gray-900">{stats.average}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Average</p>
+                  <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.average}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Highest</p>
-                  <p className="text-lg font-semibold text-green-600">{stats.highest}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Highest</p>
+                  <p className="text-base sm:text-lg font-semibold text-green-600">{stats.highest}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Lowest</p>
-                  <p className="text-lg font-semibold text-red-600">{stats.lowest}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Lowest</p>
+                  <p className="text-base sm:text-lg font-semibold text-red-600">{stats.lowest}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Passed</p>
-                  <p className="text-lg font-semibold text-green-600">{stats.passed}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Passed</p>
+                  <p className="text-base sm:text-lg font-semibold text-green-600">{stats.passed}</p>
                 </div>
               </div>
               
-              <div className="bg-white shadow rounded-lg p-4">
+              <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-500">Failed</p>
-                  <p className="text-lg font-semibold text-red-600">{stats.failed}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-500">Failed</p>
+                  <p className="text-base sm:text-lg font-semibold text-red-600">{stats.failed}</p>
                 </div>
               </div>
             </div>
 
             {/* Search and Bulk Actions */}
-            <div className="bg-white shadow rounded-lg p-4 mb-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+              <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+                  <div className="relative flex-1 sm:flex-initial">
                     <input
                       type="text"
                       placeholder="Search by name or roll no..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="pl-10 pr-4 py-2 w-full text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -533,16 +533,16 @@ const AddExamMarks = () => {
                   </div>
                   
                   {selectedStudents.length > 0 && (
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 whitespace-nowrap">
                       {selectedStudents.length} student(s) selected
                     </span>
                   )}
                 </div>
                 
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                   <button
                     onClick={() => setShowBulkActions(!showBulkActions)}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="px-3 sm:px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
                   >
                     {showBulkActions ? 'Hide' : 'Show'} Bulk Actions
                   </button>
@@ -563,31 +563,31 @@ const AddExamMarks = () => {
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     onClick={() => handleBulkAttendance('present')}
-                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200"
+                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-medium hover:bg-green-200"
                   >
                     Mark All Present
                   </button>
                   <button
                     onClick={() => handleBulkAttendance('absent')}
-                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200"
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs sm:text-sm font-medium hover:bg-red-200"
                   >
                     Mark All Absent
                   </button>
                   <button
                     onClick={() => handleBulkMarks(maxMarks)}
-                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200"
+                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium hover:bg-blue-200"
                   >
                     Mark All Full Marks
                   </button>
                   <button
                     onClick={() => handleBulkMarks(passMarks)}
-                    className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium hover:bg-yellow-200"
+                    className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium hover:bg-yellow-200"
                   >
                     Mark All Pass Marks
                   </button>
                   <button
                     onClick={() => handleBulkMarks(0)}
-                    className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium hover:bg-gray-200"
+                    className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs sm:text-sm font-medium hover:bg-gray-200"
                   >
                     Mark All Zero
                   </button>
@@ -597,28 +597,29 @@ const AddExamMarks = () => {
 
             {/* Marks Table */}
             <div className="bg-white shadow rounded-lg overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <div className="flex items-center justify-between">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-base sm:text-lg font-medium text-gray-900">
                       {viewMode === 'add' ? 'Add' : 'Update'} Exam Marks
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs sm:text-sm text-gray-500">
                       {classes.find(c => c.id === parseInt(selectedClass))?.name} - Section {classes.find(c => c.id === parseInt(selectedClass))?.section}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs sm:text-sm text-gray-500">
                       {subjects.find(s => s.id === parseInt(selectedSubject))?.name} - {examTypes.find(e => e.id === parseInt(selectedExamType))?.name}
                     </p>
                   </div>
                   {existingMarks && (
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap">
                       Existing Marks Found
                     </span>
                   )}
                 </div>
               </div>
               
-              <div className="overflow-x-auto">
+              {/* Desktop Table View */}
+              <div className="hidden lg:block overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
@@ -753,18 +754,125 @@ const AddExamMarks = () => {
                   </tbody>
                 </table>
               </div>
+              
+              {/* Mobile Card View */}
+              <div className="lg:hidden">
+                <div className="divide-y divide-gray-200">
+                  {studentsData.map(student => {
+                    const marks = marksData[student.id] || ''
+                    const attendance = attendanceData[student.id] || 'present'
+                    const grade = marks ? calculateGrade(parseFloat(marks)) : ''
+                    const isPass = marks && parseFloat(marks) >= passMarks
+                    const isAbsent = attendance === 'absent'
+                    
+                    return (
+                      <div key={student.id} className={`p-4 ${isAbsent ? 'bg-red-50' : ''}`}>
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-start">
+                            <input
+                              type="checkbox"
+                              checked={selectedStudents.includes(student.id)}
+                              onChange={() => handleStudentSelection(student.id)}
+                              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mt-1 mr-3"
+                            />
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-900">{student.name}</h4>
+                              <p className="text-xs text-gray-500">Roll No: {student.rollNo}</p>
+                            </div>
+                          </div>
+                          <div className="flex flex-col items-end space-y-1">
+                            <select
+                              value={attendance}
+                              onChange={(e) => handleAttendanceChange(student.id, e.target.value)}
+                              className={`text-xs border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
+                                isAbsent ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                              }`}
+                            >
+                              <option value="present">Present</option>
+                              <option value="absent">Absent</option>
+                            </select>
+                            {grade && !isAbsent && (
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                grade === 'A+' || grade === 'A' ? 'bg-green-100 text-green-800' :
+                                grade === 'B+' || grade === 'B' ? 'bg-blue-100 text-blue-800' :
+                                grade === 'C+' || grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
+                                grade === 'D' ? 'bg-orange-100 text-orange-800' :
+                                'bg-red-100 text-red-800'
+                              }`}>
+                                {grade}
+                              </span>
+                            )}
+                            {isAbsent && (
+                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                Absent
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-3 mb-3">
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">Marks (out of {maxMarks})</label>
+                            <input
+                              type="number"
+                              value={marks}
+                              onChange={(e) => handleMarksChange(student.id, e.target.value)}
+                              min="0"
+                              max={maxMarks}
+                              disabled={isAbsent}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
+                                isAbsent 
+                                  ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed' 
+                                  : 'border-gray-300'
+                              }`}
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">Status</label>
+                            <div>
+                              {marks && !isAbsent && (
+                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                  isPass ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                }`}>
+                                  {isPass ? 'Pass' : 'Fail'}
+                                </span>
+                              )}
+                              {isAbsent && (
+                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                  Absent
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Remarks</label>
+                          <input
+                            type="text"
+                            value={remarks[student.id] || ''}
+                            onChange={(e) => handleRemarksChange(student.id, e.target.value)}
+                            placeholder={isAbsent ? "Absent for exam" : "Add remarks..."}
+                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* Save Button */}
-            <div className="mt-6 flex justify-end">
+            <div className="mt-4 sm:mt-6 flex justify-end">
               <button
                 onClick={saveMarks}
                 disabled={isSaving}
-                className="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 {isSaving ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -780,7 +888,7 @@ const AddExamMarks = () => {
 
         {/* Empty State */}
         {!selectedClass && (
-          <div className="bg-white shadow rounded-lg p-12 text-center">
+          <div className="bg-white shadow rounded-lg p-8 sm:p-12 text-center">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>

@@ -172,23 +172,23 @@ const ViewAttendance = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Attendance Management</h1>
-          <p className="mt-1 text-sm text-gray-500">View and analyze student attendance records</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Attendance Management</h1>
+          <p className="mt-1 text-xs sm:text-sm text-gray-500">View and analyze student attendance records</p>
         </div>
 
         {/* Selection Panel */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Select Class</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Select Class</label>
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Choose a class</option>
                 {classes.map(cls => (
@@ -200,11 +200,11 @@ const ViewAttendance = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Select Session</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Select Session</label>
               <select
                 value={selectedSession}
                 onChange={(e) => setSelectedSession(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Choose a session</option>
                 {sessions.map(session => (
@@ -214,11 +214,11 @@ const ViewAttendance = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Date Range</label>
               <select
                 value={dateFilter}
                 onChange={(e) => setDateFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="week">Last Week</option>
                 <option value="month">Last Month</option>
@@ -232,7 +232,7 @@ const ViewAttendance = () => {
               <button
                 onClick={fetchAttendanceData}
                 disabled={isLoading}
-                className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                className="w-full px-3 sm:px-4 py-2 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               >
                 {isLoading ? 'Loading...' : 'View Attendance'}
               </button>
@@ -242,28 +242,28 @@ const ViewAttendance = () => {
 
         {/* Search Panel */}
         {filteredStudents.length > 0 && (
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Search Student</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-4">Search Student</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Search by Name</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Search by Name</label>
                 <input
                   type="text"
                   value={searchName}
                   onChange={(e) => setSearchName(e.target.value)}
                   placeholder="Enter student name"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Search by Roll No</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Search by Roll No</label>
                 <input
                   type="text"
                   value={searchRollNo}
                   onChange={(e) => setSearchRollNo(e.target.value)}
                   placeholder="Enter roll number"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
               
@@ -275,7 +275,7 @@ const ViewAttendance = () => {
                     setSelectedStudent(null)
                     setShowDetailedView(false)
                   }}
-                  className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  className="w-full px-3 sm:px-4 py-2 text-sm border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 >
                   Clear Search
                 </button>
@@ -287,16 +287,17 @@ const ViewAttendance = () => {
         {/* Class Overview */}
         {!showDetailedView && filteredStudents.length > 0 && (
           <div className="bg-white shadow rounded-lg overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+              <h3 className="text-base sm:text-lg font-medium text-gray-900">
                 Class Attendance Overview
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 {classes.find(c => c.id === parseInt(selectedClass))?.name} - Section {classes.find(c => c.id === parseInt(selectedClass))?.section}
               </p>
             </div>
             
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden lg:block overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -375,98 +376,152 @@ const ViewAttendance = () => {
                 </tbody>
               </table>
             </div>
+            
+            {/* Mobile Card View */}
+            <div className="lg:hidden">
+              <div className="divide-y divide-gray-200">
+                {filteredStudents.map(student => {
+                  const stats = calculateStats(student.id)
+                  return (
+                    <div key={student.id} className="p-4 hover:bg-gray-50">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="text-sm font-medium text-gray-900">{student.name}</h4>
+                          <p className="text-xs text-gray-500">Roll No: {student.rollNo}</p>
+                        </div>
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          parseFloat(stats.percentage) >= 75 ? 'bg-green-100 text-green-800' : 
+                          parseFloat(stats.percentage) >= 60 ? 'bg-yellow-100 text-yellow-800' : 
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {stats.percentage}%
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2 text-center mb-3">
+                        <div>
+                          <div className="text-xs text-gray-500">Total</div>
+                          <div className="text-sm font-medium">{stats.total}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Present</div>
+                          <div className="text-sm font-medium text-green-600">{stats.present}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Late</div>
+                          <div className="text-sm font-medium text-yellow-600">{stats.late}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">Absent</div>
+                          <div className="text-sm font-medium text-red-600">{stats.absent}</div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedStudent(student)
+                          setShowDetailedView(true)
+                        }}
+                        className="w-full px-3 py-1 text-sm bg-indigo-50 text-indigo-600 rounded-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         )}
 
         {/* Detailed Student View */}
         {showDetailedView && selectedStudent && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Student Info Card */}
-            <div className="bg-white shadow rounded-lg p-6">
+            <div className="bg-white shadow rounded-lg p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">Student Details</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="text-base sm:text-lg font-medium text-gray-900">Student Details</h3>
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {selectedStudent.name} - Roll No: {selectedStudent.rollNo}
                   </p>
                 </div>
                 <button
                   onClick={() => setShowDetailedView(false)}
-                  className="text-gray-400 hover:text-gray-500"
+                  className="p-1 text-gray-400 hover:text-gray-500"
                 >
-                  <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-5 w-5 sm:h-6 sm:w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
               
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">
                     {calculateStats(selectedStudent.id).total}
                   </div>
-                  <div className="text-sm text-gray-500">Total Days</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Total Days</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className="text-lg sm:text-2xl font-bold text-green-600">
                     {calculateStats(selectedStudent.id).present}
                   </div>
-                  <div className="text-sm text-gray-500">Present</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Present</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-600">
+                  <div className="text-lg sm:text-2xl font-bold text-yellow-600">
                     {calculateStats(selectedStudent.id).late}
                   </div>
-                  <div className="text-sm text-gray-500">Late</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Late</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-red-600">
+                  <div className="text-lg sm:text-2xl font-bold text-red-600">
                     {calculateStats(selectedStudent.id).absent}
                   </div>
-                  <div className="text-sm text-gray-500">Absent</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Absent</div>
                 </div>
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${
+                  <div className={`text-lg sm:text-2xl font-bold ${
                     parseFloat(calculateStats(selectedStudent.id).percentage) >= 75 ? 'text-green-600' : 
                     parseFloat(calculateStats(selectedStudent.id).percentage) >= 60 ? 'text-yellow-600' : 
                     'text-red-600'
                   }`}>
                     {calculateStats(selectedStudent.id).percentage}%
                   </div>
-                  <div className="text-sm text-gray-500">Attendance</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Attendance</div>
                 </div>
               </div>
             </div>
 
             {/* Attendance Records */}
             <div className="bg-white shadow rounded-lg overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">Attendance Records</h3>
-                <p className="text-sm text-gray-500">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900">Attendance Records</h3>
+                <p className="text-xs sm:text-sm text-gray-500">
                   Showing records for {getDateRangeLabel()}
                 </p>
               </div>
               
-              <div className="overflow-x-auto">
+              {/* Desktop Table View */}
+              <div className="hidden md:block overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Day
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Check In
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Check Out
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Remarks
                       </th>
                     </tr>
@@ -474,24 +529,24 @@ const ViewAttendance = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {getRecentRecords(selectedStudent.id).map((record, index) => (
                       <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {new Date(record.date).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(record.date).toLocaleDateString('en-US', { weekday: 'long' })}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(record.status)}`}>
                             {record.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {record.checkIn || '-'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {record.checkOut || '-'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {record.remarks || '-'}
                         </td>
                       </tr>
@@ -499,13 +554,47 @@ const ViewAttendance = () => {
                   </tbody>
                 </table>
               </div>
+              
+              {/* Mobile Card View */}
+              <div className="md:hidden">
+                <div className="divide-y divide-gray-200">
+                  {getRecentRecords(selectedStudent.id).map((record, index) => (
+                    <div key={index} className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h4 className="text-sm font-medium text-gray-900">
+                            {new Date(record.date).toLocaleDateString()}
+                          </h4>
+                          <p className="text-xs text-gray-500">
+                            {new Date(record.date).toLocaleDateString('en-US', { weekday: 'long' })}
+                          </p>
+                        </div>
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(record.status)}`}>
+                          {record.status}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-500">
+                        <div>
+                          <span className="font-medium">Check In:</span> {record.checkIn || '-'}
+                        </div>
+                        <div>
+                          <span className="font-medium">Check Out:</span> {record.checkOut || '-'}
+                        </div>
+                        <div className="col-span-2">
+                          <span className="font-medium">Remarks:</span> {record.remarks || '-'}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
 
         {/* Empty State */}
         {!selectedClass && (
-          <div className="bg-white shadow rounded-lg p-12 text-center">
+          <div className="bg-white shadow rounded-lg p-8 sm:p-12 text-center">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 
 const MarkAttendance = () => {
@@ -79,12 +80,10 @@ const MarkAttendance = () => {
     }
   }
 
-  // Attendance status options
+  // Attendance status options - Updated to only three options
   const attendanceStatuses = [
     { value: 'present', label: 'Present', color: 'bg-green-100 text-green-800', icon: '✓' },
     { value: 'absent', label: 'Absent', color: 'bg-red-100 text-red-800', icon: '✗' },
-    { value: 'late', label: 'Late', color: 'bg-yellow-100 text-yellow-800', icon: '⏰' },
-    { value: 'halfday', label: 'Half Day', color: 'bg-blue-100 text-blue-800', icon: '◐' },
     { value: 'leave', label: 'On Leave', color: 'bg-purple-100 text-purple-800', icon: '📄' },
   ]
 
@@ -131,7 +130,7 @@ const MarkAttendance = () => {
       return {
         '1': 'present',
         '2': 'absent',
-        '3': 'late'
+        '3': 'leave'
       }
     }
     return null
@@ -207,13 +206,11 @@ const MarkAttendance = () => {
     }, 1500)
   }
 
-  // Get attendance statistics
+  // Get attendance statistics - Updated for three options
   const getAttendanceStats = () => {
     const stats = {
       present: 0,
       absent: 0,
-      late: 0,
-      halfday: 0,
       leave: 0,
       total: filteredStudents.length
     }
@@ -230,17 +227,17 @@ const MarkAttendance = () => {
   const stats = getAttendanceStats()
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Mark Student Attendance</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Mark Student Attendance</h1>
           <p className="mt-1 text-sm text-gray-500">Record daily attendance for students</p>
         </div>
 
         {/* Selection Panel */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Select Group</label>
               <select
@@ -346,65 +343,41 @@ const MarkAttendance = () => {
         {/* Show attendance content only when filters are applied */}
         {selectedGroup && selectedField && (
           <>
-            {/* Statistics Cards */}
+            {/* Statistics Cards - Updated for three options */}
             {filteredStudents.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-                <div className="bg-white shadow rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-green-500 rounded-md p-2">
                       <span className="text-white font-bold">✓</span>
                     </div>
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-500">Present</p>
-                      <p className="text-lg font-semibold text-gray-900">{stats.present}</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-500">Present</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.present}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-red-500 rounded-md p-2">
                       <span className="text-white font-bold">✗</span>
                     </div>
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-500">Absent</p>
-                      <p className="text-lg font-semibold text-gray-900">{stats.absent}</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-500">Absent</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.absent}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 bg-yellow-500 rounded-md p-2">
-                      <span className="text-white font-bold">⏰</span>
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-500">Late</p>
-                      <p className="text-lg font-semibold text-gray-900">{stats.late}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white shadow rounded-lg p-4">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
-                      <span className="text-white font-bold">◐</span>
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-500">Half Day</p>
-                      <p className="text-lg font-semibold text-gray-900">{stats.halfday}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-purple-500 rounded-md p-2">
                       <span className="text-white font-bold">📄</span>
                     </div>
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-500">On Leave</p>
-                      <p className="text-lg font-semibold text-gray-900">{stats.leave}</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-500">On Leave</p>
+                      <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.leave}</p>
                     </div>
                   </div>
                 </div>
@@ -414,8 +387,8 @@ const MarkAttendance = () => {
             {/* Bulk Actions */}
             {filteredStudents.length > 0 && (
               <div className="bg-white shadow rounded-lg p-4 mb-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                     <button
                       onClick={() => setShowBulkActions(!showBulkActions)}
                       className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
@@ -447,7 +420,7 @@ const MarkAttendance = () => {
                       <button
                         key={status.value}
                         onClick={() => handleBulkAttendance(status.value)}
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${status.color} hover:opacity-80`}
+                        className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${status.color} hover:opacity-80`}
                       >
                         Mark All {status.label}
                       </button>
@@ -460,7 +433,7 @@ const MarkAttendance = () => {
             {/* Attendance Table for Students */}
             {filteredStudents.length > 0 && (
               <div className="bg-white shadow rounded-lg overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-200">
+                <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
                   <h3 className="text-lg font-medium text-gray-900">
                     Mark Attendance - {new Date(selectedDate).toLocaleDateString()}
                   </h3>
@@ -473,7 +446,7 @@ const MarkAttendance = () => {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-3 text-left">
+                        <th className="px-3 sm:px-6 py-3 text-left">
                           <input
                             type="checkbox"
                             checked={selectedStudents.length === filteredStudents.length}
@@ -481,22 +454,22 @@ const MarkAttendance = () => {
                             className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                           />
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Roll No
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Name
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="hidden sm:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Class
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="hidden sm:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Section
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Attendance Status
+                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Status
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Remarks
                         </th>
                       </tr>
@@ -504,7 +477,7 @@ const MarkAttendance = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {filteredStudents.map(student => (
                         <tr key={student.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                             <input
                               type="checkbox"
                               checked={selectedStudents.includes(student.id)}
@@ -512,36 +485,42 @@ const MarkAttendance = () => {
                               className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                             />
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             {student.rollNo}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {student.name}
+                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <div className="flex flex-col">
+                              <span>{student.name}</span>
+                              <span className="sm:hidden text-xs text-gray-500">
+                                {student.class} - {student.section}
+                              </span>
+                            </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="hidden sm:table-cell px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {student.class}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="hidden sm:table-cell px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {student.section}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex space-x-2">
+                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-wrap gap-1">
                               {attendanceStatuses.map(status => (
                                 <button
                                   key={status.value}
                                   onClick={() => handleAttendanceChange(student.id, status.value)}
-                                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                                  className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${
                                     attendanceData[student.id] === status.value
                                       ? `${status.color} ring-2 ring-offset-2 ring-indigo-500`
                                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                   }`}
                                 >
-                                  {status.icon} {status.label}
+                                  <span className="hidden sm:inline">{status.icon} {status.label}</span>
+                                  <span className="sm:hidden">{status.icon}</span>
                                 </button>
                               ))}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                             <input
                               type="text"
                               value={remarks[student.id] || ''}
@@ -583,7 +562,7 @@ const MarkAttendance = () => {
 
             {/* Empty State for No Students */}
             {filteredStudents.length === 0 && (
-              <div className="bg-white shadow rounded-lg p-12 text-center">
+              <div className="bg-white shadow rounded-lg p-8 sm:p-12 text-center">
                 <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
@@ -596,7 +575,7 @@ const MarkAttendance = () => {
 
         {/* Empty State for No Filters Selected */}
         {(!selectedGroup || !selectedField) && (
-          <div className="bg-white shadow rounded-lg p-12 text-center">
+          <div className="bg-white shadow rounded-lg p-8 sm:p-12 text-center">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
@@ -609,4 +588,4 @@ const MarkAttendance = () => {
   )
 }
 
-export default MarkAttendance 
+export default MarkAttendance

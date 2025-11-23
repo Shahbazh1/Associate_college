@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -63,7 +65,7 @@ const ViewExamResults = () => {
   const [showCharts, setShowCharts] = useState(false)
   const [sortBy, setSortBy] = useState('rollNo') // rollNo, name, marks, grade
   const [sortOrder, setSortOrder] = useState('asc') // asc or desc
-  const Navigate=useNavigate()
+  const Navigate = useNavigate()
 
   // Generate sample results data
   const generateResultsData = () => {
@@ -302,23 +304,23 @@ const ViewExamResults = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Exam Results</h1>
-          <p className="mt-1 text-sm text-gray-500">View and analyze exam results for classes and students</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Exam Results</h1>
+          <p className="mt-1 text-xs sm:text-sm text-gray-500">View and analyze exam results for classes and students</p>
         </div>
 
         {/* Selection Panel */}
-        <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Class</label>
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Class</option>
                 {classes.map(cls => (
@@ -330,11 +332,11 @@ const ViewExamResults = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Session</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Session</label>
               <select
                 value={selectedSession}
                 onChange={(e) => setSelectedSession(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Session</option>
                 {sessions.map(session => (
@@ -344,11 +346,11 @@ const ViewExamResults = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Exam Type</label>
               <select
                 value={selectedExamType}
                 onChange={(e) => setSelectedExamType(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select Exam</option>
                 {examTypes.map(exam => (
@@ -360,11 +362,11 @@ const ViewExamResults = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Subject</label>
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="all">All Subjects</option>
                 {subjects.map(subject => (
@@ -374,11 +376,11 @@ const ViewExamResults = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">View Type</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">View Type</label>
               <select
                 value={viewType}
                 onChange={(e) => setViewType(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="class">Class View</option>
                 <option value="student">Student View</option>
@@ -389,7 +391,7 @@ const ViewExamResults = () => {
               <button
                 onClick={fetchResults}
                 disabled={isLoading}
-                className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                className="w-full px-3 sm:px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               >
                 {isLoading ? 'Loading...' : 'View Results'}
               </button>
@@ -401,46 +403,46 @@ const ViewExamResults = () => {
           <>
             {/* Statistics Cards */}
             {stats && (
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
-                <div className="bg-white shadow rounded-lg p-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Total Students</p>
-                    <p className="text-lg font-semibold text-gray-900">{stats.totalStudents}</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Total Students</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">{stats.totalStudents}</p>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Average %</p>
-                    <p className="text-lg font-semibold text-blue-600">{stats.averagePercentage}%</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Average %</p>
+                    <p className="text-base sm:text-lg font-semibold text-blue-600">{stats.averagePercentage}%</p>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Highest %</p>
-                    <p className="text-lg font-semibold text-green-600">{stats.highestPercentage}%</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Highest %</p>
+                    <p className="text-base sm:text-lg font-semibold text-green-600">{stats.highestPercentage}%</p>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Lowest %</p>
-                    <p className="text-lg font-semibold text-red-600">{stats.lowestPercentage}%</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Lowest %</p>
+                    <p className="text-base sm:text-lg font-semibold text-red-600">{stats.lowestPercentage}%</p>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Pass %</p>
-                    <p className="text-lg font-semibold text-green-600">{stats.passPercentage}%</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Pass %</p>
+                    <p className="text-base sm:text-lg font-semibold text-green-600">{stats.passPercentage}%</p>
                   </div>
                 </div>
                 
-                <div className="bg-white shadow rounded-lg p-4">
+                <div className="bg-white shadow rounded-lg p-3 sm:p-4">
                   <div className="text-center">
-                    <p className="text-sm font-medium text-gray-500">Failed</p>
-                    <p className="text-lg font-semibold text-red-600">{stats.totalFailed}</p>
+                    <p className="text-xs sm:text-sm font-medium text-gray-500">Failed</p>
+                    <p className="text-base sm:text-lg font-semibold text-red-600">{stats.totalFailed}</p>
                   </div>
                 </div>
               </div>
@@ -448,17 +450,17 @@ const ViewExamResults = () => {
 
             {/* Grade Distribution Chart */}
             {stats && showCharts && (
-              <div className="bg-white shadow rounded-lg p-6 mb-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Grade Distribution</h3>
-                <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
+              <div className="bg-white shadow rounded-lg p-4 sm:p-6 mb-6">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-4">Grade Distribution</h3>
+                <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 sm:gap-2">
                   {Object.entries(stats.gradeDistribution).map(([grade, count]) => (
                     <div key={grade} className="text-center">
-                      <div className={`h-20 rounded flex items-end justify-center ${
+                      <div className={`h-16 sm:h-20 rounded flex items-end justify-center ${
                         grade === 'A+' || grade === 'A' ? 'bg-green-500' :
                         grade === 'B+' || grade === 'B' ? 'bg-blue-500' :
                         grade === 'C+' || grade === 'C' ? 'bg-yellow-500' :
                         grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
-                      }`} style={{ height: `${(count / stats.totalStudents) * 100}%` }}>
+                      }`} style={{ height: `${Math.max((count / stats.totalStudents) * 100, 10)}%` }}>
                         <span className="text-white text-xs font-bold">{count}</span>
                       </div>
                       <div className="text-xs text-gray-600 mt-1">{grade}</div>
@@ -469,19 +471,19 @@ const ViewExamResults = () => {
             )}
 
             {/* Controls */}
-            <div className="bg-white shadow rounded-lg p-4 mb-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
+            <div className="bg-white shadow rounded-lg p-3 sm:p-4 mb-6">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 sm:space-x-4">
+                  <div className="relative flex-grow sm:flex-grow-0">
                     <input
                       type="text"
                       placeholder="Search by name or roll no..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full pl-8 sm:pl-10 pr-2 sm:pr-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
+                      <svg className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                       </svg>
                     </div>
@@ -490,7 +492,7 @@ const ViewExamResults = () => {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="rollNo">Sort by Roll No</option>
                     <option value="name">Sort by Name</option>
@@ -500,30 +502,30 @@ const ViewExamResults = () => {
                   
                   <button
                     onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                    className="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50"
                   >
                     {sortOrder === 'asc' ? '↑' : '↓'}
                   </button>
                 </div>
                 
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     onClick={() => setShowCharts(!showCharts)}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+                    className="px-3 sm:px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
                   >
                     {showCharts ? 'Hide' : 'Show'} Charts
                   </button>
                   
                   <button
                     onClick={exportToCSV}
-                    className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                    className="px-3 sm:px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
                   >
                     Export CSV
                   </button>
                   
                   <button
                     onClick={printResults}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    className="px-3 sm:px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
                   >
                     Print
                   </button>
@@ -533,123 +535,125 @@ const ViewExamResults = () => {
 
             {/* Results Table */}
             <div className="bg-white shadow rounded-lg overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+                <h3 className="text-base sm:text-lg font-medium text-gray-900">
                   {classes.find(c => c.id === parseInt(selectedClass))?.name} - Section {classes.find(c => c.id === parseInt(selectedClass))?.section}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-500">
                   {examTypes.find(e => e.id === parseInt(selectedExamType))?.name} - {sessions.find(s => s.id === parseInt(selectedSession))?.name}
                 </p>
               </div>
               
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Rank
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Roll No
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Name
-                      </th>
-                      {selectedSubject !== 'all' && (
-                        <>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            {subjects.find(s => s.id === parseInt(selectedSubject))?.name}
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Grade
-                          </th>
-                        </>
-                      )}
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Total Marks
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Percentage
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Grade
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {getFilteredResults().map(result => (
-                      <tr key={result.studentId} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {result.overall.rank}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {result.rollNo}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {result.name}
-                        </td>
+                <div className="min-w-full">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Rank
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Roll No
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Name
+                        </th>
                         {selectedSubject !== 'all' && (
                           <>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              {result.subjects[parseInt(selectedSubject)].marks}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                result.subjects[parseInt(selectedSubject)].grade === 'A+' || result.subjects[parseInt(selectedSubject)].grade === 'A' ? 'bg-green-100 text-green-800' :
-                                result.subjects[parseInt(selectedSubject)].grade === 'B+' || result.subjects[parseInt(selectedSubject)].grade === 'B' ? 'bg-blue-100 text-blue-800' :
-                                result.subjects[parseInt(selectedSubject)].grade === 'C+' || result.subjects[parseInt(selectedSubject)].grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
-                                result.subjects[parseInt(selectedSubject)].grade === 'D' ? 'bg-orange-100 text-orange-800' :
-                                'bg-red-100 text-red-800'
-                              }`}>
-                                {result.subjects[parseInt(selectedSubject)].grade}
-                              </span>
-                            </td>
+                            <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              {subjects.find(s => s.id === parseInt(selectedSubject))?.name}
+                            </th>
+                            <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              Grade
+                            </th>
                           </>
                         )}
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {result.overall.totalMarks}/{result.overall.totalMaxMarks}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {result.overall.percentage}%
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            result.overall.grade === 'A+' || result.overall.grade === 'A' ? 'bg-green-100 text-green-800' :
-                            result.overall.grade === 'B+' || result.overall.grade === 'B' ? 'bg-blue-100 text-blue-800' :
-                            result.overall.grade === 'C+' || result.overall.grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
-                            result.overall.grade === 'D' ? 'bg-orange-100 text-orange-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {result.overall.grade}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            result.overall.grade === 'F' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                          }`}>
-                            {result.overall.grade === 'F' ? 'Fail' : 'Pass'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <button
-                            onClick={() => {
-                              Navigate('/Dashboard/exams/results/StudentSubjectMarks')
-                            }}
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            View Details
-                          </button>
-                        </td>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Total Marks
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Percentage
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Grade
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {getFilteredResults().map(result => (
+                        <tr key={result.studentId} className="hover:bg-gray-50">
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+                            {result.overall.rank}
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
+                            {result.rollNo}
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
+                            {result.name}
+                          </td>
+                          {selectedSubject !== 'all' && (
+                            <>
+                              <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
+                                {result.subjects[parseInt(selectedSubject)].marks}
+                              </td>
+                              <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap">
+                                <span className={`px-1 sm:px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                  result.subjects[parseInt(selectedSubject)].grade === 'A+' || result.subjects[parseInt(selectedSubject)].grade === 'A' ? 'bg-green-100 text-green-800' :
+                                  result.subjects[parseInt(selectedSubject)].grade === 'B+' || result.subjects[parseInt(selectedSubject)].grade === 'B' ? 'bg-blue-100 text-blue-800' :
+                                  result.subjects[parseInt(selectedSubject)].grade === 'C+' || result.subjects[parseInt(selectedSubject)].grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
+                                  result.subjects[parseInt(selectedSubject)].grade === 'D' ? 'bg-orange-100 text-orange-800' :
+                                  'bg-red-100 text-red-800'
+                                }`}>
+                                  {result.subjects[parseInt(selectedSubject)].grade}
+                                </span>
+                              </td>
+                            </>
+                          )}
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
+                            {result.overall.totalMarks}/{result.overall.totalMaxMarks}
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-900">
+                            {result.overall.percentage}%
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap">
+                            <span className={`px-1 sm:px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              result.overall.grade === 'A+' || result.overall.grade === 'A' ? 'bg-green-100 text-green-800' :
+                              result.overall.grade === 'B+' || result.overall.grade === 'B' ? 'bg-blue-100 text-blue-800' :
+                              result.overall.grade === 'C+' || result.overall.grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
+                              result.overall.grade === 'D' ? 'bg-orange-100 text-orange-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {result.overall.grade}
+                            </span>
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap">
+                            <span className={`px-1 sm:px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              result.overall.grade === 'F' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                            }`}>
+                              {result.overall.grade === 'F' ? 'Fail' : 'Pass'}
+                            </span>
+                          </td>
+                          <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium">
+                            <button
+                              onClick={() => {
+                                Navigate('/Dashboard/exams/results/StudentSubjectMarks')
+                              }}
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              View Details
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </>
@@ -657,8 +661,8 @@ const ViewExamResults = () => {
 
         {/* Empty State */}
         {!selectedClass && (
-          <div className="bg-white shadow rounded-lg p-12 text-center">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="bg-white shadow rounded-lg p-8 sm:p-12 text-center">
+            <svg className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m9 4h.01" />
             </svg>
             <h3 className="mt-2 text-sm font-medium text-gray-900">No results to display</h3>
