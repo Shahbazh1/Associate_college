@@ -1,26 +1,10 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const AdminSidebar = () => {
+const ToggleSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [expandedMenus, setExpandedMenus] = useState([]);
-  const location = useLocation();
-  
-  const toggleMenu = (menuName) => {
-    setExpandedMenus(prev => 
-      prev.includes(menuName) 
-        ? prev.filter(item => item !== menuName)
-        : [...prev, menuName]
-    );
-  };
-  
-  const isMenuActive = (path) => {
-    return location.pathname === path;
-  };
-  
-  const isSubmenuActive = (submenus) => {
-    return submenus.some(submenu => location.pathname === submenu.path);
-  };
-  
+  const sidebarRef = useRef(null);
+
   const menuItems = [
     {
       name: 'dashboard',
@@ -69,7 +53,6 @@ const AdminSidebar = () => {
       submenus: [
         { label: 'Create Timetable', path: 'createTimeTable' },
         { label: 'view Timetable', path: 'viewTimeTable' }
-
       ]
     },
     {
@@ -83,7 +66,6 @@ const AdminSidebar = () => {
       submenus: [
         { label: 'Mark Attendance', path: 'attendance/mark' },
         { label: 'View Attendance Reports', path: 'attendance/reports' },
-        // { label: 'Generate Monthly Attendance Reports', path: 'attendance/monthly' }
       ]
     },
     {
@@ -113,18 +95,17 @@ const AdminSidebar = () => {
       ]
     },
     {
-  name: 'fine',
-  label: 'viewFine',
-  icon: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5h8M9 12h6m-6 7h4.5m-4.5 0a7 7 0 010-14h8" />
-      <circle cx="18" cy="6" r="3" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M18 4.5v2.5M18 8.5h.01" />
-    </svg>
-  ),
-  submenus: [{ label: ' ViewFine', path: 'Fine/viewFine' }]
-}
-,
+      name: 'fine',
+      label: 'viewFine',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5h8M9 12h6m-6 7h4.5m-4.5 0a7 7 0 010-14h8" />
+          <circle cx="18" cy="6" r="3" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M18 4.5v2.5M18 8.5h.01" />
+        </svg>
+      ),
+      submenus: [{ label: ' ViewFine', path: 'Fine/viewFine' }]
+    },
     {
       name: 'settings',
       label: 'Settings',
@@ -135,9 +116,9 @@ const AdminSidebar = () => {
         </svg>
       ),
       submenus: [
-        { label: 'User Management', path: '/settings/users' },
-        { label: 'Profile Settings', path: '/settings/profile' },
-        { label: 'App Configuration', path: '/settings/config' }
+        { label: 'User Management', path: 'settings/users' },
+        { label: 'Profile Settings', path: 'settings/profile' },
+        { label: 'App Configuration', path: 'settings/config' }
       ]
     },
     {
@@ -154,88 +135,136 @@ const AdminSidebar = () => {
       ]
     }
   ];
-  
+
+  const toggleMenu = (menuName) => {
+    setExpandedMenus(prev => 
+      prev.includes(menuName) 
+        ? prev.filter(name => name !== menuName)
+        : [...prev, menuName]
+    );
+  };
+
+  const handleMenuItemClick = (path) => {
+    // close sidebar on mobile after clicking a menu
+    setSidebarOpen(false);
+  };
+
+  const handleToggle = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  // Close sidebar on clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setSidebarOpen(false);
+      }
+    };
+
+    if (sidebarOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sidebarOpen]);
+
   return (
-    <div className="hidden lg:block lg:flex lg:flex-col bg-gradient-to-b from-slate-800 to-slate-900 text-white shadow-xl">
-      {/* Logo/Brand */}
-      <div className="flex items-center justify-center h-16 px-4 border-b border-slate-700">
-        <div className="flex items-center">
-          <svg className="w-8 h-8 mr-2 text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-          </svg>
-          <span className="text-xl font-bold">EduAdmin</span>
+    <>
+      {/* Overlay for blur */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"></div>
+      )}
+
+      {/* Sidebar */}
+      <div
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          lg:hidden md:block sm:block`}
+      >
+        {/* Close button for mobile */}
+        <div className="flex justify-end p-4">
+          <button
+            onClick={handleToggle}
+            className="p-1 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
-      </div>
-      
-      {/* Navigation Menu */}
-      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-        {menuItems.map((item) => (
-          <div key={item.name} className="mb-2">
-            {item.submenus ? (
-              <div>
-                <button
-                  onClick={() => toggleMenu(item.name)}
-                  className={`flex items-center justify-between w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
-                    isSubmenuActive(item.submenus)
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'text-slate-300 hover:bg-slate-700 hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <span className="mr-3">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </div>
-                  <svg
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      expandedMenus.includes(item.name) ? 'transform rotate-180' : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+
+        {/* Menu items */}
+        <nav className="px-4 pb-4">
+          {menuItems.map((item) => (
+            <div key={item.name} className="mb-2">
+              {item.submenus ? (
+                <div>
+                  <button
+                    onClick={() => toggleMenu(item.name)}
+                    className="w-full flex items-center justify-between p-3 rounded-md hover:bg-gray-100 transition-colors duration-200"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                {expandedMenus.includes(item.name) && (
-                  <div className="mt-1 ml-4 space-y-1">
+                    <div className="flex items-center">
+                      <span className="text-gray-700 mr-3">{item.icon}</span>
+                      <span className="text-gray-700 font-medium">{item.label}</span>
+                    </div>
+                    <svg
+                      className={`w-4 h-4 text-gray-500 transform transition-transform duration-200 ${
+                        expandedMenus.includes(item.name) ? 'rotate-180' : ''
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  <div className={`overflow-hidden transition-all duration-300 ${expandedMenus.includes(item.name) ? 'max-h-60' : 'max-h-0'}`}>
                     {item.submenus.map((submenu) => (
                       <Link
                         key={submenu.path}
                         to={submenu.path}
-                        className={`flex items-center px-4 py-2 text-sm rounded-lg transition-all duration-200 ${
-                          isMenuActive(submenu.path)
-                            ? 'bg-blue-500 text-white'
-                            : 'text-slate-400 hover:bg-slate-700 hover:text-white'
-                        }`}
+                        onClick={() => handleMenuItemClick(submenu.path)}
+                        className="block pl-12 pr-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-md transition-colors duration-200"
                       >
-                        <span className="w-2 h-2 mr-3 rounded-full bg-blue-400"></span>
                         {submenu.label}
                       </Link>
                     ))}
                   </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                to={item.path}
-                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
-                  isMenuActive(item.path)
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'text-slate-300 hover:bg-slate-700 hover:text-white'
-                }`}
-              >
-                <span className="mr-3">{item.icon}</span>
-                <span>{item.label}</span>
-              </Link>
-            )}
-          </div>
-        ))}
-      </nav>
-    
-    </div>
+                </div>
+              ) : (
+                <Link
+                  to={item.path}
+                  onClick={() => handleMenuItemClick(item.path)}
+                  className="flex items-center p-3 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                >
+                  <span className="text-gray-700 mr-3">{item.icon}</span>
+                  <span className="text-gray-700 font-medium">{item.label}</span>
+                </Link>
+              )}
+            </div>
+          ))}
+        </nav>
+      </div>
+    </>
   );
 };
 
-export default AdminSidebar;
+export default ToggleSidebar;
