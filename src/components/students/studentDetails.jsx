@@ -405,7 +405,7 @@ const handleMonthClick = (month) => {
           
           {/* Attendance Tab */}
 {activeTab === 'attendance' && (
-  <div className="bg-gray-50 rounded-lg shadow-sm">
+  <div className="bg-gray-50 rounded-lg shadow-sm py-2 px-4">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
       <h2 className="text-lg font-semibold text-gray-800 flex items-center">
         <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
@@ -415,7 +415,7 @@ const handleMonthClick = (month) => {
       </h2>
       
       {/* Filter for time period */}
-      <div className="flex items-center space-x-2 w-full sm:w-auto">
+      <div className="flex items-center pr-4 space-x-2 w-full sm:w-auto">
         <label htmlFor="periodFilter" className="text-sm font-medium text-gray-700 whitespace-nowrap">Period:</label>
         <select
           id="periodFilter"
