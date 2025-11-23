@@ -335,16 +335,16 @@ const religionOptions = [
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-6 px-3 sm:px-4 lg:px-8">
-      <div className="max-w-4xl mx-auto w-full">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
         <div className="bg-white overflow-hidden shadow-xl rounded-lg">
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-4 sm:px-6">
-            <h1 className="text-xl sm:text-2xl font-bold text-white">Add Student</h1>
-            <p className="text-blue-100 mt-1 text-sm sm:text-base">Fill in the information below to register a new student</p>
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
+            <h1 className="text-2xl font-bold text-white">Add Student</h1>
+            <p className="text-blue-100 mt-1">Fill in the information below to register a new student</p>
           </div>
           
           {submitSuccess && (
-            <div className="bg-green-50 border-l-4 border-green-400 p-3 sm:p-4 m-4 sm:m-6">
+            <div className="bg-green-50 border-l-4 border-green-400 p-4 m-6">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
@@ -360,8 +360,8 @@ const religionOptions = [
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="px-3 sm:px-6 py-4 sm:py-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <form onSubmit={handleSubmit} className="px-6 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
               
               {/* Class Roll No */}
@@ -375,7 +375,7 @@ const religionOptions = [
                   name="classRollNo"
                   value={formData.classRollNo}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.classRollNo ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter roll number"
@@ -396,7 +396,7 @@ const religionOptions = [
                   name="nameOfStudent"
                   value={formData.nameOfStudent}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.nameOfStudent ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter student name"
@@ -417,7 +417,7 @@ const religionOptions = [
                   name="fatherName"
                   value={formData.fatherName}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.fatherName ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter father's name"
@@ -438,7 +438,7 @@ const religionOptions = [
                   name="bFormNo"
                   value={formData.bFormNo}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.bFormNo ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter B-Form or CNIC number"
@@ -459,7 +459,7 @@ const religionOptions = [
                   name="dateOfBirth"
                   value={formData.dateOfBirth}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -478,7 +478,7 @@ const religionOptions = [
                   name="hafizeQuran"
                   value={formData.hafizeQuran}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.hafizeQuran ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -502,7 +502,7 @@ const religionOptions = [
                   name="studentContactNo"
                   value={formData.studentContactNo}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.studentContactNo ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter student contact number"
@@ -523,7 +523,7 @@ const religionOptions = [
                   name="guardianContactNo"
                   value={formData.guardianContactNo}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.guardianContactNo ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter guardian contact number"
@@ -544,7 +544,7 @@ const religionOptions = [
                   name="studentWhatsappNo"
                   value={formData.studentWhatsappNo}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.studentWhatsappNo ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter student WhatsApp number"
@@ -564,7 +564,7 @@ const religionOptions = [
                   name="section"
                   value={formData.section}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.section ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -588,7 +588,7 @@ const religionOptions = [
                   name="religion"
                   value={formData.religion}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.religion ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -612,7 +612,7 @@ const religionOptions = [
                     name="sect"
                     value={formData.sect}
                     onChange={handleChange}
-                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       errors.sect ? 'border-red-500' : 'border-gray-300'
                     }`}
                   >
@@ -637,7 +637,7 @@ const religionOptions = [
                   name="group"
                   value={formData.group}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.group ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -652,17 +652,17 @@ const religionOptions = [
               </div>
               
               {/* Field - Dynamic based on group */}
-              <div className="sm:col-span-2">
+              <div>
                 <label htmlFor="field" className="block text-sm font-medium text-gray-700 mb-1">
                   Field <span className="text-red-500">*</span>
                 </label>
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                <div className="flex space-x-2">
                   <select
                     id="field"
                     name="field"
                     value={formData.field}
                     onChange={handleChange}
-                    className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                    className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       errors.field ? 'border-red-500' : 'border-gray-300'
                     }`}
                     disabled={!formData.group}
@@ -679,7 +679,7 @@ const religionOptions = [
                       name="customField"
                       value={formData.customField}
                       onChange={handleChange}
-                      className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                      className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.field ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Enter custom field"
@@ -693,7 +693,7 @@ const religionOptions = [
               
               {/* Elective Subjects - Dynamic based on field */}
               {(formData.field === 'Pre-Medical' || formData.field === 'Pre-Engineering') && (
-                <div className="sm:col-span-2">
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Elective Subjects <span className="text-red-500">*</span>
                   </label>
@@ -710,7 +710,7 @@ const religionOptions = [
               
               {/* ICS Elective Subjects */}
               {formData.field === 'ICS' && (
-                <div className="sm:col-span-2">
+                <div className="md:col-span-2">
                   <label htmlFor="electiveSubject" className="block text-sm font-medium text-gray-700 mb-1">
                     Elective Subjects <span className="text-red-500">*</span>
                   </label>
@@ -719,7 +719,7 @@ const religionOptions = [
                     name="electiveSubject"
                     value={formData.electiveSubject}
                     onChange={handleChange}
-                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                    className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
                     }`}
                   >
@@ -735,11 +735,11 @@ const religionOptions = [
               
               {/* FA IT/Arts Elective Subjects */}
               {(formData.field === 'FA IT' || formData.field === 'Arts') && (
-                <div className="sm:col-span-2">
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Elective Subjects <span className="text-red-500">*</span>
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <label htmlFor="electiveSubject1" className="block text-sm text-gray-600 mb-1">
                         Subject 1
@@ -749,7 +749,7 @@ const religionOptions = [
                         name="electiveSubject1"
                         value={formData.electiveSubject1}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
                         }`}
                       >
@@ -768,7 +768,7 @@ const religionOptions = [
                         name="electiveSubject2"
                         value={formData.electiveSubject2}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
                         }`}
                       >
@@ -787,7 +787,7 @@ const religionOptions = [
                         name="electiveSubject3"
                         value={formData.electiveSubject3}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           errors.electiveSubject ? 'border-red-500' : 'border-gray-300'
                         }`}
                       >
@@ -819,7 +819,7 @@ const religionOptions = [
                   name="session"
                   value={formData.session}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.session ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -834,7 +834,7 @@ const religionOptions = [
               </div>
               
               {/* Home Address */}
-              <div className="sm:col-span-2">
+              <div className="md:col-span-2">
                 <label htmlFor="homeAddress" className="block text-sm font-medium text-gray-700 mb-1">
                   Home Address <span className="text-red-500">*</span>
                 </label>
@@ -844,7 +844,7 @@ const religionOptions = [
                   value={formData.homeAddress}
                   onChange={handleChange}
                   rows={3}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.homeAddress ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter home address"
@@ -865,7 +865,7 @@ const religionOptions = [
                   name="feeConcession"
                   value={formData.feeConcession}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.feeConcession ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter fee concession amount"
@@ -886,7 +886,7 @@ const religionOptions = [
                   name="feeConcessionReason"
                   value={formData.feeConcessionReason}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.feeConcessionReason ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter reason for fee concession"
@@ -907,7 +907,7 @@ const religionOptions = [
                   name="marksObtained"
                   value={formData.marksObtained}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.marksObtained ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter marks obtained"
@@ -927,7 +927,7 @@ const religionOptions = [
                   name="feesStatus"
                   value={formData.feesStatus}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.feesStatus ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -951,7 +951,7 @@ const religionOptions = [
                   name="amountPaid"
                   value={formData.amountPaid}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base ${
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.amountPaid ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter amount paid"
@@ -962,16 +962,16 @@ const religionOptions = [
               </div>
               
               {/* Student Photo */}
-              <div className="sm:col-span-2">
+              <div className="md:col-span-2">
                 <label htmlFor="studentPhoto" className="block text-sm font-medium text-gray-700 mb-1">
                   Student Photo
                 </label>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                  <label className="flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto">
-                    <svg className="w-5 h-5 mr-2 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
-                    <span className="text-sm text-gray-700 truncate">
+                    <span className="text-sm text-gray-700">
                       {formData.studentPhoto ? formData.studentPhoto.name : 'Choose file'}
                     </span>
                     <input
@@ -1001,18 +1001,18 @@ const religionOptions = [
             </div>
             
             {/* Submit Button */}
-            <div className="mt-6 sm:mt-8 flex justify-center sm:justify-end">
+            <div className="mt-8 flex justify-end">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full sm:w-auto px-6 py-2 rounded-md text-white font-medium ${
+                className={`px-6 py-2 rounded-md text-white font-medium ${
                   isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
                 } transition-colors duration-200`}
               >
                 {isSubmitting ? (
-                  <span className="flex items-center justify-center">
+                  <span className="flex items-center">
                     <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
