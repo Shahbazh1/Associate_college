@@ -17,7 +17,7 @@ const Layout = () => {
     <ToggleSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
     {/* Main content scrolls independently */}
-    <main className="flex-1 bg-gray-100 p-6 overflow-y-auto h-screen scrollbar-hide">
+    <main className="flex-1 bg-gray-100 overflow-y-auto h-screen scrollbar-hide">
       <Outlet />
     </main>
   </div>

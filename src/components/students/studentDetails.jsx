@@ -29,7 +29,6 @@ const getFilteredAttendance = () => {
 };
 
 const getAttendanceTotals = () => {
-  const [selectedMonth, setSelectedMonth] = useState(null);
 const handleMonthClick = (month) => {
   setSelectedMonth(month);
 };
@@ -176,8 +175,8 @@ const handleMonthClick = (month) => {
   const [activeTab, setActiveTab] = useState('info');
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-      <div className="bg-white rounded-xl shadow-xl overflow-hidden">
+    <div className="max-w-4xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+      <div className="bg-white shadow-xl overflow-hidden">
         {/* Header Section with Background */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -193,15 +192,6 @@ const handleMonthClick = (month) => {
               <div className="ml-4">
                 <h1 className="text-2xl font-bold">{studentData.name}</h1>
                 <p className="text-blue-100">Student ID: {studentData.rollNo}</p>
-              </div>
-            </div>
-            <div className="text-center md:text-right">
-              <span className="inline-block px-4 py-2 text-sm font-semibold bg-white bg-opacity-20 rounded-full">
-                {studentData.session}
-              </span>
-              <div className="mt-3">
-                <span className="text-blue-100 text-sm">Matric Marks: </span>
-                <span className="font-bold text-lg">{studentData.matricMarks}</span>
               </div>
             </div>
           </div>
@@ -244,7 +234,7 @@ const handleMonthClick = (month) => {
         </div>
 
         {/* Tab Content */}
-        <div className="p-6">
+        <div >
           {/* Basic Info Tab */}
           {activeTab === 'info' && (
   <div>
@@ -414,22 +404,22 @@ const handleMonthClick = (month) => {
 
           
           {/* Attendance Tab */}
-          {activeTab === 'attendance' && (
-  <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
-    <div className="flex justify-between items-center mb-4">
+{activeTab === 'attendance' && (
+  <div className="bg-gray-50 rounded-lg shadow-sm">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
       <h2 className="text-lg font-semibold text-gray-800 flex items-center">
         <svg className="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
         </svg>
-        Monthly Attendance
+        <span className="text-base sm:text-lg">Monthly Attendance</span>
       </h2>
       
       {/* Filter for time period */}
-      <div className="flex items-center space-x-2">
-        <label htmlFor="periodFilter" className="text-sm font-medium text-gray-700">Period:</label>
+      <div className="flex items-center space-x-2 w-full sm:w-auto">
+        <label htmlFor="periodFilter" className="text-sm font-medium text-gray-700 whitespace-nowrap">Period:</label>
         <select
           id="periodFilter"
-          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md"
+          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md w-full sm:w-auto"
           value={attendanceFilter}
           onChange={(e) => setAttendanceFilter(e.target.value)}
         >
@@ -444,28 +434,28 @@ const handleMonthClick = (month) => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-100">
           <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Month
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Present
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Absent
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Late
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Half Day
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               On Leave
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Attendance Rate
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Fine (Rs)
             </th>
           </tr>
@@ -477,26 +467,26 @@ const handleMonthClick = (month) => {
             const fine = data.absent * 50; // 50 Rs per absent
             
             return (
-              <tr key={month}   onClick={() => handleMonthClick(month)}>  
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <tr key={month} onClick={() => handleMonthClick(month)} className="hover:bg-gray-50 cursor-pointer">  
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {month}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {data.present}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {data.absent}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {data.late}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {data.halfDay}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {data.onLeave}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex items-center">
                     <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
                       <div 
@@ -507,10 +497,10 @@ const handleMonthClick = (month) => {
                         style={{ width: `${rate}%` }}
                       ></div>
                     </div>
-                    <span>{rate}%</span>
+                    <span className="text-xs sm:text-sm">{rate}%</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     fine > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
                   }`}>
@@ -523,28 +513,28 @@ const handleMonthClick = (month) => {
           
           {/* Total row */}
           <tr className="bg-gray-50 font-medium">
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               Total
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {getAttendanceTotals().present}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {getAttendanceTotals().absent}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {getAttendanceTotals().late}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {getAttendanceTotals().halfDay}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {getAttendanceTotals().onLeave}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-              {getAttendanceTotals().rate}%
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              <span className="text-xs sm:text-sm">{getAttendanceTotals().rate}%</span>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                 {getAttendanceTotals().fine}
               </span>
@@ -554,53 +544,49 @@ const handleMonthClick = (month) => {
       </table>
     </div>
 
-    
-    
-    
     {/* Summary card */}
-    <div className="mt-6 bg-white p-4 rounded-lg shadow">
+    <div className="mt-6 bg-white p-3 sm:p-4 rounded-lg shadow">
       <h3 className="text-md font-medium text-gray-900 mb-3">Attendance Summary</h3>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div className="text-center p-3 bg-green-50 rounded-lg">
-          <p className="text-2xl font-bold text-green-600">{getAttendanceTotals().present}</p>
-          <p className="text-sm text-gray-600">Total Present</p>
+          <p className="text-xl sm:text-2xl font-bold text-green-600">{getAttendanceTotals().present}</p>
+          <p className="text-xs sm:text-sm text-gray-600">Total Present</p>
         </div>
         <div className="text-center p-3 bg-red-50 rounded-lg">
-          <p className="text-2xl font-bold text-red-600">{getAttendanceTotals().absent}</p>
-          <p className="text-sm text-gray-600">Total Absent</p>
+          <p className="text-xl sm:text-2xl font-bold text-red-600">{getAttendanceTotals().absent}</p>
+          <p className="text-xs sm:text-sm text-gray-600">Total Absent</p>
         </div>
         <div className="text-center p-3 bg-blue-50 rounded-lg">
-          <p className="text-2xl font-bold text-blue-600">{getAttendanceTotals().rate}%</p>
-          <p className="text-sm text-gray-600">Attendance Rate</p>
+          <p className="text-xl sm:text-2xl font-bold text-blue-600">{getAttendanceTotals().rate}%</p>
+          <p className="text-xs sm:text-sm text-gray-600">Attendance Rate</p>
         </div>
         <div className="text-center p-3 bg-yellow-50 rounded-lg">
-          <p className="text-2xl font-bold text-yellow-600">Rs {getAttendanceTotals().fine}</p>
-          <p className="text-sm text-gray-600">Total Fine</p>
+          <p className="text-xl sm:text-2xl font-bold text-yellow-600">Rs {getAttendanceTotals().fine}</p>
+          <p className="text-xs sm:text-sm text-gray-600">Total Fine</p>
         </div>
       </div>
     </div>
-  </div>
-  
+  </div> 
 )}
           
           {/* Exam Reports Tab */}
-          {activeTab === 'exams' && (
-  <div className="bg-gray-50 rounded-lg p-5 shadow-sm">
-    <div className="flex justify-between items-center mb-4">
+{activeTab === 'exams' && (
+  <div className="bg-gray-50 rounded-lg shadow-sm">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
       <h2 className="text-lg font-semibold text-gray-800 flex items-center">
         <svg className="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
         </svg>
-        Exam Reports
+        <span className="text-base sm:text-lg">Exam Reports</span>
       </h2>
       
       {/* Exam Type Filter */}
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-          <label htmlFor="examType" className="text-sm font-medium text-gray-700">Exam Type:</label>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center w-full sm:w-auto gap-3 sm:gap-4">
+        <div className="flex items-center space-x-2 w-full sm:w-auto">
+          <label htmlFor="examType" className="text-sm font-medium text-gray-700 whitespace-nowrap">Exam Type:</label>
           <select
             id="examType"
-            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md"
+            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md w-full sm:w-auto"
             value={examTypeFilter}
             onChange={(e) => setExamTypeFilter(e.target.value)}
           >
@@ -611,11 +597,11 @@ const handleMonthClick = (month) => {
         
         {/* Month Filter (only visible when monthly is selected) */}
         {examTypeFilter === 'monthly' && (
-          <div className="flex items-center space-x-2">
-            <label htmlFor="monthFilter" className="text-sm font-medium text-gray-700">Month:</label>
+          <div className="flex items-center space-x-2 w-full sm:w-auto">
+            <label htmlFor="monthFilter" className="text-sm font-medium text-gray-700 whitespace-nowrap">Month:</label>
             <select
               id="monthFilter"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-sm border-gray-300 rounded-md w-full sm:w-auto"
               value={monthFilter}
               onChange={(e) => setMonthFilter(e.target.value)}
             >
@@ -633,16 +619,16 @@ const handleMonthClick = (month) => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-100">
           <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Subject
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Marks
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Grade
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Performance
             </th>
           </tr>
@@ -662,10 +648,10 @@ const handleMonthClick = (month) => {
             
             return (
               <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {subject.name}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex items-center">
                     <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
                       <div 
@@ -673,19 +659,21 @@ const handleMonthClick = (month) => {
                         style={{ width: `${subject.marks}%` }}
                       ></div>
                     </div>
-                    <span>{subject.marks}/100</span>
+                    <span className="text-xs sm:text-sm">{subject.marks}/100</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${gradeColor}`}>
                     {grade}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {subject.marks >= 90 ? 'Excellent' : 
-                   subject.marks >= 80 ? 'Very Good' : 
-                   subject.marks >= 70 ? 'Good' : 
-                   subject.marks >= 60 ? 'Average' : 'Needs Improvement'}
+                <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span className="text-xs sm:text-sm">
+                    {subject.marks >= 90 ? 'Excellent' : 
+                     subject.marks >= 80 ? 'Very Good' : 
+                     subject.marks >= 70 ? 'Good' : 
+                     subject.marks >= 60 ? 'Average' : 'Needs Improvement'}
+                  </span>
                 </td>
               </tr>
             );
@@ -695,7 +683,7 @@ const handleMonthClick = (month) => {
           {examTypeFilter === 'final' && studentData.examReports.map((exam, index) => (
             <React.Fragment key={index}>
               <tr className="bg-gray-50">
-                <td colSpan="4" className="px-6 py-3 text-sm font-medium text-gray-900">
+                <td colSpan="4" className="px-4 sm:px-6 py-3 text-sm font-medium text-gray-900">
                   {exam.exam} Exam
                 </td>
               </tr>
@@ -712,10 +700,10 @@ const handleMonthClick = (month) => {
                 
                 return (
                   <tr key={subIndex}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {subject.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex items-center">
                         <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
                           <div 
@@ -723,19 +711,21 @@ const handleMonthClick = (month) => {
                             style={{ width: `${subject.marks}%` }}
                           ></div>
                         </div>
-                        <span>{subject.marks}/100</span>
+                        <span className="text-xs sm:text-sm">{subject.marks}/100</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${gradeColor}`}>
                         {grade}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {subject.marks >= 90 ? 'Excellent' : 
-                       subject.marks >= 80 ? 'Very Good' : 
-                       subject.marks >= 70 ? 'Good' : 
-                       subject.marks >= 60 ? 'Average' : 'Needs Improvement'}
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <span className="text-xs sm:text-sm">
+                        {subject.marks >= 90 ? 'Excellent' : 
+                         subject.marks >= 80 ? 'Very Good' : 
+                         subject.marks >= 70 ? 'Good' : 
+                         subject.marks >= 60 ? 'Average' : 'Needs Improvement'}
+                      </span>
                     </td>
                   </tr>
                 );
@@ -748,26 +738,26 @@ const handleMonthClick = (month) => {
     
     {/* Summary card for monthly exams */}
     {examTypeFilter === 'monthly' && monthFilter && (
-      <div className="mt-6 bg-white p-4 rounded-lg shadow">
+      <div className="mt-6 bg-white p-3 sm:p-4 rounded-lg shadow">
         <h3 className="text-md font-medium text-gray-900 mb-3">{monthFilter} Exam Summary</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div className="text-center p-3 bg-blue-50 rounded-lg">
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-xl sm:text-2xl font-bold text-blue-600">
               {Math.round(studentData.monthlyExams[monthFilter].subjects.reduce((sum, subject) => sum + subject.marks, 0) / studentData.monthlyExams[monthFilter].subjects.length)}%
             </p>
-            <p className="text-sm text-gray-600">Average Marks</p>
+            <p className="text-xs sm:text-sm text-gray-600">Average Marks</p>
           </div>
           <div className="text-center p-3 bg-green-50 rounded-lg">
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-xl sm:text-2xl font-bold text-green-600">
               {studentData.monthlyExams[monthFilter].subjects.filter(subject => subject.marks >= 60).length}/{studentData.monthlyExams[monthFilter].subjects.length}
             </p>
-            <p className="text-sm text-gray-600">Passed Subjects</p>
+            <p className="text-xs sm:text-sm text-gray-600">Passed Subjects</p>
           </div>
           <div className="text-center p-3 bg-yellow-50 rounded-lg">
-            <p className="text-2xl font-bold text-yellow-600">
+            <p className="text-xl sm:text-2xl font-bold text-yellow-600">
               {studentData.monthlyExams[monthFilter].subjects.reduce((sum, subject) => sum + subject.marks, 0)}/{studentData.monthlyExams[monthFilter].subjects.length * 100}
             </p>
-            <p className="text-sm text-gray-600">Total Marks</p>
+            <p className="text-xs sm:text-sm text-gray-600">Total Marks</p>
           </div>
         </div>
       </div>
@@ -775,32 +765,32 @@ const handleMonthClick = (month) => {
     
     {/* Summary card for final exams */}
     {examTypeFilter === 'final' && (
-      <div className="mt-6 bg-white p-4 rounded-lg shadow">
+      <div className="mt-6 bg-white p-3 sm:p-4 rounded-lg shadow">
         <h3 className="text-md font-medium text-gray-900 mb-3">Final Exams Summary</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div className="text-center p-3 bg-blue-50 rounded-lg">
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-xl sm:text-2xl font-bold text-blue-600">
               {Math.round(studentData.examReports.reduce((sum, exam) => 
                 sum + exam.subjects.reduce((subSum, subject) => subSum + subject.marks, 0), 0) / 
                 studentData.examReports.reduce((sum, exam) => sum + exam.subjects.length, 0))}%
             </p>
-            <p className="text-sm text-gray-600">Average Marks</p>
+            <p className="text-xs sm:text-sm text-gray-600">Average Marks</p>
           </div>
           <div className="text-center p-3 bg-green-50 rounded-lg">
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-xl sm:text-2xl font-bold text-green-600">
               {studentData.examReports.reduce((sum, exam) => 
                 sum + exam.subjects.filter(subject => subject.marks >= 60).length, 0)}/
               {studentData.examReports.reduce((sum, exam) => sum + exam.subjects.length, 0)}
             </p>
-            <p className="text-sm text-gray-600">Passed Subjects</p>
+            <p className="text-xs sm:text-sm text-gray-600">Passed Subjects</p>
           </div>
           <div className="text-center p-3 bg-yellow-50 rounded-lg">
-            <p className="text-2xl font-bold text-yellow-600">
+            <p className="text-xl sm:text-2xl font-bold text-yellow-600">
               {studentData.examReports.reduce((sum, exam) => 
                 sum + exam.subjects.reduce((subSum, subject) => subSum + subject.marks, 0), 0)}/
               {studentData.examReports.reduce((sum, exam) => sum + exam.subjects.length, 0) * 100}
             </p>
-            <p className="text-sm text-gray-600">Total Marks</p>
+            <p className="text-xs sm:text-sm text-gray-600">Total Marks</p>
           </div>
         </div>
       </div>
