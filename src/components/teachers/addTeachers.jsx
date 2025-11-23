@@ -191,7 +191,7 @@ const AddTeachers = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
             <h1 className="text-2xl font-bold text-white">Add New Teacher</h1>
             <p className="text-indigo-100 mt-1">Fill in teacher's information according to Staff Statement format</p>
           </div>

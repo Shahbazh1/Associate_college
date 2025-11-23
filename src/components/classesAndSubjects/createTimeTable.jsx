@@ -4,7 +4,7 @@ const sessions = ["2023-2024", "2024-2025", "2025-2026"];
 const classes = ["11th", "12th"];
 const subjects = ["Mathematics", "Physics", "Biology", "Chemistry", "English"];
 const teachers = ["Ali", "Ahmad", "Sana", "Zeeshan", "Sara"];
-const rooms = ["R-1", "R-2", "R-3","R-4", "R-5", "R-6","R-7", "R-8","Physics-Lab", "Chemistry-Lab","Bio-1-Lab","Bio-2-Lab","Computer sciene-Lab"];
+const rooms = ["R-1", "R-2", "R-3", "R-4", "R-5", "R-6", "R-7", "R-8", "Physics-Lab", "Chemistry-Lab", "Bio-1-Lab", "Bio-2-Lab", "Computer sciene-Lab"];
 
 const CreateTimeTable = () => {
   const [form, setForm] = useState({
@@ -13,20 +13,12 @@ const CreateTimeTable = () => {
     periods: 0,
   });
 
-  // for "All" group mode: rows is an array of rows, each row is array of period cells
-  const [allRows, setAllRows] = useState([]); // each row -> Array(periodCount) of cell objects or null
-
-  // Modal data: supports "all" mode. We store rowIndex & periodIndex.
+  const [allRows, setAllRows] = useState([]);
   const [modalData, setModalData] = useState(null);
-
-  // Period times state - stores start and end times for each period
   const [periodTimes, setPeriodTimes] = useState({});
-  
-  // Period time modal state
   const [periodTimeModal, setPeriodTimeModal] = useState(null);
 
   useEffect(() => {
-    // reset grids when periods change
     setAllRows([]);
     setPeriodTimes({});
   }, [form.periods]);
@@ -41,11 +33,9 @@ const CreateTimeTable = () => {
       return;
     }
 
-    // create initial 1 row with `periodCount` null cells
     const initialRow = Array(periodCount).fill(null);
     setAllRows([initialRow]);
-    
-    // Initialize period times if not already set
+
     const newPeriodTimes = {};
     for (let i = 1; i <= periodCount; i++) {
       if (!periodTimes[i]) {
@@ -58,7 +48,6 @@ const CreateTimeTable = () => {
   };
 
   const openModal = (opts) => {
-    // opts: { rowIndex?, periodIndex? }
     const { rowIndex, periodIndex } = opts;
     const existing = (allRows[rowIndex] && allRows[rowIndex][periodIndex]) || { subject: "", teacher: "", room: "" };
     setModalData({ mode: "all", rowIndex, periodIndex, ...existing });
@@ -90,7 +79,6 @@ const CreateTimeTable = () => {
     alert("Timetable Saved! Check console for payload.");
   };
 
-  // All-group helpers
   const addRow = () => {
     const periodCount = parseInt(form.periods, 10) || 0;
     if (!periodCount) {
@@ -108,7 +96,6 @@ const CreateTimeTable = () => {
     });
   };
 
-  // Period time modal functions
   const openPeriodTimeModal = (periodIndex) => {
     const periodNum = periodIndex + 1;
     const existingTime = periodTimes[periodNum] || { startHour: "09", startMin: "00", endHour: "10", endMin: "00" };
@@ -117,23 +104,22 @@ const CreateTimeTable = () => {
 
   const savePeriodTimeModal = () => {
     if (!periodTimeModal) return;
-    
+
     const { periodNum, startHour, startMin, endHour, endMin } = periodTimeModal;
-    
+
     setPeriodTimes(prev => ({
       ...prev,
       [periodNum]: { startHour, startMin, endHour, endMin }
     }));
-    
+
     setPeriodTimeModal(null);
   };
 
-  // Render helpers
   const renderCellContent = (cell) => {
-    if (!cell) return <span className="text-2xl font-bold text-indigo-500">+</span>;
+    if (!cell) return <span className="text-xl sm:text-2xl font-bold text-indigo-500">+</span>;
     return (
-      <div className="p-1 text-left">
-        {cell.subject && <p className="text-sm font-semibold text-indigo-700">{cell.subject}</p>}
+      <div className="p-1 sm:p-2 text-left">
+        {cell.subject && <p className="text-xs sm:text-sm font-semibold text-indigo-700">{cell.subject}</p>}
         {cell.teacher && <p className="text-xs text-gray-600">T: {cell.teacher}</p>}
         {cell.room && <p className="text-xs text-gray-600">R: {cell.room}</p>}
       </div>
@@ -144,33 +130,32 @@ const CreateTimeTable = () => {
     const periodNum = periodIndex + 1;
     const time = periodTimes[periodNum];
     const timeDisplay = time ? `${time.startHour}:${time.startMin} - ${time.endHour}:${time.endMin}` : "";
-    
+
     return (
-      <div 
-        className="cursor-pointer hover:bg-indigo-50 transition-colors p-2"
+      <div
+        className="cursor-pointer hover:bg-indigo-50 transition-colors p-1 sm:p-2"
         onClick={() => openPeriodTimeModal(periodIndex)}
       >
-        <div className="font-medium">Period {periodNum}</div>
-        {timeDisplay && <div className="text-xs text-gray-600">{timeDisplay}</div>}
+        <div className="font-medium text-xs sm:text-sm">Period {periodNum}</div>
+        {timeDisplay && <div className="text-xs text-gray-600 hidden sm:block">{timeDisplay}</div>}
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 flex items-center">
             <span className="mr-3 text-indigo-600">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </span>
             Create Time Table
           </h1>
 
-          {/* Top Form */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 sm:mb-6">
             <div className="form-group">
               <label className="block text-sm font-medium text-gray-700 mb-1">Session</label>
               <select name="session" value={form.session} className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" onChange={handleChange}>
@@ -191,7 +176,6 @@ const CreateTimeTable = () => {
               </select>
             </div>
 
-            {/* Periods */}
             <div className="form-group">
               <label className="block text-sm font-medium text-gray-700 mb-1">Number of Periods</label>
               <input
@@ -207,10 +191,10 @@ const CreateTimeTable = () => {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={generateGrid}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-all transform hover:scale-105 shadow-md flex items-center"
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition-all transform hover:scale-105 shadow-md flex items-center justify-center"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -220,20 +204,19 @@ const CreateTimeTable = () => {
           </div>
         </div>
 
-        {/* Grid for All group mode */}
         {allRows.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
             <div className="overflow-x-auto">
               <table className="min-w-full border-collapse">
                 <thead>
-                  <tr className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-                    <th className="border border-gray-300 p-3 text-left rounded-tl-lg">Class</th>
+                  <tr className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                    <th className="border border-gray-300 p-2 sm:p-3 text-left rounded-tl-lg text-xs sm:text-sm">Class</th>
                     {Array.from({ length: form.periods }).map((_, idx) => (
-                      <th key={idx} className="border border-gray-300 p-3 text-center">
+                      <th key={idx} className="border border-gray-300 p-1 sm:p-3 text-center text-xs sm:text-sm">
                         {renderPeriodHeader(idx)}
                       </th>
                     ))}
-                    <th className="border border-gray-300 p-3 text-center rounded-tr-lg">Action</th>
+                    <th className="border border-gray-300 p-2 sm:p-3 text-center rounded-tr-lg text-xs sm:text-sm">Action</th>
                   </tr>
                 </thead>
 
@@ -242,30 +225,28 @@ const CreateTimeTable = () => {
                     const rowsCount = allRows.length;
                     return (
                       <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                        {/* Only render class cell (with rowspan) on the first data row */}
                         {rowIndex === 0 && (
-                          <td className="border border-gray-300 p-3 font-semibold text-gray-700" rowSpan={rowsCount}>
+                          <td className="border border-gray-300 p-2 sm:p-3 font-semibold text-gray-700 text-xs sm:text-sm" rowSpan={rowsCount}>
                             {form.className}
                           </td>
                         )}
 
-                        {/* If this is not the first row, do not render class cell (it's spanned) */}
                         {row.map((cell, idx) => (
                           <td
                             key={idx}
-                            className="border border-gray-300 p-2 text-center cursor-pointer hover:bg-indigo-50 transition-colors min-w-[120px]"
+                            className="border border-gray-300 p-1 sm:p-2 text-center cursor-pointer hover:bg-indigo-50 transition-colors min-w-[100px] sm:min-w-[120px]"
                             onClick={() => openModal({ rowIndex, periodIndex: idx })}
                           >
-                            <div className="min-h-12 flex items-center justify-center">
+                            <div className="min-h-10 sm:min-h-12 flex items-center justify-center">
                               {renderCellContent(cell)}
                             </div>
                           </td>
                         ))}
 
-                        <td className="border border-gray-300 p-2 text-center">
+                        <td className="border border-gray-300 p-1 sm:p-2 text-center">
                           <button
                             onClick={() => deleteRow(rowIndex)}
-                            className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                            className="px-2 py-1 sm:px-3 sm:py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs sm:text-sm"
                           >
                             Delete
                           </button>
@@ -277,19 +258,17 @@ const CreateTimeTable = () => {
               </table>
             </div>
 
-            <div className="flex justify-between items-center mt-4">
-              <div>
-                <button
-                  onClick={addRow}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition-all transform hover:scale-105 shadow-md"
-                >
-                  Add Row
-                </button>
-              </div>
+            <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-3">
+              <button
+                onClick={addRow}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition-all transform hover:scale-105 shadow-md w-full sm:w-auto"
+              >
+                Add Row
+              </button>
 
               <button
                 onClick={saveTimeTable}
-                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-all transform hover:scale-105 shadow-md"
+                className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition-all transform hover:scale-105 shadow-md w-full sm:w-auto"
               >
                 Save Time Table
               </button>
@@ -297,11 +276,10 @@ const CreateTimeTable = () => {
           </div>
         )}
 
-        {/* Modal for period details */}
         {modalData && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-blur bg-opacity-50 backdrop-blur-sm" onClick={() => setModalData(null)}></div>
-            <div className="relative bg-white rounded-xl shadow-xl p-6 w-full max-w-md transform transition-all">
+            <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={() => setModalData(null)}></div>
+            <div className="relative bg-white rounded-xl shadow-xl p-4 sm:p-6 w-full max-w-md transform transition-all">
               <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -334,7 +312,7 @@ const CreateTimeTable = () => {
                     <option value="">Select Teacher</option>
                     {teachers.map((x) => (
                       <option key={x} value={x}>{x}</option>
-                ))}
+                    ))}
                   </select>
                 </div>
 
@@ -348,7 +326,7 @@ const CreateTimeTable = () => {
                     <option value="">Select Room</option>
                     {rooms.map((r) => (
                       <option key={r} value={r}>{r}</option>
-                ))}
+                    ))}
                   </select>
                 </div>
               </div>
@@ -371,11 +349,10 @@ const CreateTimeTable = () => {
           </div>
         )}
 
-        {/* Modal for period time selection */}
         {periodTimeModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-blur bg-opacity-50 backdrop-blur-sm" onClick={() => setPeriodTimeModal(null)}></div>
-            <div className="relative bg-white rounded-xl shadow-xl p-6 w-full max-w-md transform transition-all">
+            <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={() => setPeriodTimeModal(null)}></div>
+            <div className="relative bg-white rounded-xl shadow-xl p-4 sm:p-6 w-full max-w-md transform transition-all">
               <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

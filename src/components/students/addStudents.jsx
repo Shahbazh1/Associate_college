@@ -335,11 +335,11 @@ const religionOptions = [
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br px-2 py-4 from-blue-50 to-indigo-100  sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white overflow-hidden shadow-xl rounded-lg">
+        <div className="bg-white overflow-hidden rounded-lg shadow-xl">
           <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
-            <h1 className="text-2xl font-bold text-white">Add Student</h1>
+            <h1 className="text-xl font-bold text-white">Add Student</h1>
             <p className="text-blue-100 mt-1">Fill in the information below to register a new student</p>
           </div>
           

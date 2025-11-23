@@ -8,7 +8,7 @@ const Header = ({ setSidebarOpen, sidebarOpen }) => {
   };
 
   return (
-    <header className="w-full bg-blue-600 text-white px-4 py-3 flex justify-between items-center shadow">
+    <header className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-3 flex justify-between items-center shadow">
       
       {/* Left section */}
       <div className="text-xl font-bold">
